@@ -26,4 +26,11 @@ describe User do
   its(:password) { should == "iluvunicorns" }
   its(:is_admin) { should be_false }
   its(:terms) { should be_true }
+
+
+
+
 end
+
+
+

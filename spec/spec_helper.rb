@@ -5,6 +5,14 @@ require 'rspec/rails'
 require 'rspec/autorun'
 require 'capybara/rspec'
 
+# class ActionDispatch::IntegrationTest
+#     include Capybara::DSL
+
+#     def teardown
+#       Capybara.reset_sessions!
+#       Capybara.use_default_driver
+#     end
+# end
 
 
 
@@ -45,4 +53,22 @@ RSpec.configure do |config|
   # the seed, which is printed after each run.
   #     --seed 1234
   config.order = "random"
+end
+
+def sign_up_as_a_new_user(new_user)
+    visit new_user_path
+    fill_in "user_first", with: new_user.user_first
+    fill_in "user_last", with: new_user.user_last
+    fill_in "user_email", with: new_user.user_email
+    check "accept_terms"
+    click_on "Submit"
+
+end
+
+def update_existing_user_info
+    fill_in "user_first", with: "Josey"
+    fill_in "user_last", with: "Smiths"
+    fill_in "user_email", with: "josey_smiths@gmail.com"
+    click_on "Update"
+
 end

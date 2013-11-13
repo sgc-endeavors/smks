@@ -1,1 +1,20 @@
-<h1>smks</h1>
+<h1>SMKS</h1>
+ 
+<%= form_tag users_path do %>
+
+	<%= label_tag "user_first", "First Name:" %>
+	<%= text_field_tag "user_first" %> 
+
+	<%= label_tag "user_last", "Last Name:" %>
+	<%= text_field_tag "user_last" %> 
+
+	<%= label_tag "user_email", "Email:" %>
+	<%= text_field_tag "user_email" %> 
+
+	<%= label_tag "accept_terms", "I accept the terms and conditions"%>
+	<%= check_box_tag "accept_terms", "1" %>
+
+	<%= button_tag "Submit", name: "submit_new" %>
+
+
+<%end%>

@@ -2,9 +2,10 @@
 
 FactoryGirl.define do
   factory :user do
-    user_email "joe_smith@gmail.com"
+    
     user_first "Joe"
     user_last "Smith"
+    user_email "joe_smith@gmail.com"
     password "iluvunicorns"
     terms true
     is_admin false

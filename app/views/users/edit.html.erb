@@ -1,0 +1,22 @@
+ <h1>Edit Profile View</h1>
+
+
+<%=form_tag(user_path, :method => :put) do%> 
+
+
+
+ <%= label_tag "user_first", "First Name:" %>
+	<%= text_field_tag "user_first", @existing_user.user_first%> 
+
+
+
+	<%= label_tag "user_last", "Last Name:" %>
+	<%= text_field_tag "user_last",  @existing_user.user_last %> 
+
+	<%= label_tag "user_email", "Email:" %>
+	<%= text_field_tag "user_email",  @existing_user.user_email %> 
+
+
+	<%= button_tag "Update", name: "update" %>
+
+<%end%>

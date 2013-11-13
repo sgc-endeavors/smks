@@ -1,0 +1,20 @@
+
+	<h1> User Profile Views</h1>
+
+	<%= label_tag "user_first", "First Name:" %>
+	<%= text_field_tag "user_first", @user.user_first %>
+	
+
+	<%= label_tag "user_last", "Last Name:" %>
+	<%= text_field_tag "user_last", @user.user_last %> 
+
+	<%= label_tag "user_email", "Email:" %>
+	<%= text_field_tag "user_email", @user.user_email %> 
+
+	<%= link_to "Edit", edit_user_path(@user) %>
+
+<!-- 
+	<%= label_tag "accept_terms", "I accept the terms and conditions"%>
+	<%= check_box_tag "accept_terms", @user.terms %>
+
+	 -->
