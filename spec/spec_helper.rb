@@ -69,6 +69,6 @@ def update_existing_user_info
     fill_in "user_first", with: "Josey"
     fill_in "user_last", with: "Smiths"
     fill_in "user_email", with: "josey_smiths@gmail.com"
-    click_on "Update"
+    
 
 end

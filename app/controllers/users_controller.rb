@@ -9,9 +9,9 @@ class UsersController < ApplicationController
   	user.user_first = params[:user_first]
   	user.user_last = params[:user_last]
   	user.user_email = params[:user_email]
-  	#user.terms = params[:terms]  #<<<< Need to resolve test for saving "terms"
-  	user.save
-  	redirect_to user_path
+  	user.terms = params[:terms]  
+  	user.save!
+  	redirect_to user_path(user)
   end
 
 	def show
@@ -26,12 +26,31 @@ class UsersController < ApplicationController
 
 	def update
 		existing_user = User.find(params[:id])
-		existing_user.user_first = params[:user_first]
-		existing_user.user_last = params[:user_last]
-		existing_user.user_email = params[:user_email]
-		existing_user.save!
+		if params[:update] 
+			existing_user.user_first = params[:user_first]
+			existing_user.user_last = params[:user_last]
+			existing_user.user_email = params[:user_email]
+			existing_user.save!
+		end
+
 		redirect_to user_path
 	end
+
+	def index
+		@existing_users = User.all
+		render :index
+	end
+
+	def destroy
+		destroyed_user = User.find(params[:id])
+		destroyed_user.destroy
+		redirect_to	users_path
+
+	end
+
+
+
+
 
 
 end

@@ -10,4 +10,14 @@ FactoryGirl.define do
     terms true
     is_admin false
   end
+
+  factory :multiple_user, class: User do
+    
+    sequence(:user_first) { |i| "Joe#{i}" }
+    sequence(:user_last) { |i| "Smith#{i}" }
+    sequence(:user_email) { |i| "joe_smith#{i}@gmail.com" }
+    password "iluvunicorns"
+    terms true
+    is_admin false
+  end
 end

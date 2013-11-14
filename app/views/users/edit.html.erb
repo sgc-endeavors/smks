@@ -1,7 +1,7 @@
  <h1>Edit Profile View</h1>
 
 
-<%=form_tag(user_path, :method => :put) do%> 
+<%=form_tag(user_path, method: :PUT) do%> 
 
 
 
@@ -18,5 +18,6 @@
 
 
 	<%= button_tag "Update", name: "update" %>
+	<%= button_tag "Cancel", name: "cancel" %>
 
 <%end%>
