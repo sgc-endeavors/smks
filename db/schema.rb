@@ -11,7 +11,19 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20131107192820) do
+ActiveRecord::Schema.define(:version => 20131115184634) do
+
+  create_table "stories", :force => true do |t|
+    t.string   "title"
+    t.text     "body"
+    t.boolean  "approved"
+    t.integer  "user_id"
+    t.integer  "category_id"
+    t.integer  "picture_id"
+    t.datetime "created_at",  :null => false
+    t.datetime "updated_at",  :null => false
+    t.integer  "status_id"
+  end
 
   create_table "users", :force => true do |t|
     t.string   "user_email"
