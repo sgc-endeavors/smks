@@ -28,13 +28,12 @@ class UsersController < ApplicationController
 	def update
 		existing_user = User.find(params[:id])
 		#get rid of if after we modify buttons in edit.html.erb
-		if params[:update] 
-			existing_user.first_name = params[:first_name]
-			existing_user.last_name = params[:last_name]
+		
+			existing_user.first_name = params[:user][:first_name]
+			existing_user.last_name = params[:user][:last_name]
 			existing_user.email = params[:email]
 			existing_user.save!
-		end
-
+		
 		redirect_to user_path
 	end
 

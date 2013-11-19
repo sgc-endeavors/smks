@@ -67,9 +67,9 @@ def sign_up_as_a_new_user(new_user)
 end
 
 def update_existing_user_info
-    fill_in "first_name", with: "Josey"
-    fill_in "last_name", with: "Smiths"
-    fill_in "email", with: "josey_smiths@gmail.com"
+    fill_in "user_first_name", with: "Josey"
+    fill_in "user_last_name", with: "Smiths"
+    fill_in "user_email", with: "josey_smiths@gmail.com"
     
 
 end

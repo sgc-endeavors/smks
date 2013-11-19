@@ -1,17 +1,17 @@
  <h1>Edit Profile View</h1>
-<!-- use form_for tag and it will fill in the fields using f variable -->
-<%=form_tag(user_path, method: :PUT) do%> 
 
-  <%= label_tag "first_name", "First Name:" %>
-	<%= text_field_tag "first_name", @existing_user.first_name%> 
+<%=form_for(@existing_user, url: user_path(@existing_user), html: {method: "put"}) do |f|  %> 
+	
+	<%= f.label :first_name  %>
+	<%= f.text_field :first_name  %>
+	
+	<%= f.label :last_name  %>
+	<%= f.text_field :last_name %>
 
-	<%= label_tag "last_name", "Last Name:" %>
-	<%= text_field_tag "last_name",  @existing_user.last_name %> 
+	<%= f.label :email  %>
+	<%= f.text_field :email %>
 
-	<%= label_tag "email", "Email:" %>
-	<%= text_field_tag "email",  @existing_user.email %> 
-<!-- use submit_tag for update below and have cancel be a link to the profile of the user for current page or index page-->
-	<%= button_tag "Update", name: "update" %>
-	<%= button_tag "Cancel", name: "cancel" %>
-
+	<%= submit_tag "Update"%>
+	<p>link</p>
 <%end%>
+
