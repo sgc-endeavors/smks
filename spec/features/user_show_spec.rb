@@ -2,7 +2,7 @@ require 'spec_helper'
 
 describe "User_Show Page" do
   subject { page }
-  let(:new_user) { FactoryGirl.build(:user)}
+  let(:new_user) { FactoryGirl.build(:user, first_name: "Joe", last_name: "Smith", email: "joe_smith@gmail.com")}
 
   before(:each) { sign_up_as_a_new_user(new_user) }
 

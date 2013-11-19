@@ -16,13 +16,13 @@ describe User do
   
   it "is invalid w/out a unique email address" do
     user1 = user
-    user2 = FactoryGirl.build(:user)
+    user2 = FactoryGirl.build(:user, email: user1.email)
     user2.should_not be_valid    
   end 
 
   
   describe "User create" do
-    let(:user) { FactoryGirl.create(:user, first_name: "Joe", last_name: "Smith") }
+    let(:user) { FactoryGirl.create(:user, first_name: "Joe", last_name: "Smith", email: "joe_smith@gmail.com") }
     
     
     its(:first_name) { should == "Joe" }

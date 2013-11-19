@@ -3,7 +3,7 @@ require 'spec_helper'
 describe "User_Edit Page" do
     
   before(:each) do 
-    @existing_user =  FactoryGirl.create(:user)
+    @existing_user =  FactoryGirl.create(:user, first_name: "Joe", last_name: "Smith", email: "joe_smith@gmail.com")
     visit edit_user_path(@existing_user)  
   end
   
@@ -14,12 +14,11 @@ describe "User_Edit Page" do
   end
 
   it "displays the existing users information in the form" do
-    should have_field("user_first_name", with: "Joe")
-    should have_field("user_last_name", with: "Smith")
-    should have_field("user_email", with: "joe_smith@gmail.com")
+    should have_field("first_name", with: "Joe")
+    should have_field("last_name", with: "Smith")
+    should have_field("email", with: "joe_smith@gmail.com")
   end
-
-  
+ 
   context "user presses update" do
     it "successfully saves the user information and routes them back to the show page" do
       update_existing_user_info
@@ -31,7 +30,7 @@ describe "User_Edit Page" do
       current_path.should == user_path(@existing_user)
     end
   end
-=begin
+
   context "users presses cancel" do
     it "does NOT save the user information and routes them back to the show page" do
       update_existing_user_info
@@ -44,7 +43,5 @@ describe "User_Edit Page" do
     end
 
   end
-=end
-
 
 end

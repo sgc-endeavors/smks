@@ -1,17 +1,21 @@
  <h1>Edit Profile View</h1>
 
 <%=form_for(@existing_user, url: user_path(@existing_user), html: {method: "put"}) do |f|  %> 
-	
-	<%= f.label :first_name  %>
-	<%= f.text_field :first_name  %>
-	
-	<%= f.label :last_name  %>
-	<%= f.text_field :last_name %>
 
-	<%= f.label :email  %>
-	<%= f.text_field :email %>
+
+<!-- By default, rails uses the following naming convension to assign item identifiers (ie: ID, For)..... <model>_<column_name>.  If you choose to use the defaults, you need to adjust your RSpec/Capybara tests to reflect the similar naming convention. -->
+	
+	<%= f.label :first_name, "First Name:",  for: "first_name"  %>
+	<%= f.text_field :first_name, id: "first_name"  %>
+	
+	<%= f.label :last_name, "Last Name:", for: "last_name"  %>
+	<%= f.text_field :last_name, id: "last_name" %>
+
+	<%= f.label :email, "Email:", for: "email"  %>
+	<%= f.text_field :email, id: "email" %>
+	<br>
 
 	<%= submit_tag "Update"%>
-	<p>link</p>
+	<%= link_to "Cancel", user_path(@existing_user) %>
 <%end%>
 

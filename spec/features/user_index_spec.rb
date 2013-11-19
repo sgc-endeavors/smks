@@ -3,7 +3,7 @@ require 'spec_helper'
 describe "User_Index Page" do
 
 	before(:each) do 
-    @existing_users =  2.times { FactoryGirl.create(:multiple_user) }
+    @existing_users =  2.times { FactoryGirl.create(:user) }
     visit users_path   
   end
   

@@ -1,18 +1,14 @@
 class UsersController < ApplicationController
   
   def new
+    @new_user = User.new
     render :new
   end
 
   def create
-  	#user = User.new(params[:user])
-  	user = User.new
-  	user.first_name = params[:first_name]
-  	user.last_name = params[:last_name]
-  	user.email = params[:email]
-  	user.terms = params[:terms]  
-  	user.save!
-  	redirect_to user_path(user)
+  	new_user = User.new(params[:user])
+  	new_user.save!
+  	redirect_to user_path(new_user)
   end
 
 	def show
@@ -27,12 +23,12 @@ class UsersController < ApplicationController
 
 	def update
 		existing_user = User.find(params[:id])
-		#get rid of if after we modify buttons in edit.html.erb
-		
-			existing_user.first_name = params[:user][:first_name]
-			existing_user.last_name = params[:user][:last_name]
-			existing_user.email = params[:email]
-			existing_user.save!
+		existing_user.update_attributes(params[:user])
+			# UPDATE ATTRIBUTES IS THE SAME AS BELOW:		
+			# existing_user.first_name = params[:user][:first_name]
+			# existing_user.last_name = params[:user][:last_name]
+			# existing_user.email = params[:email]
+			# existing_user.save!
 		
 		redirect_to user_path
 	end

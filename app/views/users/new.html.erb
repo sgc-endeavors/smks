@@ -1,20 +1,20 @@
-Whe<h1>SMKS</h1>
-<!-- use form_for here, create an unsaved instance of user to render the form --> 
-<%= form_tag users_path do %>
+<h1>SMKS</h1>
 
-	<%= label_tag "first_name", "First Name:" %>
-	<%= text_field_tag "first_name" %> 
+<%= form_for(@new_user, url: users_path(@new_user)) do |f| %>
 
-	<%= label_tag "last_name", "Last Name:" %>
-	<%= text_field_tag "last_name" %> 
+	<%= f.label :first_name, "First Name:", for: "first_name" %>
+	<%= f.text_field :first_name, id: "first_name" %> 
 
-	<%= label_tag "email", "Email:" %>
-	<%= text_field_tag "email" %> 
+	<%= f.label :last_name, "Last Name:", for: "last_name" %>
+	<%= f.text_field :last_name, id: "last_name" %> 
 
-	<%= label_tag "accept_terms", "I accept the terms and conditions"%>
-	<%= check_box_tag "accept_terms", "1" %>
-<!-- use submit_tag below -->
-	<%= button_tag "Submit", name: "submit_new" %>
+	<%= f.label :email, "Email:", for: "email" %>
+	<%= f.text_field :email, id: "email" %> 
+
+	<%= f.label :terms, "I accept the terms and conditions", for: "terms"%>
+	<%= f.check_box :terms, id: "terms" %> 
+
+	<%= submit_tag "Submit"%>
 
 
 <%end%>

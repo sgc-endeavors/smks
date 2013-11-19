@@ -12,6 +12,7 @@ describe "User_Create Page" do
     within("h1") { should have_content("SMKS") }
   end
 
+
   it "saves the new users information upon submission" do
     sign_up_as_a_new_user(new_user)
     last_user = User.last
@@ -25,7 +26,6 @@ describe "User_Create Page" do
     sign_up_as_a_new_user(new_user)
     current_path.should == user_path(User.last)
   end
-
 end
 
 
