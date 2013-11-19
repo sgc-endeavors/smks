@@ -21,3 +21,6 @@ FactoryGirl.define do
     is_admin false
   end
 end
+
+#rename multiple_user to user (and delete user factory) because you can create
+#a singular user from the sequence factory

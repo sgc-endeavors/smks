@@ -55,6 +55,7 @@ RSpec.configure do |config|
   config.order = "random"
 end
 
+#create a subfolder under spec called "support" put methods like this in categorized folders (best practice) >> might need to put code in a module (check that...)
 def sign_up_as_a_new_user(new_user)
     visit new_user_path
     fill_in "user_first", with: new_user.user_first

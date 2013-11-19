@@ -5,6 +5,7 @@ class UsersController < ApplicationController
   end
 
   def create
+  	#user = User.new(params[:user])
   	user = User.new
   	user.user_first = params[:user_first]
   	user.user_last = params[:user_last]
@@ -26,6 +27,7 @@ class UsersController < ApplicationController
 
 	def update
 		existing_user = User.find(params[:id])
+		#get rid of if after we modify buttons in edit.html.erb
 		if params[:update] 
 			existing_user.user_first = params[:user_first]
 			existing_user.user_last = params[:user_last]
@@ -47,11 +49,5 @@ class UsersController < ApplicationController
 		redirect_to	users_path
 
 	end
-
-
-
-
-
-
 end
 

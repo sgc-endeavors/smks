@@ -3,6 +3,7 @@ require 'spec_helper'
 describe "User_Index Page" do
 
 	before(:each) do 
+		#Why do we need 10 users? If it works for one, it should work for 10, maybe do 2 for test
     @existing_users =  10.times { FactoryGirl.create(:multiple_user) }
     visit users_path   
   end
@@ -22,8 +23,11 @@ describe "User_Index Page" do
 	
 	context "user presses the edit link" do
 
-		it "has an 'Edit' link for each user" do
+		before(:each) do
 			first(:link, "Edit").click
+		end
+
+		it "has an 'Edit' link for each user" do
 			current_path.should == edit_user_path(User.first)
 		end
 	
@@ -37,6 +41,7 @@ describe "User_Index Page" do
 		end
 
 		it "has a 'delete' link which destroys the user" do 
+			#search database for @destroyed_user to see if it still exists @destroyed_user.reload.should be_nil
 			User.first.user_first.should_not == @destroyed_user
 		end
 

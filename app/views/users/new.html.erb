@@ -1,5 +1,5 @@
 Whe<h1>SMKS</h1>
- 
+<!-- use form_for here, create an unsaved instance of user to render the form --> 
 <%= form_tag users_path do %>
 
 	<%= label_tag "user_first", "First Name:" %>
@@ -13,7 +13,7 @@ Whe<h1>SMKS</h1>
 
 	<%= label_tag "accept_terms", "I accept the terms and conditions"%>
 	<%= check_box_tag "accept_terms", "1" %>
-
+<!-- use submit_tag below -->
 	<%= button_tag "Submit", name: "submit_new" %>
 
 
