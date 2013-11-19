@@ -1,15 +1,15 @@
 
 	<h1> User Profile Views</h1>
 
-	<%= label_tag "user_first", "First Name:" %>
-	<%= text_field_tag "user_first", @user.user_first %>
+	<%= label_tag "first_name", "First Name:" %>
+	<%= text_field_tag "first_name", @user.first_name %>
 	
 
-	<%= label_tag "user_last", "Last Name:" %>
-	<%= text_field_tag "user_last", @user.user_last %> 
+	<%= label_tag "last_name", "Last Name:" %>
+	<%= text_field_tag "last_name", @user.last_name %> 
 
-	<%= label_tag "user_email", "Email:" %>
-	<%= text_field_tag "user_email", @user.user_email %> 
+	<%= label_tag "email", "Email:" %>
+	<%= text_field_tag "email", @user.email %> 
 
 	<%= link_to "Edit", edit_user_path(@user) %>
 

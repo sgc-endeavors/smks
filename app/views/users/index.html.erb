@@ -1,9 +1,9 @@
 <h1>User Index</h1>
 
 <% for existing_user in @existing_users %>
-<%= existing_user.user_first %>
-<%= existing_user.user_last %>
-<%= existing_user.user_email %>
+<%= existing_user.first_name %>
+<%= existing_user.last_name %>
+<%= existing_user.email %>
 <%= link_to "Edit", edit_user_path(existing_user) %>
 <%= link_to "Delete", user_path(existing_user), :method => :delete, :confirm => "Are you sure you want to delete?"  %>
 <br>

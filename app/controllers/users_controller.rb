@@ -7,9 +7,9 @@ class UsersController < ApplicationController
   def create
   	#user = User.new(params[:user])
   	user = User.new
-  	user.user_first = params[:user_first]
-  	user.user_last = params[:user_last]
-  	user.user_email = params[:user_email]
+  	user.first_name = params[:first_name]
+  	user.last_name = params[:last_name]
+  	user.email = params[:email]
   	user.terms = params[:terms]  
   	user.save!
   	redirect_to user_path(user)
@@ -29,9 +29,9 @@ class UsersController < ApplicationController
 		existing_user = User.find(params[:id])
 		#get rid of if after we modify buttons in edit.html.erb
 		if params[:update] 
-			existing_user.user_first = params[:user_first]
-			existing_user.user_last = params[:user_last]
-			existing_user.user_email = params[:user_email]
+			existing_user.first_name = params[:first_name]
+			existing_user.last_name = params[:last_name]
+			existing_user.email = params[:email]
 			existing_user.save!
 		end
 

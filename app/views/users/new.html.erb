@@ -2,14 +2,14 @@ Whe<h1>SMKS</h1>
 <!-- use form_for here, create an unsaved instance of user to render the form --> 
 <%= form_tag users_path do %>
 
-	<%= label_tag "user_first", "First Name:" %>
-	<%= text_field_tag "user_first" %> 
+	<%= label_tag "first_name", "First Name:" %>
+	<%= text_field_tag "first_name" %> 
 
-	<%= label_tag "user_last", "Last Name:" %>
-	<%= text_field_tag "user_last" %> 
+	<%= label_tag "last_name", "Last Name:" %>
+	<%= text_field_tag "last_name" %> 
 
-	<%= label_tag "user_email", "Email:" %>
-	<%= text_field_tag "user_email" %> 
+	<%= label_tag "email", "Email:" %>
+	<%= text_field_tag "email" %> 
 
 	<%= label_tag "accept_terms", "I accept the terms and conditions"%>
 	<%= check_box_tag "accept_terms", "1" %>

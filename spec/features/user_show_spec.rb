@@ -11,9 +11,9 @@ describe "User_Show Page" do
 	end
 
   it "shows the users profile" do
-  	should have_field("user_first", with: "Joe")
-  	should have_field("user_last", with: "Smith")
-  	should have_field("user_email", with: "joe_smith@gmail.com")
+  	should have_field("first_name", with: "Joe")
+  	should have_field("last_name", with: "Smith")
+  	should have_field("email", with: "joe_smith@gmail.com")
   	#my_box = find("accept_terms")
   	#my_box.should be_checked
   	#has_checked_field("accept_terms")

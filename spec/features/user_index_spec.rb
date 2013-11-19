@@ -3,8 +3,7 @@ require 'spec_helper'
 describe "User_Index Page" do
 
 	before(:each) do 
-		#Why do we need 10 users? If it works for one, it should work for 10, maybe do 2 for test
-    @existing_users =  10.times { FactoryGirl.create(:multiple_user) }
+    @existing_users =  2.times { FactoryGirl.create(:multiple_user) }
     visit users_path   
   end
   
@@ -15,9 +14,9 @@ describe "User_Index Page" do
   end
 
   it "shows user information for multiple 'Joes'" do
-		should have_content(User.first.user_first)
-		should have_content(User.last.user_last)
-		should have_content(User.first.user_email)
+		should have_content(User.first.first_name)
+		should have_content(User.last.last_name)
+		should have_content(User.first.email)
 	end
 
 	
@@ -36,13 +35,13 @@ describe "User_Index Page" do
 	context "user presses the delete link" do
 		
 		before(:each) do
-			@destroyed_user = User.first.user_first
+			@destroyed_user = User.first.first_name
 			first(:link, "Delete").click
 		end
 
 		it "has a 'delete' link which destroys the user" do 
-			#search database for @destroyed_user to see if it still exists @destroyed_user.reload.should be_nil
-			User.first.user_first.should_not == @destroyed_user
+			#search database for @destroyed_user to see if it still exists @destroyed_user.reload.should be_nil>>>> THE TEST WRITTEN THIS WAY DOES NOT PASS.
+			User.first.first_name.should_not == @destroyed_user 
 		end
 
 		it "after destroy it returns the user to the index view" do

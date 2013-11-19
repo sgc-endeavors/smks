@@ -58,18 +58,18 @@ end
 #create a subfolder under spec called "support" put methods like this in categorized folders (best practice) >> might need to put code in a module (check that...)
 def sign_up_as_a_new_user(new_user)
     visit new_user_path
-    fill_in "user_first", with: new_user.user_first
-    fill_in "user_last", with: new_user.user_last
-    fill_in "user_email", with: new_user.user_email
+    fill_in "first_name", with: new_user.first_name
+    fill_in "last_name", with: new_user.last_name
+    fill_in "email", with: new_user.email
     check "accept_terms"
     click_on "Submit"
 
 end
 
 def update_existing_user_info
-    fill_in "user_first", with: "Josey"
-    fill_in "user_last", with: "Smiths"
-    fill_in "user_email", with: "josey_smiths@gmail.com"
+    fill_in "first_name", with: "Josey"
+    fill_in "last_name", with: "Smiths"
+    fill_in "email", with: "josey_smiths@gmail.com"
     
 
 end

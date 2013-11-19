@@ -2,14 +2,14 @@
 <!-- use form_for tag and it will fill in the fields using f variable -->
 <%=form_tag(user_path, method: :PUT) do%> 
 
-  <%= label_tag "user_first", "First Name:" %>
-	<%= text_field_tag "user_first", @existing_user.user_first%> 
+  <%= label_tag "first_name", "First Name:" %>
+	<%= text_field_tag "first_name", @existing_user.first_name%> 
 
-	<%= label_tag "user_last", "Last Name:" %>
-	<%= text_field_tag "user_last",  @existing_user.user_last %> 
+	<%= label_tag "last_name", "Last Name:" %>
+	<%= text_field_tag "last_name",  @existing_user.last_name %> 
 
-	<%= label_tag "user_email", "Email:" %>
-	<%= text_field_tag "user_email",  @existing_user.user_email %> 
+	<%= label_tag "email", "Email:" %>
+	<%= text_field_tag "email",  @existing_user.email %> 
 <!-- use submit_tag for update below and have cancel be a link to the profile of the user for current page or index page-->
 	<%= button_tag "Update", name: "update" %>
 	<%= button_tag "Cancel", name: "cancel" %>
