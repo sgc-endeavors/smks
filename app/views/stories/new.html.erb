@@ -1,0 +1,18 @@
+<h1>Create Story</h1>
+
+<%= form_for(@new_story, url: stories_path(@new_story)) do |f| %>
+	<%= f.label :title, "Title:", for: "title" %>
+	<%= f.text_field :title, id: "title" %> 
+
+	<br>
+
+	<%= f.label :body, "Body:", for: "body" %>
+	<%= f.text_area :body, id: "body" %>
+
+	<%= f.label :user_id, "User_ID:", for: "user_id" %>
+	<%= f.text_field :user_id, id: "user_id" %>
+
+
+	<%= submit_tag "Submit" %>
+
+<%end%>

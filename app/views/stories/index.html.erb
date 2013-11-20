@@ -1,0 +1,11 @@
+<h1>Stories Index</h1>
+
+
+<% @existing_stories.each do |existing_story|%>
+<%= existing_story.title %>
+<%= link_to "Edit", edit_story_path(existing_story) %>
+<br>
+<%end%>
+<br>
+<%=link_to "Create", new_story_path %>
+

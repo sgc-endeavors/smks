@@ -1,0 +1,13 @@
+<h1>Story Summary</h1>
+
+	<%= label_tag "title", "Title:" %>
+	<%= text_field_tag "title", @existing_story.title %> 
+
+	<br>
+
+	<%= label_tag "body", "Body:" %>
+	<%= text_area_tag "body", @existing_story.body %>
+
+	<%= link_to "Edit", edit_story_path(@existing_story) %>
+
+	<%= link_to "Show All", stories_path %>

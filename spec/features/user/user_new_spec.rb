@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe "User_Create Page" do
+describe "User_New Page" do
   subject { page }
   let(:new_user) { FactoryGirl.build(:user)}
 

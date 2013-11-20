@@ -4,23 +4,15 @@ describe User do
   let(:user) { FactoryGirl.create(:user) }
   subject { user }
   
-  it "is invalid w/out an email address" do
-    user.email = nil
-    user.should_not be_valid
-  end
+  it { should have_many(:stories) }
 
-  it "is invalid w/out agreeing to terms" do
-    user.terms = false
-    user.should_not be_valid
-  end
-  
-  it "is invalid w/out a unique email address" do
-    user1 = user
-    user2 = FactoryGirl.build(:user, email: user1.email)
-    user2.should_not be_valid    
-  end 
+  it { should validate_presence_of(:email) }
+  it { should validate_uniqueness_of(:email) }
 
-  
+  it { should_not allow_value(:false).for(:terms) }
+  # NEED TO RESOLVE ISSUES W/ THE ABOVE TEST
+
+
   describe "User create" do
     let(:user) { FactoryGirl.create(:user, first_name: "Joe", last_name: "Smith", email: "joe_smith@gmail.com") }
     

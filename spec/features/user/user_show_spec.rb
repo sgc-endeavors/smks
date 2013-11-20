@@ -14,10 +14,7 @@ describe "User_Show Page" do
   	should have_field("first_name", with: "Joe")
   	should have_field("last_name", with: "Smith")
   	should have_field("email", with: "joe_smith@gmail.com")
-  	#my_box = find("accept_terms")
-  	#my_box.should be_checked
-  	#has_checked_field("accept_terms")
-  	# should have_field("accept_terms", with: "1")  << Still need to resolve how checkbox is handled.
+  	#Still need to resolve how checkbox is handled.
 	end
 
 	it "includes a link to 'edit' the profile" do

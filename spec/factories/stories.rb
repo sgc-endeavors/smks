@@ -2,10 +2,11 @@
 
 FactoryGirl.define do
   factory :story do
-    title "Baby Gerard Craps His Pants at 1st Day of School"
+    sequence(:title) { |i| "Baby#{i} Craps His Pants" }
     body "The body of the text"
     approved false
-    user_id 1
+    association :user
+    #user_id 1
     category_id 1
     picture_id 1
   end

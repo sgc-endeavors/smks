@@ -49,6 +49,7 @@ gem 'jquery-rails'
     gem 'factory_girl_rails'
     gem 'better_errors'
     gem 'capybara'
+    gem 'shoulda-matchers'
     
   end
   
