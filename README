@@ -1,1 +1,6 @@
-yee haw
+This is a collaboration between Seth Geyer and Gerard Cote (aka: SGC Endeavors) to create a website/blog that will allow individuals to share and view amusing stories about children. The application is in its infancy and is being designed in Rails using TDD practices.  
+
+Ruby on Rails
+Rspec
+FactoryGirl
+Capybara
