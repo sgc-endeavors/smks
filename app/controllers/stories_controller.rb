@@ -1,4 +1,5 @@
 class StoriesController < ApplicationController
+	before_filter :authenticate_user!, except: [ :index ]
 
  def index
  	@existing_stories = Story.all

@@ -18,6 +18,7 @@ describe "Story_New Page" do
  		last_story = Story.last
  		last_story.title.should == new_story.title
  		last_story.body.should == new_story.body
+ 		
   end
 
   it "shows the new story's page" do

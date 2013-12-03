@@ -5,6 +5,38 @@ require 'rspec/rails'
 require 'rspec/autorun'
 require 'capybara/rspec'
 
+
+#create a subfolder under spec called "support" put methods like this in categorized folders (best practice) >> might need to put code in a module (check that...)
+#Below is not necessary due to devise
+# def sign_up_as_a_new_user(new_user)
+#     visit new_user_path
+#     fill_in "first_name", with: new_user.first_name
+#     fill_in "last_name", with: new_user.last_name
+#     fill_in "email", with: new_user.email
+#     check "terms"
+#     click_on "Submit"
+# end
+
+#Below is not necessary due to devise
+# def update_existing_user_info
+#   fill_in "first_name", with: "Josey"
+#   fill_in "last_name", with: "Smiths"
+#   fill_in "email", with: "josey_smiths@gmail.com"
+# end
+
+def submit_a_new_story(new_story)
+  fill_in "title", with: new_story.title
+  fill_in "body", with: new_story.body
+  fill_in "user_id", with: new_story.user_id
+  click_on "Submit"
+end
+
+def update_existing_story
+  fill_in "title", with: "Eating Burgers"
+  fill_in "body", with: "Burger eating story..."
+end
+
+
 # class ActionDispatch::IntegrationTest
 #     include Capybara::DSL
 
@@ -13,14 +45,6 @@ require 'capybara/rspec'
 #       Capybara.use_default_driver
 #     end
 # end
-
-
-
-
-
-
-
-
 
 # Requires supporting ruby files with custom matchers and macros, etc,
 # in spec/support/ and its subdirectories.
@@ -55,32 +79,5 @@ RSpec.configure do |config|
   config.order = "random"
 end
 
-#create a subfolder under spec called "support" put methods like this in categorized folders (best practice) >> might need to put code in a module (check that...)
-def sign_up_as_a_new_user(new_user)
-    visit new_user_path
-    fill_in "first_name", with: new_user.first_name
-    fill_in "last_name", with: new_user.last_name
-    fill_in "email", with: new_user.email
-    check "terms"
-    click_on "Submit"
 
-end
-
-def update_existing_user_info
-  fill_in "first_name", with: "Josey"
-  fill_in "last_name", with: "Smiths"
-  fill_in "email", with: "josey_smiths@gmail.com"
-end
-
-def submit_a_new_story(new_story)
-  fill_in "title", with: new_story.title
-  fill_in "body", with: new_story.body
-  fill_in "user_id", with: new_story.user_id
-  click_on "Submit"
-end
-
-def update_existing_story
-  fill_in "title", with: "Eating Burgers"
-  fill_in "body", with: "Burger eating story..."
-end
 
