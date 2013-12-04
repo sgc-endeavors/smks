@@ -5,7 +5,8 @@ describe "Story_Edit Page" do
 
 	before(:each) do
 		@current_story = FactoryGirl.create(:story, title: "Eating Boogers", body: "Booger eating story...")
-		visit edit_story_path(@current_story)	
+		sign_in_as_existing_user(FactoryGirl.create(:user))
+    visit edit_story_path(@current_story)	
 	end
 
 	it "shows the page title" do

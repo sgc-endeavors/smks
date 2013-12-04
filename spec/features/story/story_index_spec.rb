@@ -4,7 +4,8 @@ describe "Story_Index Page" do
 
 	before(:each) do
 		2.times { FactoryGirl.create(:story) }
-		visit stories_path		
+		sign_in_as_existing_user(FactoryGirl.create(:user))
+		#visit stories_path		
 	end
 
 	subject { page }
@@ -19,7 +20,7 @@ describe "Story_Index Page" do
 	end
 
 	it "allows user to access the story edit page" do 
-		first(:link, "Edit").click
+		first(:link, "Edit Story").click
 		current_path.should == edit_story_path(Story.first)
 	end
 

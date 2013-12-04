@@ -5,6 +5,7 @@ describe "Story_Show Page" do
 	
 	before(:each) do
 		@current_story = FactoryGirl.create(:story, title: "Eating Boogers", body: "Booger eating story...")
+		sign_in_as_existing_user(FactoryGirl.create(:user))
 		visit story_path(@current_story)
 	end
 

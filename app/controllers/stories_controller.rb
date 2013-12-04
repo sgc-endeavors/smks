@@ -13,6 +13,7 @@ class StoriesController < ApplicationController
 
  def create #(post)
  	new_story = Story.new(params[:story])
+ 	new_story.user_id = current_user.id
  	new_story.save!
  	redirect_to story_path(new_story)
  end
