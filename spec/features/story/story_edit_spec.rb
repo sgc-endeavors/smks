@@ -3,9 +3,11 @@ require 'spec_helper'
 describe "Story_Edit Page" do 
 	subject { page }
 
-	before(:each) do
-		@current_story = FactoryGirl.create(:story, title: "Eating Boogers", body: "Booger eating story...")
-		sign_in_as_existing_user(FactoryGirl.create(:user))
+
+  before(:each) do
+    @user = FactoryGirl.create(:user)
+		@current_story = FactoryGirl.create(:story, user_id: @user.id, title: "Eating Boogers", body: "Booger eating story...")
+		sign_in_as_existing_user(@user)
     visit edit_story_path(@current_story)	
 	end
 

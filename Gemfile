@@ -6,7 +6,6 @@ gem 'rails', '3.2.13'
 # gem 'rails', :git => 'git://github.com/rails/rails.git'
 
 gem 'pg'
-gem 'devise'
 
 
 # Gems used only for assets and not required
@@ -40,7 +39,7 @@ gem 'jquery-rails'
 
 #___________________________________________
 
-#added recommended Gems per Davinci Notes
+#added recommended Gems per Davinci Notes and others
   group :development, :test do
     gem 'pry-rails'        # to debug with binding.pry
     gem 'pry-debugger'     # to use the next command     
@@ -51,7 +50,10 @@ gem 'jquery-rails'
     gem 'better_errors'
     gem 'capybara'
     gem 'shoulda-matchers'
-    
   end
+
+  gem 'cancan'
+  gem 'devise'
+
   
 

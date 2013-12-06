@@ -1,11 +1,23 @@
 <h1>Stories Index</h1>
 
+<table>
+	<tr>
+		<th> Title</th>
+		<th> Body</th>
+		<th> </th>
+	</tr>
+	<% @existing_stories.each do |existing_story|%>
 
-<% @existing_stories.each do |existing_story|%>
-<%= existing_story.title %>
-<%= link_to "Edit Story", edit_story_path(existing_story) %>
-<br>
-<%end%>
-<br>
+	<tr>
+		<td><%= existing_story.title %></td>
+		<td><%= existing_story.body %></td>
+		<td><% if can? :update, existing_story  %>
+				<%= link_to "Edit Story", edit_story_path(existing_story) %>
+				<%end%>
+				
+		</td>
+	</tr>
+	<%end%>
+<table>
 <%=link_to "Create", new_story_path %>
 

@@ -20,11 +20,13 @@ class StoriesController < ApplicationController
 
 def show #(get)
  	@existing_story = Story.find(params[:id])
+ 	authorize! :update, @existing_story
  	render :show
 end
 
 def edit #(get)
 	@current_story = Story.find(params[:id])
+	authorize! :update, @current_story
 	render :edit
 end
 

@@ -4,8 +4,9 @@ describe "Story_Show Page" do
 	subject { page }
 	
 	before(:each) do
-		@current_story = FactoryGirl.create(:story, title: "Eating Boogers", body: "Booger eating story...")
-		sign_in_as_existing_user(FactoryGirl.create(:user))
+		@user = FactoryGirl.create(:user)
+		@current_story = FactoryGirl.create(:story, user_id: @user.id, title: "Eating Boogers", body: "Booger eating story...")
+		sign_in_as_existing_user(@user)
 		visit story_path(@current_story)
 	end
 
@@ -27,5 +28,11 @@ describe "Story_Show Page" do
 		click_on "Show All"
 		current_path.should == stories_path
 	end
+
+	it "should not be able to access the show view via the URL unless you authored the story" do
+			visit story_path(FactoryGirl.create(:story))
+			current_path.should == root_path
+	end
+
 
 end
