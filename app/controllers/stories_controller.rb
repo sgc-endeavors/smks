@@ -18,23 +18,27 @@ class StoriesController < ApplicationController
  	redirect_to story_path(new_story)
  end
 
-def show #(get)
- 	@existing_story = Story.find(params[:id])
- 	authorize! :update, @existing_story
- 	render :show
-end
+	def show #(get)
+	 	@existing_story = Story.find(params[:id])
+	 	authorize! :update, @existing_story
+	 	render :show
+	end
 
-def edit #(get)
-	@current_story = Story.find(params[:id])
-	authorize! :update, @current_story
-	render :edit
-end
+	def edit #(get)
+		@current_story = Story.find(params[:id])
+		authorize! :update, @current_story
+		render :edit
+	end
 
-def update #(post/put)
-	updated_story = Story.find(params[:id])
-	updated_story.update_attributes(params[:story])
-	redirect_to story_path(updated_story)
-end
+	def update #(post/put)
+		updated_story = Story.find(params[:id])
+		updated_story.update_attributes(params[:story])
+		redirect_to story_path(updated_story)
+	end
 
+	def destroy #(post/delete)
+		Story.find(params[:id]).destroy
+		redirect_to root_path
+	end
 end
 

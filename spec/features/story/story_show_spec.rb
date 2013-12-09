@@ -29,6 +29,9 @@ describe "Story_Show Page" do
 		current_path.should == stories_path
 	end
 
+	it "should include radio buttons for funny, not_funny, no_score" do
+		should have_field("funny")
+	end
 	it "should not be able to access the show view via the URL unless you authored the story" do
 			visit story_path(FactoryGirl.create(:story))
 			current_path.should == root_path

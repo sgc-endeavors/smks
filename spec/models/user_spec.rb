@@ -5,6 +5,7 @@ describe User do
   subject { user }
   
   it { should have_many(:stories) }
+  it { should have_many(:ratings) }
 
   it { should validate_presence_of(:email) }
   it { should validate_uniqueness_of(:email) }

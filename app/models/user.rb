@@ -11,6 +11,7 @@ class User < ActiveRecord::Base
     #NEED TO RESOLVE ISSUES W/ THE ABOVE VALIDATION
     
     has_many :stories
+    has_many :ratings
     
 end
 

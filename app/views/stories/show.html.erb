@@ -7,6 +7,19 @@
 
 	<%= label_tag "body", "Body:" %>
 	<%= text_area_tag "body", @existing_story.body %>
+	<br><br>
+
+	< %= form_for(@new_rating, url: ratings_path) do |f| %> 
+
+		<%= radio_button_tag(:funny, "funny") %>
+		<%= label_tag(:funny_label, "That was funny!") %>
+		<%= radio_button_tag(:not_funny, "not_funny") %>
+		<%= label_tag(:not_funny_label, "That was stupid!") %>
+		<%= radio_button_tag(:not_rated, "not_rated") %>
+		<%= label_tag(:not_rated_label, "Not rated.") %>
+	< %end%>
+	<br><br>
+
 
 	<%= link_to "Edit", edit_story_path(@existing_story) %>
 

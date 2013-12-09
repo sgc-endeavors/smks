@@ -9,12 +9,14 @@
 	<% @existing_stories.each do |existing_story|%>
 
 	<tr>
-		<td><%= existing_story.title %></td>
+		<td><%= link_to existing_story.title, story_path(existing_story) %></td>
 		<td><%= existing_story.body %></td>
 		<td><% if can? :update, existing_story  %>
-				<%= link_to "Edit Story", edit_story_path(existing_story) %>
+					<%= link_to "Edit Story", edit_story_path(existing_story) %>
 				<%end%>
-				
+				<% if can? :destroy, existing_story  %>
+					<%= link_to "Delete", story_path(existing_story), method: :delete, confirm: "Are You Sure?" %>
+				<%end%>
 		</td>
 	</tr>
 	<%end%>

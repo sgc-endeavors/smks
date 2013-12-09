@@ -4,7 +4,7 @@ App::Application.routes.draw do
 
   root :to => "stories#index"
 
-  resources :users, :stories 
+  resources :users, :stories, :ratings
   # The priority is based upon order of creation:
   # first created -> highest priority.
 
