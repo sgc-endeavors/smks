@@ -1,4 +1,4 @@
-class RatingsController < ApplicationController
+gitclass RatingsController < ApplicationController
 
 
 
