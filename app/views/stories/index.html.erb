@@ -4,26 +4,18 @@
 <%=link_to "Create", new_story_path %>
 
 
-<table class="table table-striped">
-	<tr>
-		<th> </th>
-		<th> Title</th>
-		<th> Body</th>
-		<th> Modify</th>
-	</tr>
-	<% @existing_stories.each do |existing_story|%>
+<% @existing_stories.each do |existing_story|%>
 
-	<tr>
-		<td></td>
-		<td><%= link_to existing_story.title, story_path(existing_story) %></td>
-		<td><%= existing_story.body %></td>
-		<td><% if can? :update, existing_story  %>
-					<%= link_to "Edit Story", edit_story_path(existing_story) %> |
-				<%end%>
-				<% if can? :destroy, existing_story  %>
-					<%= link_to "Delete", story_path(existing_story), method: :delete, confirm: "Are You Sure?" %>
-				<%end%>
-		</td>
-	</tr>
+	<h4><%= link_to existing_story.title, story_path(existing_story) %></h4>
+	<%= existing_story.body[0..299]%><%=link_to "...more", story_path(existing_story) %><br>
+	<p>Thumbs Up: <%=Rating.where(story_id: existing_story.id).where(name: 'thumbs up').count%> ~ Thumbs Down: <%=Rating.where(story_id: existing_story.id).where(name: 'thumbs down').count%>
+	<% if can? :update, existing_story  %>
+		| <%= link_to "Edit Story", edit_story_path(existing_story) %> |
 	<%end%>
-<table>
+	<% if can? :destroy, existing_story  %>
+		<%= link_to "Delete", story_path(existing_story), method: :delete, confirm: "Are You Sure?" %>
+	<%end%>
+<br>
+<hr/>
+<%end%>
+

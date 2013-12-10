@@ -15,7 +15,7 @@ describe Story do
   it { should validate_presence_of(:user_id) }
 	  
   its(:title) { should == "Baby Mongo eats birthday cake" }
-  its(:body) { should == "The body of the text" }
+  its(:body) { should == "The body of the text is this long" }
   its(:category_id) { should == 1 }
 	its(:approved) { should == false }
 	its(:picture_id) { should == 1 }

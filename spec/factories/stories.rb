@@ -3,7 +3,7 @@
 FactoryGirl.define do
   factory :story do
     sequence(:title) { |i| "Baby#{i}'s First Day of School" }
-    body "The body of the text"
+    body "The body of the text is this long"
     approved false
     association :user
     #user_id 1

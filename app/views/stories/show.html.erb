@@ -2,25 +2,25 @@
 
 	<%= label_tag "title", "Title:" %>
 	<%= text_field_tag "title", @existing_story.title %> 
-
 	<br>
 
 	<%= label_tag "body", "Body:" %>
 	<%= text_area_tag "body", @existing_story.body %>
-	<br><br>
+	<br>
 
-	< %= form_for(@new_rating, url: ratings_path) do |f| %> 
+<p>Thumbs Up: <%=@ratings.where(name: 'thumbs up').count%> | Thumbs Down: <%=@ratings.where(name: 'thumbs down').count%></p>
+	<%if @rating.name != nil%>
+		<p><%="You scored this a #{@rating.name}!"%></p>
+	<%else%>
+		<%= form_for(@rating, url: ratings_path) do |f| %> 
+		 	<%= button_tag "Thumbs Up", name: "t_up", value: @existing_story.id %>	
+		 	<%= button_tag "Thumbs Down", name: "t_down", value: @existing_story.id %>
+	 	<%end%>
+	<%end%>
+	<br>
 
-		<%= radio_button_tag(:funny, "funny") %>
-		<%= label_tag(:funny_label, "That was funny!") %>
-		<%= radio_button_tag(:not_funny, "not_funny") %>
-		<%= label_tag(:not_funny_label, "That was stupid!") %>
-		<%= radio_button_tag(:not_rated, "not_rated") %>
-		<%= label_tag(:not_rated_label, "Not rated.") %>
-	< %end%>
-	<br><br>
-
-
-	<%= link_to "Edit", edit_story_path(@existing_story) %> |
+	<% if can? :update, @existing_story  %>
+		<%= link_to "Edit Story", edit_story_path(@existing_story) %> |
+	<%end%>
 
 	<%= link_to "Show All", stories_path %>

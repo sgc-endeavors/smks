@@ -1,8 +1,9 @@
 class StoriesController < ApplicationController
-	before_filter :authenticate_user!, except: [ :index ]
+	before_filter :authenticate_user!, except: [ :index, :show ]
 
  def index
  	@existing_stories = Story.all
+ 	#@ratings = Rating.all
  	render :index
  end
 
@@ -20,7 +21,8 @@ class StoriesController < ApplicationController
 
 	def show #(get)
 	 	@existing_story = Story.find(params[:id])
-	 	authorize! :update, @existing_story
+	 	@rating = Rating.where(story_id: @existing_story.id).where(user_id: current_user.id).first || Rating.new
+	 	@ratings = Rating.where(story_id: @existing_story.id)
 	 	render :show
 	end
 

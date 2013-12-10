@@ -24,8 +24,17 @@ describe "Story_Index Page" do
 			should have_link(Story.first.title)
 		end
 
-		it "shows the body of the story" do
-			should have_content(Story.first.body)
+		it "shows the total ratings for the story" do
+		@current_story = FactoryGirl.create(:story)
+		FactoryGirl.create(:rating, story_id: @current_story.id)
+		FactoryGirl.create(:rating, name: "thumbs down", story_id: @current_story.id)
+		visit stories_path		
+		should have_content("Thumbs Up: 1 | Thumbs Down: 1")
+	end
+
+
+		it "shows the first 300 characters of the story" do
+			should have_content(Story.first.body[0..299])
 		end
 
 		it "allows user to access the story edit page" do 
