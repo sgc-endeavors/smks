@@ -6,13 +6,13 @@ describe "Story_Show Page" do
 	before(:each) do
 		@user = FactoryGirl.create(:user)
 		@current_story = FactoryGirl.create(:story, user_id: @user.id, title: "Eating Boogers", body: "Booger eating story...")
+		@comment = FactoryGirl.create(:comment, story_id: @current_story.id, user_id: @user.id)
+		FactoryGirl.create(:comment, story_id: 99999, body: "I'm a comment not related to this story") # <- a comment not related to the current story.
 		sign_in_as_existing_user(@user)
 		visit story_path(@current_story)
 	end
 
-	it "shows the page title" do
-		within("h1") { should have_content("Story Summary") }
-	end
+
 
 	it "shows the story details" do
 		should have_field("title", with: "Eating Boogers")
@@ -77,5 +77,52 @@ describe "Story_Show Page" do
 			should_not have_link("Edit Story")
 	end
 
+	context "site visitor has not logged in" do
+		it "should not be able to view any links or buttons" do
+			click_on "Logout"
+			visit story_path(@current_story)
+			should_not have_button("Thumbs Up")
+			should_not have_button("Thumbs Down")
+			
+		end
+	end
+
+
+
+##### COMMENTS SECTION #####
+
+	it "allows the user to access the comment/new view" do
+		click_on("Create Comment")
+		current_path.should == new_comment_path
+	end
+
+	it "includes a listing of all the comments for the story" do
+		should have_content("That was the funniest thing I've ever read...")
+		should_not have_content("I'm a comment not related to this story")
+	end
+
+	context "the current user authored the comment" do
+		it { should have_link("Edit Comment") }
+		it { should have_link("Delete") }
+	
+		it "routes the user to edit view when the user presses 'Edit'" do
+			click_on("Edit Comment")
+			current_path.should == edit_comment_path(@comment)
+		end
+
+
+	end
+
+	context "the current user did not author the comment" do
+		before(:each) do
+			FactoryGirl.create(:comment, story_id: @current_story.id, user_id: 9999)
+			visit story_path(@current_story)
+		end
+
+		it { should_not have_link("Edit Comment") }		
+		it { should_not have_link("Delete") }
+
+
+	end
 
 end

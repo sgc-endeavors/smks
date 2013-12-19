@@ -11,10 +11,6 @@ describe "Story_Edit Page" do
     visit edit_story_path(@current_story)	
 	end
 
-	it "shows the page title" do
-		within("h1") { should have_content("Story Edit View") }
-	end
-
  	it "displays the existing story's information in the form" do
  		should have_field("title", with: "Eating Boogers")
  		should have_field("body", with: "Booger eating story...")

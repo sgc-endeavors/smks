@@ -21,8 +21,13 @@ class StoriesController < ApplicationController
 
 	def show #(get)
 	 	@existing_story = Story.find(params[:id])
-	 	@rating = Rating.where(story_id: @existing_story.id).where(user_id: current_user.id).first || Rating.new
+	 	if current_user == nil   
+	 		@rating = Rating.new
+	 	else
+	 		@rating = Rating.where(story_id: @existing_story.id).where(user_id: current_user.id).first || Rating.new
+	 	end
 	 	@ratings = Rating.where(story_id: @existing_story.id)
+	 	@comments = Comment.where(story_id: @existing_story.id)
 	 	render :show
 	end
 

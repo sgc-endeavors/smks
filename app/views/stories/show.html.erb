@@ -1,5 +1,4 @@
-<h1>Story Summary</h1>
-
+<h1> Show for Story </h1>
 	<%= label_tag "title", "Title:" %>
 	<%= text_field_tag "title", @existing_story.title %> 
 	<br>
@@ -9,13 +8,15 @@
 	<br>
 
 <p>Thumbs Up: <%=@ratings.where(name: 'thumbs up').count%> | Thumbs Down: <%=@ratings.where(name: 'thumbs down').count%></p>
-	<%if @rating.name != nil%>
-		<p><%="You scored this a #{@rating.name}!"%></p>
-	<%else%>
-		<%= form_for(@rating, url: ratings_path) do |f| %> 
-		 	<%= button_tag "Thumbs Up", name: "t_up", value: @existing_story.id %>	
-		 	<%= button_tag "Thumbs Down", name: "t_down", value: @existing_story.id %>
-	 	<%end%>
+	<%if current_user != nil%>
+		<%if @rating.name != nil%>
+			<p><%="You scored this a #{@rating.name}!"%></p>
+		<%else%>
+			<%= form_for(@rating, url: ratings_path) do |f| %> 
+			 	<%= button_tag "Thumbs Up", name: "t_up", value: @existing_story.id %>	
+			 	<%= button_tag "Thumbs Down", name: "t_down", value: @existing_story.id %>
+		 	<%end%>
+		<%end%>
 	<%end%>
 	<br>
 
@@ -23,4 +24,17 @@
 		<%= link_to "Edit Story", edit_story_path(@existing_story) %> |
 	<%end%>
 
-	<%= link_to "Show All", stories_path %>
+	<%= link_to "Show All", stories_path %> | <%= link_to "Create Comment", new_comment_path(story_id: @existing_story.id) %>
+
+	<br>
+	<h4>Comments</h4>
+	
+	<%@comments.each do |comment| %>
+	<%=comment.body%>	| <%=comment.user.first_name%> | <%=comment.story_id%> 
+	<%if can? :update, comment %>
+		| <%= link_to "Edit Comment", edit_comment_path(comment)%> 
+		| <%= link_to "Delete", comment_path(comment)%>
+	<%end%>
+	
+		<br>
+	<%end%>

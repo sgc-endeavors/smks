@@ -11,10 +11,6 @@ describe "Story_New Page" do
 		visit new_story_path
 	end
 
-	it "includes a page title" do  
- 		within("h1") { should have_content("Create Story") }
-  end
-
   it "saves the new story information upon submission" do
 		submit_a_new_story(new_story)
  		last_story = Story.last

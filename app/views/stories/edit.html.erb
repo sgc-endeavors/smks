@@ -1,4 +1,4 @@
-<h1>Story Edit View </h1>
+<h1>Edit My Story </h1>
 
 
 <%= form_for(@current_story, url: story_path(@current_story), html: {method: "put"} ) do |f| %>
@@ -11,7 +11,7 @@
 	<%= f.label :body, "Body:", for: "body" %>
 	<%= f.text_area :body, id: "body" %>
 
-	
+	<br>
 	<%= submit_tag "Update" %>
 	<%= link_to "Cancel", story_path(@current_story)%>
 

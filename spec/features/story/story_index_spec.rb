@@ -11,9 +11,7 @@ describe "Story_Index Page" do
 
 	context "a user has logged in" do
 		before(:each) { sign_in_as_existing_user(@user) }
-		it "shows the page title" do
-			within("h1") { should have_content("Stories Index") }
-		end
+		
 
 		it "shows titles for multiple stories" do
 			should have_content(Story.first.title)
@@ -29,7 +27,7 @@ describe "Story_Index Page" do
 		FactoryGirl.create(:rating, story_id: @current_story.id)
 		FactoryGirl.create(:rating, name: "thumbs down", story_id: @current_story.id)
 		visit stories_path		
-		should have_content("Thumbs Up: 1 | Thumbs Down: 1")
+		should have_content("Thumbs Up: 1 ~ Thumbs Down: 1")
 	end
 
 

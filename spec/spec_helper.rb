@@ -44,6 +44,16 @@ def update_existing_story
   fill_in "body", with: "Burger eating story..."
 end
 
+def submit_a_new_comment(new_comment)
+  fill_in "body", with: "That was the funniest thing I've ever read..."
+  click_on("Submit")
+end
+
+def update_an_existing_comment(comment)
+  fill_in "body", with: "That was the dumbest thing I've ever read..."
+  click_on("Update")
+end
+
 
 # class ActionDispatch::IntegrationTest
 #     include Capybara::DSL

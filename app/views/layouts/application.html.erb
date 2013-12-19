@@ -9,9 +9,10 @@
 <body>
 
   <div class="container-fluid">
-  	<p class="notice"><%= notice %></p>
-    <p class="alert"><%= alert %></p>
-
+  	<p class="alert"><%= alert %></p>
+    <p class="notice"><%= notice %></p>
+    
+    <p><i>Controller: <%=controller.controller_name%> - Action: <%=controller.action_name%></i></p>
     
     <% if user_signed_in? %>
     	Logged in as <strong><%= current_user.email %></strong>.
