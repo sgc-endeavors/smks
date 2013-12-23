@@ -2,7 +2,7 @@ App::Application.routes.draw do
   
   devise_for :users
 
-  root :to => "stories#index"
+  root :to => "stories#landing_page"
 
   resources :users, :stories, :ratings, :comments
   # The priority is based upon order of creation:

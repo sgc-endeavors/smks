@@ -1,5 +1,10 @@
 class StoriesController < ApplicationController
-	before_filter :authenticate_user!, except: [ :index, :show ]
+	before_filter :authenticate_user!, except: [ :landing_page, :index, :show ]
+
+ def landing_page
+ 	render :landing_page
+ end
+
 
  def index
  	@existing_stories = Story.all
