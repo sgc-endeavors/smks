@@ -7,6 +7,7 @@ FactoryGirl.define do
     approved false
     association :user
     #user_id 1
+    share_type "public"
     category_id 1
     picture_id 1
   end

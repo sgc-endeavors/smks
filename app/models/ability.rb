@@ -6,6 +6,7 @@ class Ability
 		
 		if user.is_admin?
 			can :manage, Story
+		
 		else
 			can :read, Story
 			can :update, Story do |story|

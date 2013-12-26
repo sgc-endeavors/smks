@@ -6,7 +6,7 @@ describe "Story_Edit Page" do
 
   before(:each) do
     @user = FactoryGirl.create(:user)
-		@current_story = FactoryGirl.create(:story, user_id: @user.id, title: "Eating Boogers", body: "Booger eating story...")
+		@current_story = FactoryGirl.create(:story, share_type: "public", user_id: @user.id, title: "Eating Boogers", body: "Booger eating story...")
 		sign_in_as_existing_user(@user)
     visit edit_story_path(@current_story)	
 	end
@@ -14,7 +14,6 @@ describe "Story_Edit Page" do
  	it "displays the existing story's information in the form" do
  		should have_field("title", with: "Eating Boogers")
  		should have_field("body", with: "Booger eating story...")
-
   end
  
   context "user presses update" do
@@ -24,6 +23,7 @@ describe "Story_Edit Page" do
     	updated_story = Story.last
     	updated_story.title.should == "Eating Burgers"
     	updated_story.body.should == "Burger eating story..."
+      updated_story.share_type.should == "private"
     	current_path.should == story_path(updated_story)
     end
   

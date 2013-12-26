@@ -10,30 +10,57 @@ describe "Story_Index Page" do
 	subject { page }
 
 	context "a user has logged in" do
-		before(:each) { sign_in_as_existing_user(@user) }
-		
+		before(:each) do 
+			sign_in_as_existing_user(@user) 
+			visit stories_path
+		end
 
-		it "shows titles for multiple stories" do
+		it "shows titles for multiple stories" do     ##############
 			should have_content(Story.first.title)
 			should have_content(Story.last.title)
 		end
+
+		it "allows the visitor to view all public stories and their own private stories" do
+			FactoryGirl.create(:story, title: "My Private Story", user_id: @user.id, share_type: "private")
+			visit stories_path
+			should have_content("My Private Story")
+		end
+
+		it "does not allow the visitor to view others private stories" do
+			FactoryGirl.create(:story, title: "Someone Else's Private Story", share_type: "private")
+			visit stories_path
+			should_not have_content("Someone Else's Private Story")
+		end
+
 
 		it "includes a link to the stories 'show' page" do
 			should have_link(Story.first.title)
 		end
 
 		it "shows the total ratings for the story" do
-		@current_story = FactoryGirl.create(:story)
-		FactoryGirl.create(:rating, story_id: @current_story.id)
-		FactoryGirl.create(:rating, name: "thumbs down", story_id: @current_story.id)
-		visit stories_path		
-		should have_content("Thumbs Up: 1 ~ Thumbs Down: 1")
-	end
-
+			@current_story = FactoryGirl.create(:story)
+			FactoryGirl.create(:rating, story_id: @current_story.id)
+			FactoryGirl.create(:rating, name: "thumbs down", story_id: @current_story.id)
+			visit stories_path		
+			should have_content("Thumbs Up: 1 ~ Thumbs Down: 1")
+		end
 
 		it "shows the first 300 characters of the story" do
 			should have_content(Story.first.body[0..299])
 		end
+
+		it "shows the author's first name" do
+			should have_content("By: #{Story.first.user.first_name}")
+		end
+
+		it "shows the date last_updated" do
+			should have_content("Date: #{Story.first.updated_at}")
+		end
+
+		it "shows the date last_updated" do
+			should have_content("Type: #{Story.first.share_type}")
+		end
+
 
 		it "allows user to access the story edit page" do 
 			first(:link, "Edit Story").click
@@ -73,7 +100,10 @@ describe "Story_Index Page" do
 		end
 	end
 	context "user is an Administrator" do		
-		before(:each) { sign_in_as_existing_user(FactoryGirl.create(:user, is_admin: true)) } 
+		before(:each) do 
+			sign_in_as_existing_user(FactoryGirl.create(:user, is_admin: true))
+			visit stories_path
+		end
 
 		it "shows the edit link for ALL stories" do
 			should have_link("Edit Story", count: 2)
@@ -90,11 +120,18 @@ describe "Story_Index Page" do
 		end
 	end	
 
-	context "user has NOT logged in" do
-		it "does NOT allow user to click on the edit link" do
+	context "visitor has NOT logged in" do
+		it "does NOT allow visitor to click on the edit link" do
 			visit stories_path
 			should_not have_link("Edit Story")
 		end
+
+		it "only allows the visitor to view 'public' stories" do
+			FactoryGirl.create(:story, title: "My Private Story", user_id: @user.id, share_type: "private")
+			visit stories_path
+			should_not have_content("My Private Story")
+		end
+
 	end
 
 

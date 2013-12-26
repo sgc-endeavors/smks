@@ -7,6 +7,7 @@ FactoryGirl.define do
     sequence(:email) { |i| "joe_smith#{i}@gmail.com" }
     password "iluvunicorns"
     password_confirmation "iluvunicorns"
+    default_share_preference "public"
     terms true
     is_admin false
   end

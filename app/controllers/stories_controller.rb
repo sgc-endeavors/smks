@@ -7,8 +7,11 @@ class StoriesController < ApplicationController
 
 
  def index
- 	@existing_stories = Story.all
- 	#@ratings = Rating.all
+ 	if current_user == nil
+ 		@existing_stories = Story.where(share_type: "public")
+ 	else
+ 		@existing_stories = Story.where(share_type: "private").where(user_id: current_user.id) + Story.where(share_type: "public")
+ 	end
  	render :index
  end
 

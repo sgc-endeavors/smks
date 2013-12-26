@@ -8,6 +8,7 @@
 
 	<h4><%= link_to existing_story.title, story_path(existing_story) %></h4>
 	<%= existing_story.body[0..299]%><%=link_to "...more", story_path(existing_story) %><br>
+	By: <%=existing_story.user.first_name%> | Date: <%=existing_story.updated_at %> | Type: <%=existing_story.share_type%>
 	<p>Thumbs Up: <%=Rating.where(story_id: existing_story.id).where(name: 'thumbs up').count%> ~ Thumbs Down: <%=Rating.where(story_id: existing_story.id).where(name: 'thumbs down').count%>
 	<% if can? :update, existing_story  %>
 		| <%= link_to "Edit Story", edit_story_path(existing_story) %> |

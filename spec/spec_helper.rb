@@ -25,13 +25,6 @@ def sign_up_as_a_new_user(new_user)
     click_on "Create Account"
 end
 
-#Below is not necessary due to devise
-# def update_existing_user_info
-#   fill_in "first_name", with: "Josey"
-#   fill_in "last_name", with: "Smiths"
-#   fill_in "email", with: "josey_smiths@gmail.com"
-# end
-
 def submit_a_new_story(new_story)
   fill_in "title", with: new_story.title
   fill_in "body", with: new_story.body
@@ -42,6 +35,7 @@ end
 def update_existing_story
   fill_in "title", with: "Eating Burgers"
   fill_in "body", with: "Burger eating story..."
+  select "private", from: "share_type"  ##### Can't figure out how to select an item from a checkbox.
 end
 
 def submit_a_new_comment(new_comment)
