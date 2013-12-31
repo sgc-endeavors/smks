@@ -19,7 +19,9 @@ class Ability
 	
 		if user.is_admin?
 			can :manage, Comment
-		else
+		elsif user.id != nil
+			can :create, Comment
+		end
 			can :read, Comment
 			can :update, Comment do |comment|
 				comment.user == user
@@ -27,11 +29,6 @@ class Ability
 			can :destroy, Comment do |comment|
 				comment.user == user
 			end
-		end
-
-
-
-
 	end
 
 end
