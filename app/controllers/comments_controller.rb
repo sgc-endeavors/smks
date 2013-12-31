@@ -1,8 +1,10 @@
 class CommentsController < ApplicationController
-
+	before_filter :authenticate_user!
+	
 	def new
 		@new_comment = Comment.new
 		@story_id = params[:story_id]
+		authorize! :create, Comment
 		render :new
 	end
 
