@@ -16,7 +16,7 @@ describe "Story_Edit Page" do
  		should have_field("body", with: "Booger eating story...")
   end
  
-  context "user presses update" do
+  context "user presses 'Update'" do
     it "successfully saves the story information and routes them back to the show page" do
     	update_existing_story
     	click_on "Update"
@@ -24,9 +24,22 @@ describe "Story_Edit Page" do
     	updated_story.title.should == "Eating Burgers"
     	updated_story.body.should == "Burger eating story..."
       updated_story.share_type.should == "private"
+      updated_story.status.should == "published"
     	current_path.should == story_path(updated_story)
     end
-  
+  end
+
+  context "user presses 'Save as Draft'" do
+    it "successfully saves the story information and routes them back to the show page" do
+      update_existing_story
+      click_on "Save as Draft"
+      updated_story = Story.last
+      updated_story.title.should == "Eating Burgers"
+      updated_story.body.should == "Burger eating story..."
+      updated_story.share_type.should == "private"
+      updated_story.status.should == "draft"
+      current_path.should == story_path(updated_story)
+    end
   end
 
   context "users presses cancel" do

@@ -8,6 +8,7 @@ FactoryGirl.define do
     association :user
     #user_id 1
     share_type "public"
+   # status "published"
     category_id 1
     picture_id 1
   end

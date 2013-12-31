@@ -1,4 +1,6 @@
-<h1> Show for Story </h1>
+<h1> Your Story </h1>
+	 <img src="/images/riley.jpg" width="400"/>
+
 	<%= label_tag "title", "Title:" %>
 	<%= text_field_tag "title", @existing_story.title %> 
 	<br>
@@ -7,24 +9,30 @@
 	<%= text_area_tag "body", @existing_story.body %>
 	<br>
 
-<p>Thumbs Up: <%=@ratings.where(name: 'thumbs up').count%> | Thumbs Down: <%=@ratings.where(name: 'thumbs down').count%></p>
-	<%if current_user != nil%>
-		<%if @rating.name != nil%>
-			<p><%="You scored this a #{@rating.name}!"%></p>
-		<%else%>
-			<%= form_for(@rating, url: ratings_path) do |f| %> 
-			 	<%= button_tag "Thumbs Up", name: "t_up", value: @existing_story.id %>	
-			 	<%= button_tag "Thumbs Down", name: "t_down", value: @existing_story.id %>
-		 	<%end%>
-		<%end%>
-	<%end%>
+	<%= label_tag "share_type", "Share Type#:" %>
+	<%= text_field_tag "share_type", @existing_story.share_type %>
 	<br>
+
+	<%= label_tag "status", "Status:#" %>
+	<%= text_field_tag "status", @existing_story.status %>
+	<br>
+
+	<%= render "ratings_partial" %>
+
 
 	<% if can? :update, @existing_story  %>
 		<%= link_to "Edit Story", edit_story_path(@existing_story) %> |
+		<%= link_to "Delete Story", story_path(@existing_story), method: :delete, confirm: "Are You Sure?" %> |
+
 	<%end%>
 
-	<%= link_to "Show All", stories_path %> | <%= link_to "Create Comment", new_comment_path(story_id: @existing_story.id) %>
+	<%= link_to "Home", root_path%> | 
+	<%= link_to "Show All", stories_path %> 
+	<%unless current_user == nil%>
+		| <%= link_to "Show Journal", stories_path(type: "personal") %> 
+	<%end%>
+		| <%= link_to "Create Comment", new_comment_path(story_id: @existing_story.id) %> 
+ 
 
 	<br>
 	<h4>Comments</h4>

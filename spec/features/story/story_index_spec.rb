@@ -4,131 +4,214 @@ describe "Story_Index Page" do
 
 	before(:each) do
 		@user = FactoryGirl.create(:user)
-		2.times { FactoryGirl.create(:story, user_id: @user.id) }
+		2.times { FactoryGirl.create(:story, share_type: "public", status: "published", user_id: @user.id) }
+		FactoryGirl.create(:rating, story_id: Story.first.id)
+		FactoryGirl.create(:rating, name: "thumbs down", story_id: Story.first.id)
 	end
 
 	subject { page }
 
-	context "a user has logged in" do
-		before(:each) do 
-			sign_in_as_existing_user(@user) 
-			visit stories_path
+	context "a visitor has or has not logged in" do
+		before(:each) do
+			FactoryGirl.create(:story, title: "My Private Story", user_id: @user.id, status: "published", share_type: "private")
+			FactoryGirl.create(:story, title: "My Draft Story", status: "draft", user_id: @user.id)
+
 		end
 
-		it "shows titles for multiple stories" do     ##############
-			should have_content(Story.first.title)
-			should have_content(Story.last.title)
+		context "visitor wants to see all public stories" do
+			before(:each) { visit stories_path(type: "public") }
+			it "allows the visitor to view all public stories" do		
+				should_not have_content("My Private Story")
+			end
+
+			it "allows user to access the create story page" do 
+				should have_link("Create")
+			end
+
+			it "does not show stories with a 'draft' status" do
+				should_not have_content("My Draft Story")
+			end
+
+			it "includes a link to the stories 'show' page" do
+				should have_link(Story.first.title)
+			end
+
+			it "shows the total ratings for the story" do	
+				should have_content("Thumbs Up: 1 | Thumbs Down: 1")
+			end
+
+			it "shows the first 300 characters of the story" do
+				should have_content(Story.first.body[0..299])
+			end
+
+			it "shows the author's first name" do
+				should have_content("By: #{Story.first.user.first_name}")
+			end
+
+			it "shows the date last_updated" do
+				should have_content("Date: #{Story.first.updated_at}")
+			end
+
+			it "shows the share type classification" do
+				should have_content("Type: #{Story.first.share_type}")
+			end
+		end
+		# context "visitor wants to see all his private stories before logging in" do
+		# 	before(:each) { visit stories_path(type: "private") }
+		# 		current_path.should == new_sessions_path
+		# end
+
+	end
+
+	context "a visitor has logged in" do
+		
+		context "user is NOT an Administrator" do	
+			before(:each) do 
+				sign_in_as_existing_user(@user) 
+			end
+
+			
+			# it "allows the visitor to view all public stories and their own private stories" do
+			# 	FactoryGirl.create(:story, title: "My Private Story", user_id: @user.id, status: "published", share_type: "private")
+			# 	visit stories_path
+			# 	should have_content("My Private Story")
+			# end
+			# it "does not allow the visitor to view others private stories" do
+			# 	FactoryGirl.create(:story, title: "Someone Else's Private Story", share_type: "private")
+			# 	visit stories_path
+			# 	should_not have_content("Someone Else's Private Story")
+			# end
+
+			
+
+
+
+			context "visitor wants to see all public stories" do
+				before(:each) do 
+					visit stories_path(type: "public")
+				end
+
+				context "user has 1 story in draft status" do
+					before(:each) do
+						FactoryGirl.create(:story, title: "My Draft Story", status: "draft", user_id: @user.id)
+						visit stories_path(type: "public")
+					end
+					
+					it "shows a link to the stories in draft status" do
+						should have_link("Complete Drafts(1)")
+					end
+
+					context "user presses 'Complete Drafts' link" do
+						before(:each) { click_on("Complete Drafts(1)") }
+						it "routes user to the index page for draft stories" do
+							#current_path.should == stories_path(type: "draft")
+							should have_content("My Draft Story")
+						end
+						it "should display: 'Draft Stories'" do
+							should have_content("My Draft Stories")
+						end
+
+
+					end
+
+				end
+
+
+				context "user has no stories in draft status" do
+					it "shows a link to the stories in draft status" do
+						visit stories_path(type: "public")
+						should_not have_link("Complete Drafts")
+					end
+				end
+
+				it "allows user to access the story edit page for their stories" do 
+					first(:link, "Edit Story").click
+					current_path.should == edit_story_path(Story.first)
+				end
+				it "shows the edit link for only those stories authored by the user" do
+					FactoryGirl.create(:story) #
+					should have_link("Edit Story", count: 2)
+				end
+				it "shows the delete link for only those stories authored by the user" do
+					FactoryGirl.create(:story) #
+					should have_link("Delete", count: 2)
+				end
+				it "should not be able to access the edit view via the URL unless you authored the story" do
+					visit edit_story_path(FactoryGirl.create(:story)) #
+					current_path.should == root_path
+				end
+
+				it "should be titled 'Too Funny Not to Share'" do
+					should have_content("Too Funny Not to Share")
+				end
+			end
+		
+
+			context "visitor wants to see all his public and private stories" do
+				before(:each) do 
+					FactoryGirl.create(:story, title: "My Private Story", user_id: @user.id, status: "published", share_type: "private")
+					visit stories_path(type: "personal")
+				end
+				
+				it "allows the visitor to view their own private stories AND public stories" do
+					should have_content("My Private Story")
+				end
+
+				it "should be titled 'My Personal Journal'" do
+					should have_content("My Personal Journal")
+				end
+
+
+				it "allows user to access the story edit page for their stories" do 
+					first(:link, "Edit Story").click
+					current_path.should == edit_story_path(Story.last)
+				end
+				it "shows the edit link for only those stories authored by the user" do
+					FactoryGirl.create(:story) #
+					should have_link("Edit Story", count: 3)
+				end
+				it "shows the delete link for only those stories authored by the user" do
+					FactoryGirl.create(:story) #
+					should have_link("Delete", count: 3)
+				end
+				it "should not be able to access the edit view via the URL unless you authored the story" do
+					visit edit_story_path(FactoryGirl.create(:story)) #
+					current_path.should == root_path
+				end
+			end
+
 		end
 
-		it "allows the visitor to view all public stories and their own private stories" do
-			FactoryGirl.create(:story, title: "My Private Story", user_id: @user.id, share_type: "private")
-			visit stories_path
-			should have_content("My Private Story")
-		end
-
-		it "does not allow the visitor to view others private stories" do
-			FactoryGirl.create(:story, title: "Someone Else's Private Story", share_type: "private")
-			visit stories_path
-			should_not have_content("Someone Else's Private Story")
-		end
-
-
-		it "includes a link to the stories 'show' page" do
-			should have_link(Story.first.title)
-		end
-
-		it "shows the total ratings for the story" do
-			@current_story = FactoryGirl.create(:story)
-			FactoryGirl.create(:rating, story_id: @current_story.id)
-			FactoryGirl.create(:rating, name: "thumbs down", story_id: @current_story.id)
-			visit stories_path		
-			should have_content("Thumbs Up: 1 ~ Thumbs Down: 1")
-		end
-
-		it "shows the first 300 characters of the story" do
-			should have_content(Story.first.body[0..299])
-		end
-
-		it "shows the author's first name" do
-			should have_content("By: #{Story.first.user.first_name}")
-		end
-
-		it "shows the date last_updated" do
-			should have_content("Date: #{Story.first.updated_at}")
-		end
-
-		it "shows the date last_updated" do
-			should have_content("Type: #{Story.first.share_type}")
-		end
-
-
-		it "allows user to access the story edit page" do 
-			first(:link, "Edit Story").click
-			current_path.should == edit_story_path(Story.first)
-		end
-
-		it "after deletion, redirects to root_path" do
-			first(:link, "Delete").click
-			current_path.should == root_path			
-		end
-
-		it "allows user to delete a selected story" do
-			first(:link, "Delete").click
-			Story.where(user_id: @user.id).count.should == 1			
-		end
-
-		it "allows user to access the create story page" do 
-			click_on "Create"
-			current_path.should == new_story_path
-		end
-	
-		context "user is NOT an Administrator" do		
-			it "shows the edit link for only those stories authored by the user" do
-				FactoryGirl.create(:story) #
+		context "user IS an Administrator" do		
+			before(:each) do 
+				admin_user = FactoryGirl.create(:user, is_admin: true)
+				sign_in_as_existing_user(admin_user)
+				visit stories_path(type: "public")
+			end
+			
+			it "shows the edit link for ALL stories" do
 				should have_link("Edit Story", count: 2)
 			end
-
-			it "shows the delete link for only those stories authored by the user" do
-				FactoryGirl.create(:story) #
+			it "shows the delete link for ALL stories" do
 				should have_link("Delete", count: 2)
 			end
-
-			it "should not be able to access the edit view via the URL unless you authored the story" do
-				visit edit_story_path(FactoryGirl.create(:story)) #
-				current_path.should == root_path
+			it "should be able to access the edit view via the URL" do
+				existing_story = FactoryGirl.create(:story)
+				visit edit_story_path(existing_story) #
+				current_path.should == edit_story_path(existing_story)
 			end
-		end
+		end	
 	end
-	context "user is an Administrator" do		
-		before(:each) do 
-			sign_in_as_existing_user(FactoryGirl.create(:user, is_admin: true))
-			visit stories_path
-		end
-
-		it "shows the edit link for ALL stories" do
-			should have_link("Edit Story", count: 2)
-		end
-
-		it "shows the delete link for ALL stories" do
-			should have_link("Delete", count: 2)
-		end
-
-		it "should be able to access the edit view via the URL" do
-			existing_story = FactoryGirl.create(:story)
-			visit edit_story_path(existing_story) #
-			current_path.should == edit_story_path(existing_story)
-		end
-	end	
 
 	context "visitor has NOT logged in" do
 		it "does NOT allow visitor to click on the edit link" do
-			visit stories_path
+			visit stories_path(type: "public")
 			should_not have_link("Edit Story")
 		end
 
 		it "only allows the visitor to view 'public' stories" do
 			FactoryGirl.create(:story, title: "My Private Story", user_id: @user.id, share_type: "private")
-			visit stories_path
+			visit stories_path(type: "public")
 			should_not have_content("My Private Story")
 		end
 

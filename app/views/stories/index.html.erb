@@ -1,17 +1,32 @@
 
-<h1>Funny Stories</h1>
+<%if @type == "public" || @type == nil%>
+	<h1>Too Funny Not to Share</h1>
+<%elsif @type == "personal"%>
+	<h1>My Personal Journal</h1>
+<%else%>
+	<h1>My Draft Stories</h1>
+<%end%>
 
-<%=link_to "Create", new_story_path %>
 
+<%=link_to "Create", new_story_path %> 
+<%if @draft_stories_count.to_i > 0%>
+	| <%=link_to "Complete Drafts(#{@draft_stories_count})", stories_path(type: "draft") %>
+<%end%>
 
 <% @existing_stories.each do |existing_story|%>
 
 	<h4><%= link_to existing_story.title, story_path(existing_story) %></h4>
-	<%= existing_story.body[0..299]%><%=link_to "...more", story_path(existing_story) %><br>
-	By: <%=existing_story.user.first_name%> | Date: <%=existing_story.updated_at %> | Type: <%=existing_story.share_type%>
-	<p>Thumbs Up: <%=Rating.where(story_id: existing_story.id).where(name: 'thumbs up').count%> ~ Thumbs Down: <%=Rating.where(story_id: existing_story.id).where(name: 'thumbs down').count%>
+	 <p><img src="../images/riley.jpg" width="100", align="left"/><%= existing_story.body[0..299]%><%=link_to "...more", story_path(existing_story) %></p>
+	By: <%=existing_story.user.first_name%> | Date: <%=existing_story.updated_at %> | Type: <%=existing_story.share_type%> | Status: <%=existing_story.status%>
+	
+
+	<%@existing_story = existing_story%>
+	<%= render "ratings_partial" %>
+
+
+
 	<% if can? :update, existing_story  %>
-		| <%= link_to "Edit Story", edit_story_path(existing_story) %> |
+		<%= link_to "Edit Story", edit_story_path(existing_story) %> |
 	<%end%>
 	<% if can? :destroy, existing_story  %>
 		<%= link_to "Delete", story_path(existing_story), method: :delete, confirm: "Are You Sure?" %>

@@ -32,10 +32,17 @@ def submit_a_new_story(new_story)
   click_on "Submit"
 end
 
+def save_draft_of_a_new_story(new_story)
+  fill_in "title", with: new_story.title
+  fill_in "body", with: new_story.body
+  click_on "Save as Draft"
+end
+
+
 def update_existing_story
   fill_in "title", with: "Eating Burgers"
   fill_in "body", with: "Burger eating story..."
-  select "private", from: "share_type"  ##### Can't figure out how to select an item from a checkbox.
+  select "private", from: "Share type" 
 end
 
 def submit_a_new_comment(new_comment)

@@ -1,24 +1,33 @@
-       <div class="container">
-          <div class="hero-unit">
-            <div align="middle">
-              <p><< Image Here >></p>
-              <h1>SMKS</h1><br>
-              <p>An online journal for capturing and sharing those memorable and often-amusing moments as your child discovers their new world.<br><br>
-              <a href=<%=stories_path%>>Enter</a></p>
+       <!DOCTYPE html>
+<html>
+<head>
+  <title>App</title>
+  <%= stylesheet_link_tag    "application", :media => "all" %>
+  <%= javascript_include_tag "application" %>
+  <%= csrf_meta_tags %>
+</head>
+<body>
+  <br><br>
+
+  <div class="container">
+
+            <div class="hero-unit">
+              <div align="middle">
+                <img src="../images/riley.jpg" width="300"/>
+                <h1>SMKS</h1><br>
+                <p>An online journal for capturing and sharing (or not sharing) those memorable and often-amusing moments as your child discovers their new world.<br><br>
+                <a href=<%=stories_path%>>Enter</a></p>
             </div>
           </div>
-          <div class="row">
-            <div class="span3">
-              <h4 align="center"><a href="">Keep a Personal Journal and Scrapbook</a></h4>
+          <div class="row" >
+            <div class="span4">
+              <h4 align="center"><a href=<%=stories_path(type: "personal")%>>My Personal Journal</a></h4>
             </div>
-            <div class="span3">
-              <h4 align="center"><a href=""> Capture & Share Exceptionally Funny Stories</a></h4>
+            <div class="span4">
+              <h4 align="center"><a href=""> Share Something Funny</a></h4>
            </div>
-            <div class="span3">
-              <h4 align="center"><a href="">Commiserate with Other Parents</a></h4>
-            </div>
-            <div class="span3">
-              <h4 align="center"><a href="">Take a Break... and Laugh!</a></h4>
+            <div class="span4">
+              <h4 align="center"><a href="">Read Something Funny</a></h4>
             </div>
           
             
@@ -30,4 +39,6 @@
         </div><br>
 
 
-        </div>
+      </div>
+    </body>
+    </html>

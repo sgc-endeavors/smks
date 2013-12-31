@@ -10,4 +10,6 @@ describe "Landing Page" do
 		click_on("Enter")
 		current_path.should == stories_path
 	end
+
+
 end
