@@ -9,6 +9,9 @@ if defined?(Bundler)
   # Bundler.require(:default, :assets, Rails.env)
 end
 
+##### Added by Seth
+config.assets.initialize_on_precompile = false
+
 module App
   class Application < Rails::Application
     # Settings in config/environments/* take precedence over those specified here.
