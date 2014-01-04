@@ -1,11 +1,17 @@
 <br><br>
 	 <div align="middle">
 
-	 <img src="/images/riley.jpg" width="400"/>  < %=link_to ">>", story_path(@next.id)%>
+	<%if @previous_story.blank? == false%>
+	 <%=link_to "<<", story_path(@previous_story, type: @type)%>
+	 <%end%>
+	 <img src="/images/riley.jpg" width="400"/>  
+	 <%if @next_story.blank? == false%>
+	 <%=link_to ">>", story_path(@next_story, type: @type)%>
+	 <%end%>
 
 	<h2 ><b><%=@existing_story.title%> - <%=@existing_story.kid.name %></b></h2>
 
-	<h4><%=@existing_story.body %></h4>
+	<h4>"<%=@existing_story.body %>"</h4>
 	
 
 <p>By: <%=@existing_story.user.first_name.capitalize%> | Date: <%=@existing_story.updated_at %> | Type: <%=@existing_story.share_type%> | Status: <%=@existing_story.status%>

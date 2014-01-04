@@ -15,8 +15,14 @@
 
 <% @existing_stories.each do |existing_story|%>
 
-	<h4><%= link_to existing_story.title, story_path(existing_story) %> - <%=existing_story.kid.name%></h4>
-	 <p><img src="../images/riley.jpg" width="100", align="left"/><%= existing_story.body[0..299]%><%=link_to "...more", story_path(existing_story) %></p>
+	<h4><%= link_to existing_story.title, story_path(existing_story, type: @type) %> - <%=existing_story.kid.name%></h4>
+	 <p><img src="../images/riley.jpg" width="100", align="left"/>
+	 	"<%= existing_story.body[0..299]%>
+	 	<%if existing_story.body.length > 300%>
+	 		<%=link_to "...more", story_path(existing_story, type: @type) %>"
+	 	<%else%>
+	 	<%end%>
+	 </p>
 	By: <%=existing_story.user.first_name%> | Date: <%=existing_story.updated_at %> | Type: <%=existing_story.share_type%> | Status: <%=existing_story.status%>
 
 	<% if can? :update, existing_story  %>

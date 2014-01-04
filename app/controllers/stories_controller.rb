@@ -24,11 +24,11 @@ class StoriesController < ApplicationController
 
  	@type = params[:type]
  	if params[:type] == "public" || params[:type] == nil
- 			@existing_stories = Story.where(share_type: "public").where(status: "published")	
+ 			@existing_stories = Story.where(share_type: "public").where(status: "published").order("id desc")	
  	elsif params[:type] == "personal"
-		 	@existing_stories = Story.where(share_type: "private").where(status: "published").where(user_id: current_user.id) + Story.where(share_type: "public").where(status: "published").where(user_id: current_user.id)
+		 	@existing_stories = Story.where(status: "published").where(user_id: current_user.id).order("id desc")
  	elsif params[:type] == "draft"
-		@existing_stories = Story.where(status: "draft").where(user_id: current_user.id)
+		@existing_stories = Story.where(status: "draft").where(user_id: current_user.id).order("id desc")
  	end
  	render :index
  end
@@ -57,9 +57,16 @@ class StoriesController < ApplicationController
  end
 
 	def show #(get)
+		@type = params[:type]
 	 	@existing_story = Story.find(params[:id])
-	 	@next = Story.where("id > #{params[:id].to_i}").first
- 
+	 	if @type == "public" || params[:type] == nil
+ 			@next_story = Story.where("id > #{params[:id].to_i}").where(share_type: "public").where(status: "published").first
+			@previous_story = Story.where("id < #{params[:id].to_i}").where(share_type: "public").where(status: "published").first	 			
+	 	elsif @type == "personal"
+		 	@next_story = Story.where("id > #{params[:id].to_i}").where(status: "published").where(user_id: current_user.id).first
+			@previous_story = Story.where("id < #{params[:id].to_i}").where(status: "published").where(user_id: current_user.id).first 
+	 	end
+
 	 	# if current_user == nil   
 	 	# 	@rating = Rating.new
 	 	# else
@@ -67,6 +74,11 @@ class StoriesController < ApplicationController
 	 	# end
 	 	# @ratings = Rating.where(story_id: @existing_story.id)
 	 	@comments = Comment.where(story_id: @existing_story.id)
+
+		###### NEED TO ADD TEST SO THAT YOU CAN NOT BACKDOOR SOMEONES STORY VIA TYPING IN THE URL
+		#CURRENTLY YOU CAN.
+	 	#authorize! :read, @existing_story <<<< need to be so that you can only access public/published stories
+
 	 	render :show
 	end
 
