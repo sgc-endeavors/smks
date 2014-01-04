@@ -10,28 +10,26 @@
 
 <%=link_to "Create", new_story_path %> 
 <%if @draft_stories_count.to_i > 0%>
-	| <%=link_to "Complete Drafts(#{@draft_stories_count})", stories_path(type: "draft") %>
+	| <%=link_to "Finish Draft(#{@draft_stories_count})", stories_path(type: "draft") %>
 <%end%>
 
 <% @existing_stories.each do |existing_story|%>
 
-	<h4><%= link_to existing_story.title, story_path(existing_story) %></h4>
+	<h4><%= link_to existing_story.title, story_path(existing_story) %> - <%=existing_story.kid.name%></h4>
 	 <p><img src="../images/riley.jpg" width="100", align="left"/><%= existing_story.body[0..299]%><%=link_to "...more", story_path(existing_story) %></p>
 	By: <%=existing_story.user.first_name%> | Date: <%=existing_story.updated_at %> | Type: <%=existing_story.share_type%> | Status: <%=existing_story.status%>
-	
-
-	<%@existing_story = existing_story%>
-	<%= render "ratings_partial" %>
-
-
 
 	<% if can? :update, existing_story  %>
-		<%= link_to "Edit Story", edit_story_path(existing_story) %> |
+		| <%= link_to "Edit Story", edit_story_path(existing_story) %> |
 	<%end%>
 	<% if can? :destroy, existing_story  %>
 		<%= link_to "Delete", story_path(existing_story), method: :delete, confirm: "Are You Sure?" %>
-	<%end%>
-<br>
+	<%end%>	
+<br><br>
+	
+	<%@existing_story = existing_story%>
+	<%= render "ratings_partial" %>
+
 <hr/>
 <%end%>
 

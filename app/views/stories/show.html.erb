@@ -1,42 +1,29 @@
-<h1> Your Story </h1>
-	 <img src="/images/riley.jpg" width="400"/>
+<br><br>
+	 <div align="middle">
 
-	<%= label_tag "title", "Title:" %>
-	<%= text_field_tag "title", @existing_story.title %> 
-	<br>
+	 <img src="/images/riley.jpg" width="400"/>  < %=link_to ">>", story_path(@next.id)%>
 
-	<%= label_tag "body", "Body:" %>
-	<%= text_area_tag "body", @existing_story.body %>
-	<br>
+	<h2 ><b><%=@existing_story.title%> - <%=@existing_story.kid.name %></b></h2>
 
-	<%= label_tag "share_type", "Share Type#:" %>
-	<%= text_field_tag "share_type", @existing_story.share_type %>
-	<br>
+	<h4><%=@existing_story.body %></h4>
+	
 
-	<%= label_tag "status", "Status:#" %>
-	<%= text_field_tag "status", @existing_story.status %>
+<p>By: <%=@existing_story.user.first_name.capitalize%> | Date: <%=@existing_story.updated_at %> | Type: <%=@existing_story.share_type%> | Status: <%=@existing_story.status%>
+
+	<% if can? :update, @existing_story  %>
+		| <%= link_to "Edit Story", edit_story_path(@existing_story) %> |
+		<%= link_to "Delete Story", story_path(@existing_story), method: :delete, confirm: "Are You Sure?" %>
+
+	<%end%>
+</p>
+	
 	<br>
 
 	<%= render "ratings_partial" %>
 
-
-	<% if can? :update, @existing_story  %>
-		<%= link_to "Edit Story", edit_story_path(@existing_story) %> |
-		<%= link_to "Delete Story", story_path(@existing_story), method: :delete, confirm: "Are You Sure?" %> |
-
-	<%end%>
-
-	<%= link_to "Home", root_path%> | 
-	<%= link_to "Show All", stories_path %> 
-	<%unless current_user == nil%>
-		| <%= link_to "Show Journal", stories_path(type: "personal") %> 
-	<%end%>
-		| <%= link_to "Create Comment", new_comment_path(story_id: @existing_story.id) %> 
- 
-
-	<br>
 	<h4>Comments</h4>
-	
+	<%= link_to "Create Comment", new_comment_path(story_id: @existing_story.id) %> 
+
 	<%@comments.each do |comment| %>
 	<%=comment.body%>	| <%=comment.user.first_name%> | <%=comment.story_id%> 
 	<%if can? :update, comment %>
@@ -46,3 +33,5 @@
 	
 		<br>
 	<%end%>
+
+</div>

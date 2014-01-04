@@ -1,4 +1,10 @@
-<h1>Create a Story</h1>
+<% header = if @share_type == "public"
+	"to Share"
+else
+	"for my Personal Journal Only"
+end%>
+
+<h1>Create a Story <%=header%> </h1>
 
  <img src="/images/riley.jpg" width="400"/>
 
@@ -7,12 +13,16 @@
 	<%= f.text_field :title, id: "title" %> 
 
 	<br>
+	
+	<%= label_tag :kid_name, "Child's First Name:"%>
+	<%= select_tag :kid_name, options_for_select(Kid.where(user_id: current_user.id).map(&:name))%> <%=link_to "Add Child", new_kid_path%> 
+
 
 	<%= f.label :body, "Body:", for: "body" %>
 	<%= f.text_area :body, id: "body" %>
 
 	<%= f.label :share_type, "Share Type:", for: "share_type" %>
-	<%= f.select :share_type, options_for_select(["public", "private"], current_user.default_share_preference) %>
+	<%= f.select :share_type, options_for_select(["public", "private"], @share_type) %>
 
 	<%= f.label :user_id, "User_ID:", for: "user_id" %>
 	<%= f.text_field :user_id, id: "user_id" %>
@@ -23,3 +33,4 @@
 	<%= link_to "Cancel", stories_path%>
 
 <%end%>
+

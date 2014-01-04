@@ -7,6 +7,7 @@ describe User do
   it { should have_many(:stories) }
   it { should have_many(:ratings) }
   it { should have_many(:comments) }
+  it { should have_many(:kids) }
   it { should validate_presence_of(:email) }
   it { should validate_uniqueness_of(:email) }
 

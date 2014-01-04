@@ -98,11 +98,11 @@ describe "Story_Index Page" do
 					end
 					
 					it "shows a link to the stories in draft status" do
-						should have_link("Complete Drafts(1)")
+						should have_link("Finish Draft(1)")
 					end
 
 					context "user presses 'Complete Drafts' link" do
-						before(:each) { click_on("Complete Drafts(1)") }
+						before(:each) { click_on("Finish Draft(1)") }
 						it "routes user to the index page for draft stories" do
 							#current_path.should == stories_path(type: "draft")
 							should have_content("My Draft Story")
@@ -120,7 +120,7 @@ describe "Story_Index Page" do
 				context "user has no stories in draft status" do
 					it "shows a link to the stories in draft status" do
 						visit stories_path(type: "public")
-						should_not have_link("Complete Drafts")
+						should_not have_link("Finish Draft")
 					end
 				end
 

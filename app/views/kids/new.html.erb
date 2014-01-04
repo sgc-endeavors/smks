@@ -1,0 +1,10 @@
+<h1>Create a Child's Name </h1>
+
+<%=form_for(@new_kid, url: kids_path(@new_kid)) do |f| %>
+	<%= f.label :name, "Child's First Name:", for: "name" %>
+	<%= f.text_field :name, id: "name" %> <br>
+
+	<%=submit_tag "Submit"%>
+<%end%>
+	<br>
+	

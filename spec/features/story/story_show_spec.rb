@@ -16,8 +16,9 @@ describe "Story_Show Page" do
 	it "shows the story details" do
 		@current_story = FactoryGirl.create(:story, share_type: "public", title: "Eating Boogers", body: "Booger eating story...")
 		visit story_path(@current_story)
-		should have_field("title", with: "Eating Boogers")
-		should have_field("body", with: "Booger eating story...")
+		should have_content("Eating Boogers")
+		should have_content("Booger eating story...")
+		should have_content("Junior")
 	end
 
 	###### The following 3 examples are not passing; however the code is working

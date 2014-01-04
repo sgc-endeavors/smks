@@ -7,13 +7,16 @@ describe "Story_Edit Page" do
   before(:each) do
     @user = FactoryGirl.create(:user)
 		@current_story = FactoryGirl.create(:story, share_type: "public", user_id: @user.id, title: "Eating Boogers", body: "Booger eating story...")
-		sign_in_as_existing_user(@user)
+		@second_kid = FactoryGirl.create(:kid, name: "Jasmine", user_id: @user.id)
+    sign_in_as_existing_user(@user)
     visit edit_story_path(@current_story)	
 	end
 
  	it "displays the existing story's information in the form" do
  		should have_field("title", with: "Eating Boogers")
  		should have_field("body", with: "Booger eating story...")
+    #should have_select(:kid_name, options: ["Junior"])
+    #I'm not sure how to write this test for dropdown boxes.
   end
  
   context "user presses 'Update'" do
@@ -24,6 +27,7 @@ describe "Story_Edit Page" do
     	updated_story.title.should == "Eating Burgers"
     	updated_story.body.should == "Burger eating story..."
       updated_story.share_type.should == "private"
+      updated_story.kid.name.should == "Jasmine"
       updated_story.status.should == "published"
     	current_path.should == story_path(updated_story)
     end
@@ -36,6 +40,7 @@ describe "Story_Edit Page" do
       updated_story = Story.last
       updated_story.title.should == "Eating Burgers"
       updated_story.body.should == "Burger eating story..."
+      updated_story.kid.name.should == "Jasmine"
       updated_story.share_type.should == "private"
       updated_story.status.should == "draft"
       current_path.should == story_path(updated_story)

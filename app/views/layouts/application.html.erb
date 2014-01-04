@@ -19,15 +19,20 @@
             <a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
               <span class="icon-th-list"></span>
             </a>
-              <a tabindex=-1 href= "/home" class="brand"> <img style="width: 30px; height: 30px" src=""></a>
+              <a tabindex=-1 href= <%=landing_page_path%> class="brand"> <img style="width: 30px; height: 30px" src=""> SMKS</a>
           
             <div class = "nav-collapse collapse">
               <ul class="nav pull-right">
 
-                <li><a href="/">Home</a></li>
-                <li><a href="/">My Personal Journal</a></li>
-                <li><a href="/">Share Funny</a></li>                              
-                <li><a href="/">Read Funny</a></li>                              
+                <% if user_signed_in? %>
+                  <li><a href=<%=stories_path(type: "personal")%>>My Personal Journal</a></li>
+                  <% count = Story.where(user_id: current_user.id).where(status: "draft").count%>
+                  <%if count > 0%> 
+                    <li><a href=<%=stories_path(type: "draft")%>>Finish Drafts(<%=count%>)</a></li>
+                  <%end%>
+                <%end%>
+                <li><a href=<%=new_story_path(type: "public")%>>Share Funny</a></li>                              
+                <li><a href=<%=stories_path(type: "public")%>>Read Funny</a></li>                              
                 
                 <% if user_signed_in? %>
                   <li class="dropdown">

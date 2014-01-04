@@ -1,8 +1,19 @@
 class StoriesController < ApplicationController
-	before_filter :authenticate_user!, except: [ :landing_page, :index, :show ]
+	before_filter :authenticate_user!, except: [ :landing_page, :index, :show, :marketing ]
+
+ 
+	
+
+
+
+
 
  def landing_page
  	render :landing_page, layout:false
+ end
+
+ def marketing
+ 	render :marketing
  end
 
 
@@ -24,11 +35,17 @@ class StoriesController < ApplicationController
 
  def new #(get)
  	@new_story = Story.new
+	@share_type = if params[:type] 
+	 		"public"
+	 	else
+	 		User.find(current_user.id).default_share_preference
+	 	end 
  	render :new
  end
 
  def create #(post)
  	new_story = Story.new(params[:story])
+ 	new_story.kid_id = Kid.where(name: params[:kid_name]).where(user_id: current_user.id).first.id
  	new_story.user_id = current_user.id
  	new_story.status = if params[:submit]
  		"published"
@@ -41,6 +58,8 @@ class StoriesController < ApplicationController
 
 	def show #(get)
 	 	@existing_story = Story.find(params[:id])
+	 	@next = Story.where("id > #{params[:id].to_i}").first
+ 
 	 	# if current_user == nil   
 	 	# 	@rating = Rating.new
 	 	# else
@@ -53,6 +72,12 @@ class StoriesController < ApplicationController
 
 	def edit #(get)
 		@current_story = Story.find(params[:id])
+		if @current_story.kid != nil
+			@kid_name = @current_story.kid.name
+		else
+			@kid_name = nil
+		end
+
 		authorize! :update, @current_story
 		render :edit
 	end
@@ -65,6 +90,7 @@ class StoriesController < ApplicationController
  		else
  			"draft"
  		end
+ 		updated_story.kid_id = Kid.where(name: params[:kid_name]).where(user_id: current_user.id).first.id
  		updated_story.save!
 		redirect_to story_path(updated_story)
 	end

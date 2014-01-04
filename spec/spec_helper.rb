@@ -28,12 +28,13 @@ end
 def submit_a_new_story(new_story)
   fill_in "title", with: new_story.title
   fill_in "body", with: new_story.body
-  #fill_in "user_id", with: new_story.user_id
+  select "Junior", from: "Child's First Name:"
   click_on "Submit"
 end
 
 def save_draft_of_a_new_story(new_story)
   fill_in "title", with: new_story.title
+  select "Junior", from: "Child's First Name:"
   fill_in "body", with: new_story.body
   click_on "Save as Draft"
 end
@@ -42,6 +43,7 @@ end
 def update_existing_story
   fill_in "title", with: "Eating Burgers"
   fill_in "body", with: "Burger eating story..."
+  select "Jasmine", from: "Child's First Name:"
   select "private", from: "Share type" 
 end
 
