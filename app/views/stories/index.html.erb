@@ -13,6 +13,75 @@
 	| <%=link_to "Finish Draft(#{@draft_stories_count})", stories_path(type: "draft") %>
 <%end%>
 
+<table class="table">        
+	<tr>
+  	<%count = 0%>
+  	<% @existing_stories.each do |existing_story|%>
+    <td> 
+    	<ul>
+      	<li class="image_align">
+      		<div> <img src="../images/riley.jpg" width="300", align="middle"/></div>
+      		<div><%=existing_story.title%></div>
+      		<div>	"<%= existing_story.body[0..299]%>
+	 					<%if existing_story.body.length > 300%>
+	 						<%=link_to "...more", story_path(existing_story, type: @type) %>"
+	 					<%else%>
+	 					<%end%>
+	 				</div>
+	 				<div>
+	 					By: <%=existing_story.user.first_name%> | 
+	 					Date: <%=existing_story.updated_at %>
+
+						<% if can? :update, existing_story  %>
+							| <%= link_to "Edit Story", edit_story_path(existing_story) %> |
+						<%end%>
+						<% if can? :destroy, existing_story  %>
+							<%= link_to "Delete", story_path(existing_story), method: :delete, confirm: "Are You Sure?" %>
+						<%end%>	
+	 				</div>
+    		</li>
+    	</ul>
+    </td>
+  <%count = count + 1%>       
+  <%if count%3 == 0%> 
+  	</tr>
+  <%end%>
+  <% end %>
+  </tr>
+</table>
+
+
+
+<div class="container">
+
+      <div class="row">
+      
+        <div class="col-lg-12">
+          <h1 class="page-header">2 Col Portfolio <small>Showcase Your Work Two Columns at a Time</small></h1>
+        </div>
+
+      </div>
+
+      <div class="row">
+        
+        <div class="col-lg-6 col-md-6 portfolio-item">
+          <a href="#project-one"><img class="img-responsive" src="http://placehold.it/700x400"></a>
+          <h3><a href="#project-one">Project One</a></h3>
+          <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam viverra euismod odio, gravida pellentesque urna varius vitae.</p>
+        </div>
+
+        <div class="col-lg-6 col-md-6 portfolio-item">
+          <a href="#project-two"><img class="img-responsive" src="http://placehold.it/700x400"></a>
+          <h3><a href="#project-two">Project Two</a></h3>
+          <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam viverra euismod odio, gravida pellentesque urna varius vitae.</p>
+        </div>
+
+      </div>
+
+
+
+
+
 <% @existing_stories.each do |existing_story|%>
 
 	<h4><%= link_to existing_story.title, story_path(existing_story, type: @type) %> - <%=existing_story.kid.name%></h4>
@@ -38,4 +107,3 @@
 
 <hr/>
 <%end%>
-

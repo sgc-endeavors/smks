@@ -2,7 +2,7 @@ App::Application.routes.draw do
   
   devise_for :users
 
-  root :to => "stories#index"
+  root :to => "stories#landing_page"
 
   get "/marketing" => "stories#marketing", as: "marketing"
   get "/landing_page" => "stories#landing_page", as: "landing_page"

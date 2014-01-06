@@ -60,11 +60,11 @@ class StoriesController < ApplicationController
 		@type = params[:type]
 	 	@existing_story = Story.find(params[:id])
 	 	if @type == "public" || params[:type] == nil
- 			@next_story = Story.where("id > #{params[:id].to_i}").where(share_type: "public").where(status: "published").first
-			@previous_story = Story.where("id < #{params[:id].to_i}").where(share_type: "public").where(status: "published").first	 			
+ 			@next_story = Story.where(share_type: "public").where(status: "published").order(:id).where("id > #{params[:id].to_i}").first
+			@previous_story = Story.where(share_type: "public").where(status: "published").order(:id).where("id < #{params[:id].to_i}").last	 			
 	 	elsif @type == "personal"
-		 	@next_story = Story.where("id > #{params[:id].to_i}").where(status: "published").where(user_id: current_user.id).first
-			@previous_story = Story.where("id < #{params[:id].to_i}").where(status: "published").where(user_id: current_user.id).first 
+		 	@next_story = Story.where(status: "published").where(user_id: current_user.id).order(:id).where("id > #{params[:id].to_i}").first
+			@previous_story = Story.where(status: "published").where(user_id: current_user.id).order(:id).where("id < #{params[:id].to_i}").last
 	 	end
 
 	 	# if current_user == nil   

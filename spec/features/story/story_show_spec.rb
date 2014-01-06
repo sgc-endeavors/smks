@@ -5,7 +5,7 @@ describe "Story_Show Page" do
 	
 	before(:each) do
 		@user = FactoryGirl.create(:user)
-		@current_story = FactoryGirl.create(:story, status: "published", share_type: "public", title: "Eating Boogers", body: "Booger eating story...")
+		@current_story = FactoryGirl.create(:story, id: 6, status: "published", share_type: "public", title: "Eating Boogers", body: "Booger eating story...")
 		@comment = FactoryGirl.create(:comment, story_id: @current_story.id, user_id: @user.id)
 		FactoryGirl.create(:comment, story_id: 99999, body: "I'm a comment not related to this story") # <- a comment not related to the current story.
 		sign_in_as_existing_user(@user)
@@ -20,6 +20,36 @@ describe "Story_Show Page" do
 		should have_content("Booger eating story...")
 		should have_content("Junior")
 	end
+
+	context "has a previous story and a newer story" do
+		before(:each) do
+			@previous_story = FactoryGirl.create(:story, id: 5, status: "published", share_type: "public", title: "A Previous Story")	
+			@newer_story = FactoryGirl.create(:story, id: 7, status: "published", share_type: "public", title: "A Newer Story")	
+			visit story_path(@current_story)
+		end
+
+		it "includes a link to show the previous story" do
+			click_on("<<")
+			current_path.should == story_path(@previous_story)
+		end
+
+		it "includes a link to show the newer story" do
+			click_on(">>")
+			current_path.should == story_path(@newer_story)
+		end
+
+	end
+
+
+	context "there is not a previous or newer story" do
+		it "does NOT include a link to show the previous story" do
+			should_not have_link("<<")
+		end
+		it "does not include a link to show the newer story" do
+			should_not have_link(">>")
+		end
+	end
+
 
 	###### The following 3 examples are not passing; however the code is working
 		# it "includes a link to show all the stories" do

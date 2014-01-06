@@ -15,14 +15,31 @@ describe "Story_Index Page" do
 		before(:each) do
 			FactoryGirl.create(:story, title: "My Private Story", user_id: @user.id, status: "published", share_type: "private")
 			FactoryGirl.create(:story, title: "My Draft Story", status: "draft", user_id: @user.id)
-
 		end
+
+		context "a story's body is more than 300 characters in length" do
+			before(:each) do
+				FactoryGirl.create(:story, title: "A Long Story", status: "published", share_type: "public", body: "Ice cream macaroon croissant cookie wafer jujubes. Lollipop lemon drops oat cake croissant dessert. Cookie cupcake lemon drops cotton candy cookie pudding caramels. Lollipop sweet biscuit cotton candy. Drage pastry jujubes cotton candy sesame snaps chocolate bar dessert lollipop. Sweet tiramisu donut.")
+				visit stories_path(type: "public")
+			end
+			it { should have_link("...more") }
+			 
+		end
+
+		context "a story's body is less than 300 characters in length" do
+			before(:each) do
+				visit stories_path(type: "public")
+			end
+			it { should_not have_link("...more") }
+		end
+
 
 		context "visitor wants to see all public stories" do
 			before(:each) { visit stories_path(type: "public") }
 			it "allows the visitor to view all public stories" do		
 				should_not have_content("My Private Story")
 			end
+
 
 			it "allows user to access the create story page" do 
 				should have_link("Create")
@@ -118,7 +135,7 @@ describe "Story_Index Page" do
 
 
 				context "user has no stories in draft status" do
-					it "shows a link to the stories in draft status" do
+				it "shows a link to the stories in draft status" do
 						visit stories_path(type: "public")
 						should_not have_link("Finish Draft")
 					end
@@ -126,7 +143,7 @@ describe "Story_Index Page" do
 
 				it "allows user to access the story edit page for their stories" do 
 					first(:link, "Edit Story").click
-					current_path.should == edit_story_path(Story.first)
+					current_path.should == edit_story_path(Story.last)
 				end
 				it "shows the edit link for only those stories authored by the user" do
 					FactoryGirl.create(:story) #
