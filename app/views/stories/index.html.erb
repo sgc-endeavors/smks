@@ -1,9 +1,16 @@
 
+<div class="container">
 <%if @type == "public" || @type == nil%>
-	<h1>Too Funny Not to Share</h1>
+	<div class="row">
+		<div class="span9">
+			<h1>Too Funny Not to Share</h1>
 <%elsif @type == "personal"%>
+	<div class="row">
+		<div class="span12">
 	<h1>My Personal Journal</h1>
 <%else%>
+	<div class="row">
+		<div class="span12">
 	<h1>My Draft Stories</h1>
 <%end%>
 
@@ -13,97 +20,66 @@
 	| <%=link_to "Finish Draft(#{@draft_stories_count})", stories_path(type: "draft") %>
 <%end%>
 
-<table class="table">        
-	<tr>
-  	<%count = 0%>
-  	<% @existing_stories.each do |existing_story|%>
-    <td> 
-    	<ul>
-      	<li class="image_align">
-      		<div> <img src="../images/riley.jpg" width="300", align="middle"/></div>
-      		<div><%=existing_story.title%></div>
-      		<div>	"<%= existing_story.body[0..299]%>
+
+<ul class="thumbnails">
+	<% @existing_stories.each do |existing_story|%>
+  <li class="span3">
+    <div href="#" class="thumbnail nails2">
+      <a href=<%=story_path(existing_story, type: @type)%>> <img src="../images/riley.jpg" alt=""></a>
+      <div class="caption">
+      	<h4><%= link_to existing_story.title, story_path(existing_story, type: @type) %></h4>
+      		<p>"<%= existing_story.body[0..299]%>
 	 					<%if existing_story.body.length > 300%>
 	 						<%=link_to "...more", story_path(existing_story, type: @type) %>"
 	 					<%else%>
-	 					<%end%>
-	 				</div>
-	 				<div>
-	 					By: <%=existing_story.user.first_name%> | 
-	 					Date: <%=existing_story.updated_at %>
-
-						<% if can? :update, existing_story  %>
-							| <%= link_to "Edit Story", edit_story_path(existing_story) %> |
+	 						"
+	 					<%end%> <br>
+	 					<%=existing_story.kid.name%> - Age: ____<br><br>
+	 					By: <%=existing_story.user.first_name.capitalize%> on <%=existing_story.updated_at.strftime("%m/%d/%Y") %> <br>
+	 					<% if can? :update, existing_story  %>
+							<%= link_to "Edit Story", edit_story_path(existing_story) %> |
 						<%end%>
 						<% if can? :destroy, existing_story  %>
 							<%= link_to "Delete", story_path(existing_story), method: :delete, confirm: "Are You Sure?" %>
 						<%end%>	
-	 				</div>
-    		</li>
-    	</ul>
-    </td>
-  <%count = count + 1%>       
-  <%if count%3 == 0%> 
-  	</tr>
-  <%end%>
-  <% end %>
-  </tr>
-</table>
-
-
-
-<div class="container">
-
-      <div class="row">
-      
-        <div class="col-lg-12">
-          <h1 class="page-header">2 Col Portfolio <small>Showcase Your Work Two Columns at a Time</small></h1>
-        </div>
-
-      </div>
-
-      <div class="row">
-        
-        <div class="col-lg-6 col-md-6 portfolio-item">
-          <a href="#project-one"><img class="img-responsive" src="http://placehold.it/700x400"></a>
-          <h3><a href="#project-one">Project One</a></h3>
-          <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam viverra euismod odio, gravida pellentesque urna varius vitae.</p>
-        </div>
-
-        <div class="col-lg-6 col-md-6 portfolio-item">
-          <a href="#project-two"><img class="img-responsive" src="http://placehold.it/700x400"></a>
-          <h3><a href="#project-two">Project Two</a></h3>
-          <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam viverra euismod odio, gravida pellentesque urna varius vitae.</p>
-        </div>
-
-      </div>
-
-
-
-
-
-<% @existing_stories.each do |existing_story|%>
-
-	<h4><%= link_to existing_story.title, story_path(existing_story, type: @type) %> - <%=existing_story.kid.name%></h4>
-	 <p><img src="../images/riley.jpg" width="100", align="left"/>
-	 	"<%= existing_story.body[0..299]%>
-	 	<%if existing_story.body.length > 300%>
-	 		<%=link_to "...more", story_path(existing_story, type: @type) %>"
-	 	<%else%>
-	 	<%end%>
-	 </p>
-	By: <%=existing_story.user.first_name%> | Date: <%=existing_story.updated_at %> | Type: <%=existing_story.share_type%> | Status: <%=existing_story.status%>
-
-	<% if can? :update, existing_story  %>
-		| <%= link_to "Edit Story", edit_story_path(existing_story) %> |
-	<%end%>
-	<% if can? :destroy, existing_story  %>
-		<%= link_to "Delete", story_path(existing_story), method: :delete, confirm: "Are You Sure?" %>
-	<%end%>	
-<br><br>
 	
-	<%@existing_story = existing_story%>
-	<%= render "ratings_partial" %>
+						<%@existing_story = existing_story%>
+						<%= render "ratings_partial" %>
+	 				</p>
+	 		</div>
+    </div>
+  </li>
+  <%end%>
+</ul>
 
-<hr/>
+
+
+	</div> <!-- closs out the span	-->
+	
+<%if @type == "public" || @type == nil%>
+	<div class="span3">
+		<br><br>
+		<b>This Week's 5 Most Funny</b>
+		<hr />
+		<% for i in (0..2)%>
+			<%id = @top_stories[i]%>
+			<%story = Story.find(id[0])%><br>
+			<b><%=link_to story.title, story_path(story, type: @type)%></b><br>
+			"<%=story.body[0..299]%>
+				<%if story.body.length > 300%>
+	 				<%=link_to "...more", story_path(story, type: @type) %>"
+	 			<%else%>
+	 			"
+	 			<%end%>
+
+
+
+			<br>
+			Thumbs Up: <%=id[1]%><br><br>
+
+			<%end%>
+	</div>
 <%end%>
+
+</div> <!-- close out the row-->
+</div>

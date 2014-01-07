@@ -9,7 +9,7 @@
 
 
 
-<p>Thumbs Up: <%=@ratings.where(name: 'thumbs up').count%> | Thumbs Down: <%=@ratings.where(name: 'thumbs down').count%></p>
+<p>Thumbs Up: <%=@ratings.where(name: 'thumbs up').count%> | Down: <%=@ratings.where(name: 'thumbs down').count%></p>
 	<%if current_user != nil && @existing_story.user_id != current_user.id%>
 		<%if @rating.name != nil%>
 			<p><%="You scored this a #{@rating.name}!"%></p>

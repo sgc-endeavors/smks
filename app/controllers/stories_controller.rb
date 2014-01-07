@@ -1,13 +1,6 @@
 class StoriesController < ApplicationController
 	before_filter :authenticate_user!, except: [ :landing_page, :index, :show, :marketing ]
 
- 
-	
-
-
-
-
-
  def landing_page
  	render :landing_page, layout:false
  end
@@ -16,7 +9,6 @@ class StoriesController < ApplicationController
  	render :marketing
  end
 
-
  def index
  	unless current_user == nil
  		@draft_stories_count = Story.where(status: "draft").where(user_id: current_user.id).count
@@ -24,7 +16,8 @@ class StoriesController < ApplicationController
 
  	@type = params[:type]
  	if params[:type] == "public" || params[:type] == nil
- 			@existing_stories = Story.where(share_type: "public").where(status: "published").order("id desc")	
+ 		@existing_stories = Story.where(share_type: "public").where(status: "published").order("id desc")	
+		@top_stories = Story.joins(:ratings).group("stories.id").count("ratings.id").sort
  	elsif params[:type] == "personal"
 		 	@existing_stories = Story.where(status: "published").where(user_id: current_user.id).order("id desc")
  	elsif params[:type] == "draft"

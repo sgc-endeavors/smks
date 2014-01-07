@@ -40,6 +40,16 @@ describe "Story_Index Page" do
 				should_not have_content("My Private Story")
 			end
 
+			context "has a side bar showing the week's most funny" do
+
+				it "allows the visitor to view the most funny list" do
+					should have_content("This Week's 5 Most Funny")
+				end
+
+				it "contains the five funniest stories of all time" do
+					pending
+				end
+			end
 
 			it "allows user to access the create story page" do 
 				should have_link("Create")
@@ -54,7 +64,7 @@ describe "Story_Index Page" do
 			end
 
 			it "shows the total ratings for the story" do	
-				should have_content("Thumbs Up: 1 | Thumbs Down: 1")
+				should have_content("Thumbs Up: 1 | Down: 1")
 			end
 
 			it "shows the first 300 characters of the story" do
@@ -66,12 +76,9 @@ describe "Story_Index Page" do
 			end
 
 			it "shows the date last_updated" do
-				should have_content("Date: #{Story.first.updated_at}")
+				should have_content("on #{Story.first.updated_at.strftime("%m/%d/%Y")}")
 			end
 
-			it "shows the share type classification" do
-				should have_content("Type: #{Story.first.share_type}")
-			end
 		end
 		# context "visitor wants to see all his private stories before logging in" do
 		# 	before(:each) { visit stories_path(type: "private") }

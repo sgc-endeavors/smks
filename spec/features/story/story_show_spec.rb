@@ -107,7 +107,7 @@ describe "Story_Show Page" do
 		FactoryGirl.create(:rating, story_id: @current_story.id)
 		FactoryGirl.create(:rating, name: "thumbs down", story_id: @current_story.id)
 		visit story_path(@current_story)		
-		should have_content("Thumbs Up: 1 | Thumbs Down: 1")
+		should have_content("Thumbs Up: 1 | Down: 1")
 	end
 
 	context "user rates the story for the first time" do
