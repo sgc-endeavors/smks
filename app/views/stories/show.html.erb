@@ -5,8 +5,9 @@
 	 <%=link_to "<<", story_path(@previous_story, type: @type)%>
 	 <%end%>
 	 
+	 <%= image_tag @existing_story.image_url(:thumb).to_s %>
 
-	 <img src="/images/riley.jpg" width="400"/>  
+	 <!-- <img src="/images/riley.jpg" width="400"/>  -->
 	 
 	 <%if @next_story.blank? == false%>
 	 <%=link_to ">>", story_path(@next_story, type: @type)%>

@@ -25,7 +25,7 @@
 	<% @existing_stories.each do |existing_story|%>
   <li class="span3">
     <div href="#" class="thumbnail nails2">
-      <a href=<%=story_path(existing_story, type: @type)%>> <img src="../images/riley.jpg" alt=""></a>
+      <a href=<%=story_path(existing_story, type: @type)%>> <%= image_tag existing_story.image_url(:thumb).to_s %></a>
       <div class="caption">
       	<h4><%= link_to existing_story.title, story_path(existing_story, type: @type) %></h4>
       		<p>"<%= existing_story.body[0..299]%>

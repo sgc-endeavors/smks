@@ -1,6 +1,6 @@
 <h1>Edit My Story </h1>
 
- <img src="/images/riley.jpg" width="400"/>
+ <%= image_tag @current_story.image_url(:thumb).to_s %>
 
 
 <%= form_for(@current_story, url: story_path(@current_story), html: {method: "put"} ) do |f| %>
@@ -16,6 +16,9 @@
 
 	<%= f.label :body, "Body:", for: "body" %>
 	<%= f.text_area :body, id: "body" %>
+
+	<%= f.label :image, "Change story's picture" %>
+	<%= f.file_field :image %>
 
 	<%= f.label :share_type%>
 	<%= f.select :share_type, options_for_select(["public", "private"], @current_story.share_type)%>

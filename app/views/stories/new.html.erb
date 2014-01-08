@@ -8,7 +8,7 @@ end%>
 
  <img src="/images/riley.jpg" width="400"/>
 
-<%= form_for(@new_story, url: stories_path(@new_story)) do |f| %>
+<%= form_for(@new_story, html: { multipart: true }, url: stories_path(@new_story)) do |f| %>
 	<%= f.label :title, "Title:", for: "title" %>
 	<%= f.text_field :title, id: "title" %> 
 
@@ -17,9 +17,10 @@ end%>
 	<%= label_tag :kid_name, "Child's First Name:"%>
 	<%= select_tag :kid_name, options_for_select(Kid.where(user_id: current_user.id).map(&:name))%> <%=link_to "Add Child", new_kid_path%> 
 
-
 	<%= f.label :body, "Body:", for: "body" %>
 	<%= f.text_area :body, id: "body" %>
+
+	<%= f.file_field :image %>
 
 	<%= f.label :share_type, "Share Type:", for: "share_type" %>
 	<%= f.select :share_type, options_for_select(["public", "private"], @share_type) %>
