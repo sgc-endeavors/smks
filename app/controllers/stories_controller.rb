@@ -18,6 +18,8 @@ class StoriesController < ApplicationController
  	if params[:type] == "public" || params[:type] == nil
  		@existing_stories = Story.where(share_type: "public").where(status: "published").order("id desc")	
 		@top_stories = Story.joins(:ratings).group("stories.id").count("ratings.id").sort
+		
+
  	elsif params[:type] == "personal"
 		 	@existing_stories = Story.where(status: "published").where(user_id: current_user.id).order("id desc")
  	elsif params[:type] == "draft"

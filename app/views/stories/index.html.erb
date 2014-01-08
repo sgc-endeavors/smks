@@ -60,8 +60,9 @@
 	<div class="span3">
 		<br><br>
 		<b>This Week's 5 Most Funny</b>
+		<%=@top_rated%>
 		<hr />
-		<% for i in (0..2)%>
+		<% for i in (0..(@top_stories.size-1))%>
 			<%id = @top_stories[i]%>
 			<%story = Story.find(id[0])%><br>
 			<b><%=link_to story.title, story_path(story, type: @type)%></b><br>
