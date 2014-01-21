@@ -9,7 +9,7 @@ FactoryGirl.define do
     association :kid
     #user_id 1
     share_type "public"
-   # status "published"
+   #published_date Date.new(2012, 12, 3)
     category_id 1
     picture_id 1
   end

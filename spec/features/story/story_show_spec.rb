@@ -5,7 +5,7 @@ describe "Story_Show Page" do
 	
 	before(:each) do
 		@user = FactoryGirl.create(:user)
-		@current_story = FactoryGirl.create(:story, id: 6, status: "published", share_type: "public", title: "Eating Boogers", body: "Booger eating story...")
+		@current_story = FactoryGirl.create(:story, id: 6, status: "published", published_date: Date.new(2012, 12, 3), share_type: "public", title: "Eating Boogers", body: "Booger eating story...")
 		@comment = FactoryGirl.create(:comment, story_id: @current_story.id, user_id: @user.id)
 		FactoryGirl.create(:comment, story_id: 99999, body: "I'm a comment not related to this story") # <- a comment not related to the current story.
 		sign_in_as_existing_user(@user)
@@ -14,7 +14,7 @@ describe "Story_Show Page" do
 
 
 	it "shows the story details" do
-		@current_story = FactoryGirl.create(:story, share_type: "public", title: "Eating Boogers", body: "Booger eating story...")
+		@current_story = FactoryGirl.create(:story, status: "published", published_date: Date.new(2012, 12, 3), share_type: "public", title: "Eating Boogers", body: "Booger eating story...")
 		visit story_path(@current_story)
 		should have_content("Eating Boogers")
 		should have_content("Booger eating story...")
@@ -23,8 +23,8 @@ describe "Story_Show Page" do
 
 	context "has a previous story and a newer story" do
 		before(:each) do
-			@previous_story = FactoryGirl.create(:story, id: 5, status: "published", share_type: "public", title: "A Previous Story")	
-			@newer_story = FactoryGirl.create(:story, id: 7, status: "published", share_type: "public", title: "A Newer Story")	
+			@previous_story = FactoryGirl.create(:story, id: 5, status: "published", published_date: Date.new(2012, 12, 3), share_type: "public", title: "A Previous Story")	
+			@newer_story = FactoryGirl.create(:story, id: 7, status: "published", published_date: Date.new(2012, 12, 3), share_type: "public", title: "A Newer Story")	
 			visit story_path(@current_story)
 		end
 
@@ -67,12 +67,12 @@ describe "Story_Show Page" do
 
 	context "the story is authored by the current_user" do
 		before(:each) do
-			published_authored_story = FactoryGirl.create(:story, user_id: @user.id, share_type: "private", title: "My Published Private Story")
+			published_authored_story = FactoryGirl.create(:story, user_id: @user.id, status: "published", published_date: Date.new(2012, 12, 3), share_type: "private", title: "My Published Private Story")
 			visit story_path(published_authored_story)
 		end
-		it "does NOT show 'thumbs up/thumbs down' buttons" do
-			should_not have_button("Thumbs Up")
-			should_not have_button("Thumbs Down")
+		it "does NOT show 'ratings' buttons" do
+			should_not have_button("1")
+			should_not have_button("3")
 		end
 		it "routes user to the edit view of the story" do
 			click_on "Edit Story"
@@ -87,12 +87,17 @@ describe "Story_Show Page" do
 
 	context "the story is not authored by the current_user" do
 		before(:each) do
-			published_non_authored_story = FactoryGirl.create(:story, share_type: "private", title: "My Published Private Story")
+			published_non_authored_story = FactoryGirl.create(:story, status: "published", published_date: Date.new(2012, 12, 3), share_type: "private", title: "My Published Private Story")
 			visit story_path(published_non_authored_story)
 		end
-		it "shows 'thumbs up/thumbs down' buttons" do
-			should have_button("Thumbs Up")
-			should have_button("Thumbs Down")
+		it "shows the 'ha-ha scale' buttons" do
+			should have_button("0")
+			should have_button("1")
+			should have_button("3")
+			should have_button("5")
+			should have_button("7")
+			should have_button("10")
+
 		end
 		it "should not have an 'Edit Story' link" do
 			should_not have_link("Edit Story")
@@ -105,27 +110,27 @@ describe "Story_Show Page" do
 
 	it "shows the total ratings for the story" do
 		FactoryGirl.create(:rating, story_id: @current_story.id)
-		FactoryGirl.create(:rating, name: "thumbs down", story_id: @current_story.id)
+		FactoryGirl.create(:rating, numeric_score: 7, story_id: @current_story.id)
 		visit story_path(@current_story)		
-		should have_content("Thumbs Up: 1 | Down: 1")
+		should have_content("Ha-Ha Rating: 4x (per 2 people)")
 	end
 
 	context "user rates the story for the first time" do
-		context "user presses thumbs up button" do
-			before(:each) { click_button "Thumbs Up" }
+		context "user presses the '1' button" do
+			before(:each) { click_button "1" }
 			
-			it "should create a 'thumbs up' user rating for the story" do
-				Rating.where(story_id: @current_story.id).where(user_id: @user.id).first.name.should == "thumbs up"
+			it "should create a '1' user rating for the story" do
+				Rating.where(story_id: @current_story.id).where(user_id: @user.id).first.numeric_score.should == 1
 			end
 
 			it "should return the user to the index stories path" do
 				current_path.should == stories_path
 			end
 		end
-		context "user presses thumbs down button" do
-			it "should create a 'thumbs down' user rating for the story" do
-				click_button "Thumbs Down"
-				Rating.where(story_id: @current_story.id).where(user_id: @user.id).first.name.should == "thumbs down"
+		context "user presses '10' button" do
+			it "should create a '10' user rating for the story" do
+				click_button "10"
+				Rating.where(story_id: @current_story.id).where(user_id: @user.id).first.numeric_score.should == 10
 			end	
 		end
 	end
@@ -136,8 +141,8 @@ describe "Story_Show Page" do
 			visit story_path(@current_story)
 		end
 
-		it { should have_content("You scored this a thumbs up!") }
-		it { should_not have_button("Thumbs Up") }
+		it { should have_content("You gave this 1 Ha-Ha's") }
+		it { should_not have_button("1") }
 
 	end
 
@@ -147,11 +152,11 @@ describe "Story_Show Page" do
 			visit story_path(@current_story)
 		end
 		it "should not be able to view ratings buttons" do
-			should_not have_button("Thumbs Up")
-			should_not have_button("Thumbs Down")
+			should_not have_button("1")
+			should_not have_button("3")
 		end
 		it "should not be able to 'Show Journal'" do
-			should_not have_link("Show Journal")
+			should_not have_link("Show Scrapbook")
 		end
 		it "should not be able to create a comment without first logging in" do
 			click_on("Create Comment")

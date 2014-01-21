@@ -13,12 +13,12 @@
 	 <%=link_to ">>", story_path(@next_story, type: @type)%>
 	 <%end%>
 
-	<h2 ><b><%=@existing_story.title%> - <%=@existing_story.kid.name %></b></h2>
+	<h3><%=@existing_story.title%> </h3>
 
-	<h4>"<%=@existing_story.body %>"</h4>
+	<p><%=@existing_story.body %>~ <%=@existing_story.kid.name%> - Age: ____</p>
 	
 
-<p>By: <%=@existing_story.user.first_name.capitalize%> | Date: <%=@existing_story.updated_at %> | Type: <%=@existing_story.share_type%> | Status: <%=@existing_story.status%>
+<p>By: <%=@existing_story.user.first_name.capitalize%> | Date: <%=@existing_story.published_date.strftime("%m/%d/%Y") %> | Type: <%=@existing_story.share_type%> | Status: <%=@existing_story.status%>
 
 	<% if can? :update, @existing_story  %>
 		| <%= link_to "Edit Story", edit_story_path(@existing_story) %> |

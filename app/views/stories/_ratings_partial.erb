@@ -6,17 +6,43 @@
 	 	@ratings = Rating.where(story_id: @existing_story.id)
 	 	%>
 
-
-
-
-<p>Thumbs Up: <%=@ratings.where(name: 'thumbs up').count%> | Down: <%=@ratings.where(name: 'thumbs down').count%></p>
-	<%if current_user != nil && @existing_story.user_id != current_user.id%>
-		<%if @rating.name != nil%>
-			<p><%="You scored this a #{@rating.name}!"%></p>
+<% if @ratings.count > 0%>
+<% scores= @ratings.uniq.pluck(:numeric_score) %>
+<%total_ha_has = 0 %>
+<% scores.each do |f| %>
+	<%total_ha_has = total_ha_has + @ratings.where(numeric_score: f).count * f%>
+<%end%>
+	<%average_score = "#{total_ha_has / @ratings.count}x"%>
+		<%if @ratings.count > 1%>
+			<%people = "people"%>
 		<%else%>
+			<%people = "person"%>
+		<%end%>
+	<%else%>
+	<%average_score = "Not yet rated"%>
+
+<%end%>
+
+
+<p>Ha-Ha Rating: <%=average_score%> <i>(per <%=@ratings.count%> <%=people%>) </i>
+	<%if current_user != nil && @existing_story.user_id != current_user.id%>
+		<%if @rating.numeric_score != nil%>
+			<br><%="You gave this #{@rating.numeric_score} Ha-Ha's"%></p>
+		<%else%>
+
 			<%= form_for(@rating, url: ratings_path) do |f| %> 
-			 	<%= button_tag "Thumbs Up", name: "t_up", value: @existing_story.id %>	
-			 	<%= button_tag "Thumbs Down", name: "t_down", value: @existing_story.id %>
+			 	<div>
+			 	How Many Ha-Ha's?: <br>
+			 	 
+			 	<%= hidden_field_tag :story_id, @existing_story.id %>
+			 	<%= button_tag "0", name: "rating", value: 0, class: "btn btn-mini btn-danger " %>
+			 	<%= button_tag "1", name: "rating", value: 1, class: "btn btn-mini  btn-warning " %>
+		 		<%= button_tag "3", name: "rating", value: 3, class: "btn btn-mini btn-info"%>
+			 	<%= button_tag "5", name: "rating", value: 5, class: "btn btn-mini " %>	
+			 	<%= button_tag "7", name: "rating", value: 7, class: "btn btn-mini btn-primary"%>
+			 	<%= button_tag "10", name: "rating", value: 10, class: "btn btn-mini btn-success" %>	
+			 	
+		 		</div>
 		 	<%end%>
 		<%end%>
 	<%end%>

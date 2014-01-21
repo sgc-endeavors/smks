@@ -27,8 +27,8 @@
 	<%= f.text_field :status%>
 
 	<br>
-	<%= button_tag "Update", name: "update" %>
-	<%= button_tag "Save as Draft", name: "save_as_draft" %>
+	<%= button_tag "Publish", name: "publish", class: "btn btn-success btn-small" %>
+	<%= button_tag "Save as Draft", name: "save_as_draft", class: "btn btn-small" %>
 	<%= link_to "Cancel", story_path(@current_story)%>
 
 <%end%>

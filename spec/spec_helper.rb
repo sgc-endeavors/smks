@@ -29,7 +29,7 @@ def submit_a_new_story(new_story)
   fill_in "title", with: new_story.title
   fill_in "body", with: new_story.body
   select "Junior", from: "Child's First Name:"
-  click_on "Submit"
+  click_on "Publish"
 end
 
 def save_draft_of_a_new_story(new_story)

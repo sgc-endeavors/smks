@@ -1,7 +1,7 @@
 <% header = if @share_type == "public"
 	"to Share"
 else
-	"for my Personal Journal Only"
+	"for my Scrapbook Only"
 end%>
 
 <h1>Create a Story <%=header%> </h1>
@@ -23,14 +23,13 @@ end%>
 	<%= f.file_field :image %>
 
 	<%= f.label :share_type, "Share Type:", for: "share_type" %>
-	<%= f.select :share_type, options_for_select(["public", "private"], @share_type) %>
+	<%= f.select :share_type, options_for_select(["public", "private"], @share_type) %><br>
 
-	<%= f.label :user_id, "User_ID:", for: "user_id" %>
-	<%= f.text_field :user_id, id: "user_id" %>
+	<%= f.hidden_field :user_id, id: "user_id" %>
 
 
-	<%= button_tag "Submit", name: "submit" %>
-	<%= button_tag "Save as Draft", name: "draft" %>
+	<%= button_tag "Publish", name: "publish", class: "btn btn-success btn-small" %>
+	<%= button_tag "Save as Draft", name: "draft", class: "btn btn-small" %>
 	<%= link_to "Cancel", stories_path%>
 
 <%end%>

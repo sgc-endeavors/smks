@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20140108204613) do
+ActiveRecord::Schema.define(:version => 20140121050021) do
 
   create_table "comments", :force => true do |t|
     t.text     "body"
@@ -33,8 +33,9 @@ ActiveRecord::Schema.define(:version => 20140108204613) do
     t.string   "name"
     t.integer  "user_id"
     t.integer  "story_id"
-    t.datetime "created_at", :null => false
-    t.datetime "updated_at", :null => false
+    t.datetime "created_at",    :null => false
+    t.datetime "updated_at",    :null => false
+    t.integer  "numeric_score"
   end
 
   create_table "stories", :force => true do |t|
@@ -44,13 +45,14 @@ ActiveRecord::Schema.define(:version => 20140108204613) do
     t.integer  "user_id"
     t.integer  "category_id"
     t.integer  "picture_id"
-    t.datetime "created_at",  :null => false
-    t.datetime "updated_at",  :null => false
+    t.datetime "created_at",     :null => false
+    t.datetime "updated_at",     :null => false
     t.string   "share_type"
     t.string   "status"
     t.string   "kids_age"
     t.integer  "kid_id"
     t.string   "image"
+    t.datetime "published_date"
   end
 
   create_table "users", :force => true do |t|

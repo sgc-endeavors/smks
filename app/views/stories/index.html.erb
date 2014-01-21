@@ -7,7 +7,7 @@
 <%elsif @type == "personal"%>
 	<div class="row">
 		<div class="span12">
-	<h1>My Personal Journal</h1>
+	<h1>My Scrapbook</h1>
 <%else%>
 	<div class="row">
 		<div class="span12">
@@ -21,21 +21,31 @@
 <%end%>
 
 
-<ul class="thumbnails">
 	<% @existing_stories.each do |existing_story|%>
-  <li class="span3">
-    <div href="#" class="thumbnail nails2">
-      <a href=<%=story_path(existing_story, type: @type)%>> <%= image_tag existing_story.image_url(:thumb).to_s %></a>
-      <div class="caption">
-      	<h4><%= link_to existing_story.title, story_path(existing_story, type: @type) %></h4>
-      		<p>"<%= existing_story.body[0..299]%>
+
+<div class="row-fluid thumbnail">
+
+	<div class= "span3">
+		  <a href=<%=story_path(existing_story, type: @type)%>> 
+		  	<img src="/images/riley.jpg" width="250"/>
+		  </a>
+	</div>
+	<div class= "span9" >
+		<h4 style="display: inline"><%= link_to existing_story.title, story_path(existing_story, type: @type) %></h4>
+      		<p><%= existing_story.body[0..299]%>
 	 					<%if existing_story.body.length > 300%>
-	 						<%=link_to "...more", story_path(existing_story, type: @type) %>"
-	 					<%else%>
-	 						"
-	 					<%end%> <br>
+	 						<%=link_to "...more", story_path(existing_story, type: @type) %>
+	 					<%end%> ~
 	 					<%=existing_story.kid.name%> - Age: ____<br><br>
-	 					By: <%=existing_story.user.first_name.capitalize%> on <%=existing_story.updated_at.strftime("%m/%d/%Y") %> <br>
+	 					By: <%=existing_story.user.first_name.capitalize%> on 
+
+	 					<%if existing_story.published_date != nil%>
+	 						<%=existing_story.published_date.strftime("%m/%d/%Y") %> 
+	 					<%else%>
+	 						<%="'not yet published'"%>
+	 					<%end%>
+	 					<br>
+
 	 					<% if can? :update, existing_story  %>
 							<%= link_to "Edit Story", edit_story_path(existing_story) %> |
 						<%end%>
@@ -46,12 +56,11 @@
 						<%@existing_story = existing_story%>
 						<%= render "ratings_partial" %>
 	 				</p>
-	 		</div>
-    </div>
-  </li>
-  <%end%>
-</ul>
-
+		
+	</div>
+</div>
+<br>
+<%end%>
 
 
 	</div> <!-- closs out the span	-->
@@ -59,7 +68,7 @@
 <%if @type == "public" || @type == nil%>
 	<div class="span3">
 		<br><br>
-		<b>This Week's 5 Most Funny</b>
+		<b>This Month's 10 Most Funny</b>
 		<%=@top_rated%>
 		<hr />
 		<% for i in (0..(@top_stories.size-1))%>

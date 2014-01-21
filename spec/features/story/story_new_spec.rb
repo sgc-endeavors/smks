@@ -60,7 +60,8 @@ describe "Story_New Page" do
 		 		last_story.share_type.should == "private"
 		 		last_story.kid.name.should == "Junior"
 		 		last_story.user_id.should == new_story.user_id	
-		 		last_story.status.should == "published"		
+		 		last_story.status.should == "published"
+		 		last_story.published_date.should_not be_nil	
 		  end
 		  it "shows the new story's page" do
 		 		current_path.should == story_path(Story.last)
@@ -76,6 +77,7 @@ describe "Story_New Page" do
 		 		last_story.share_type.should == "private"
 		 		last_story.user_id.should == new_story.user_id	
 		 		last_story.status.should == "draft"		
+		 		last_story.published_date.should be_nil
 		  end
 		  it "shows the new story's page" do
 		 		current_path.should == story_path(Story.last)

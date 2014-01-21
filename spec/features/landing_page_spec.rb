@@ -12,7 +12,7 @@ describe "Landing Page" do
 	end
 
 	it "allow the user to visit the marketing content" do
-		click_on("My Personal Journal")
+		click_on("My Scrapbook")
 		current_path.should == marketing_path
 	end	
 

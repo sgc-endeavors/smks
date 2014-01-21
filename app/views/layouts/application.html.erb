@@ -25,7 +25,7 @@
               <ul class="nav pull-right">
 
                 <% if user_signed_in? %>
-                  <li><a href=<%=stories_path(type: "personal")%>>My Personal Journal</a></li>
+                  <li><a href=<%=stories_path(type: "personal")%>>My Scrapbook</a></li>
                   <% count = Story.where(user_id: current_user.id).where(status: "draft").count%>
                   <%if count > 0%> 
                     <li><a href=<%=stories_path(type: "draft")%>>Finish Drafts(<%=count%>)</a></li>

@@ -16,7 +16,7 @@ class StoriesController < ApplicationController
 
  	@type = params[:type]
  	if params[:type] == "public" || params[:type] == nil
- 		@existing_stories = Story.where(share_type: "public").where(status: "published").order("id desc")	
+ 		@existing_stories = Story.where(share_type: "public").where(status: "published").order("published_date desc")	
 		@top_stories = Story.joins(:ratings).group("stories.id").count("ratings.id").sort
 		
 
@@ -42,10 +42,11 @@ class StoriesController < ApplicationController
  	new_story = Story.new(params[:story])
  	new_story.kid_id = Kid.where(name: params[:kid_name]).where(user_id: current_user.id).first.id
  	new_story.user_id = current_user.id
- 	new_story.status = if params[:submit]
- 		"published"
+ 	if params[:publish]
+ 		new_story.status = "published"
+ 		new_story.published_date = Time.now.to_datetime
  	else
- 		"draft"
+ 		new_story.status = "draft"
  	end
  	new_story.save!
  	redirect_to story_path(new_story)
@@ -92,10 +93,14 @@ class StoriesController < ApplicationController
 	def update #(post/put)
 		updated_story = Story.find(params[:id])
 		updated_story.update_attributes(params[:story])
-		updated_story.status = if params[:update]
- 			"published"
+
+		if params[:publish]
+ 			updated_story.status = "published"
+ 			if updated_story.published_date == nil
+ 				updated_story.published_date = Time.now.to_datetime
+ 			end
  		else
- 			"draft"
+ 			updated_story.status = "draft"
  		end
  		updated_story.kid_id = Kid.where(name: params[:kid_name]).where(user_id: current_user.id).first.id
  		updated_story.save!

@@ -2,7 +2,7 @@
 
 FactoryGirl.define do
   factory :rating do
-    name "thumbs up"
+    numeric_score 1
     association :user
     association :story
    end
