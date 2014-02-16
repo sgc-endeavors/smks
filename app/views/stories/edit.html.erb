@@ -1,9 +1,9 @@
 <h1>Edit My Story </h1>
 
- <%= image_tag @current_story.image_url(:thumb).to_s %>
-
 
 <%= form_for(@current_story, url: story_path(@current_story), html: {method: "put"} ) do |f| %>
+
+	<%=image_tag Image.where(story_id: @current_story).first.s3_image_loc_url(:thumb).to_s%>
 
 	<%= f.label :title, "Title:", for: "title" %>
 	<%= f.text_field :title, id: "title" %> 
@@ -15,10 +15,7 @@
 	<br>
 
 	<%= f.label :body, "Body:", for: "body" %>
-	<%= f.text_area :body, id: "body" %>
-
-	<%= f.label :image, "Change story's picture" %>
-	<%= f.file_field :image %>
+	<%= f.text_area :body, id: "body" %><br>
 
 	<%= f.label :share_type%>
 	<%= f.select :share_type, options_for_select(["public", "private"], @current_story.share_type)%>

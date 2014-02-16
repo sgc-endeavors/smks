@@ -18,16 +18,16 @@ class Ability
 		end
 	
 		if user.is_admin?
-			can :manage, Comment
+			can :manage, Remark
 		elsif user.id != nil
-			can :create, Comment
+			can :create, Remark
 		end
-			can :read, Comment
-			can :update, Comment do |comment|
-				comment.user == user
+			can :read, Remark
+			can :update, Remark do |remark|
+				remark.user == user
 			end
-			can :destroy, Comment do |comment|
-				comment.user == user
+			can :destroy, Remark do |remark|
+				remark.user == user
 			end
 	end
 

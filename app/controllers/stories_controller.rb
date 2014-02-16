@@ -42,6 +42,7 @@ class StoriesController < ApplicationController
  	new_story = Story.new(params[:story])
  	new_story.kid_id = Kid.where(name: params[:kid_name]).where(user_id: current_user.id).first.id
  	new_story.user_id = current_user.id
+
  	if params[:publish]
  		new_story.status = "published"
  		new_story.published_date = Time.now.to_datetime
@@ -49,6 +50,12 @@ class StoriesController < ApplicationController
  		new_story.status = "draft"
  	end
  	new_story.save!
+ 	new_image = Image.new
+ 	new_image.s3_image_loc = params[:s3_image_loc]
+ 	new_image.user_id = current_user.id
+ 	new_image.story_id = new_story.id
+ 	new_image.save!
+
  	redirect_to story_path(new_story)
  end
 
@@ -69,7 +76,7 @@ class StoriesController < ApplicationController
 	 	# 	@rating = Rating.where(story_id: @existing_story.id).where(user_id: current_user.id).first || Rating.new
 	 	# end
 	 	# @ratings = Rating.where(story_id: @existing_story.id)
-	 	@comments = Comment.where(story_id: @existing_story.id)
+	 	@remarks = Remark.where(story_id: @existing_story.id)
 
 		###### NEED TO ADD TEST SO THAT YOU CAN NOT BACKDOOR SOMEONES STORY VIA TYPING IN THE URL
 		#CURRENTLY YOU CAN.

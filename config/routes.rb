@@ -1,13 +1,17 @@
 App::Application.routes.draw do
   
-  devise_for :users
-
   root :to => "stories#landing_page"
+
+  devise_for :admin_users, ActiveAdmin::Devise.config
+  ActiveAdmin.routes(self)
+
+  devise_for :users
+  ActiveAdmin.routes(self)
 
   get "/marketing" => "stories#marketing", as: "marketing"
   get "/landing_page" => "stories#landing_page", as: "landing_page"
 
-  resources :users, :stories, :ratings, :comments, :kids
+  resources :users, :stories, :ratings, :remarks, :kids, :images
   # The priority is based upon order of creation:
   # first created -> highest priority.
 
@@ -36,13 +40,13 @@ App::Application.routes.draw do
 
   # Sample resource route with sub-resources:
   #   resources :products do
-  #     resources :comments, :sales
+  #     resources :remarks, :sales
   #     resource :seller
   #   end
 
   # Sample resource route with more complex sub-resources
   #   resources :products do
-  #     resources :comments
+  #     resources :remarks
   #     resources :sales do
   #       get 'recent', :on => :collection
   #     end

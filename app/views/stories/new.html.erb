@@ -6,9 +6,10 @@ end%>
 
 <h1>Create a Story <%=header%> </h1>
 
- <img src="/images/riley.jpg" width="400"/>
-
 <%= form_for(@new_story, html: { multipart: true }, url: stories_path(@new_story)) do |f| %>
+	
+	<%=file_field_tag :s3_image_loc%>
+
 	<%= f.label :title, "Title:", for: "title" %>
 	<%= f.text_field :title, id: "title" %> 
 
@@ -19,8 +20,6 @@ end%>
 
 	<%= f.label :body, "Body:", for: "body" %>
 	<%= f.text_area :body, id: "body" %>
-
-	<%= f.file_field :image %>
 
 	<%= f.label :share_type, "Share Type:", for: "share_type" %>
 	<%= f.select :share_type, options_for_select(["public", "private"], @share_type) %><br>

@@ -26,9 +26,7 @@
 <div class="row-fluid thumbnail">
 
 	<div class= "span3">
-		  <a href=<%=story_path(existing_story, type: @type)%>> 
-		  	<img src="/images/riley.jpg" width="250"/>
-		  </a>
+		<%=image_tag Image.where(story_id: existing_story.id).first.s3_image_loc_url(:thumb).to_s if Image.where(story_id: existing_story.id).first%>
 	</div>
 	<div class= "span9" >
 		<h4 style="display: inline"><%= link_to existing_story.title, story_path(existing_story, type: @type) %></h4>

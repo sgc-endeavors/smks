@@ -10,6 +10,7 @@ gem 'pg'
 
 gem 'carrierwave'
 gem 'rmagick'
+#gem 'imagemagick'
 
 # Gems used only for assets and not required
 # in production environments by default.
@@ -23,7 +24,7 @@ group :assets do
   gem 'uglifier', '>= 1.0.3'
 end
 
-gem 'jquery-rails'
+gem "jquery-rails", "< 3.0.0"
 
 # To use ActiveModel has_secure_password
 # gem 'bcrypt-ruby', '~> 3.0.0'
@@ -57,7 +58,7 @@ gem 'jquery-rails'
 
   gem 'cancan'
   gem 'devise'
-
+  gem 'activeadmin'
 
 gem "therubyracer"
 gem "less-rails" #Sprockets (what Rails 3.1 uses for its asset pipeline) supports LESS

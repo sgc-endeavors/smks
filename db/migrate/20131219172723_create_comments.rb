@@ -1,6 +1,6 @@
-class CreateComments < ActiveRecord::Migration
+class CreateRemarks < ActiveRecord::Migration
   def change
-    create_table :comments do |t|
+    create_table :remarks do |t|
       t.text :body
       t.boolean :approved
       t.integer :story_id

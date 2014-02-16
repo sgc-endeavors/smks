@@ -47,12 +47,12 @@ def update_existing_story
   select "private", from: "Share type" 
 end
 
-def submit_a_new_comment(new_comment)
+def submit_a_new_remark(new_remark)
   fill_in "body", with: "That was the funniest thing I've ever read..."
   click_on("Submit")
 end
 
-def update_an_existing_comment(comment)
+def update_an_existing_remark(remark)
   fill_in "body", with: "That was the dumbest thing I've ever read..."
   click_on("Update")
 end
@@ -74,7 +74,7 @@ Dir[Rails.root.join("spec/support/**/*.rb")].each { |f| require f }
 RSpec.configure do |config|
   # ## Mock Framework
   #
-  # If you prefer to use mocha, flexmock or RR, uncomment the appropriate line:
+  # If you prefer to use mocha, flexmock or RR, unremark the appropriate line:
   #
   # config.mock_with :mocha
   # config.mock_with :flexmock

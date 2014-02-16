@@ -6,8 +6,8 @@ describe "Story_Show Page" do
 	before(:each) do
 		@user = FactoryGirl.create(:user)
 		@current_story = FactoryGirl.create(:story, id: 6, status: "published", published_date: Date.new(2012, 12, 3), share_type: "public", title: "Eating Boogers", body: "Booger eating story...")
-		@comment = FactoryGirl.create(:comment, story_id: @current_story.id, user_id: @user.id)
-		FactoryGirl.create(:comment, story_id: 99999, body: "I'm a comment not related to this story") # <- a comment not related to the current story.
+		@remark = FactoryGirl.create(:remark, story_id: @current_story.id, user_id: @user.id)
+		FactoryGirl.create(:remark, story_id: 99999, body: "I'm a remark not related to this story") # <- a remark not related to the current story.
 		sign_in_as_existing_user(@user)
 		visit story_path(@current_story)
 	end
@@ -158,8 +158,8 @@ describe "Story_Show Page" do
 		it "should not be able to 'Show Journal'" do
 			should_not have_link("Show Scrapbook")
 		end
-		it "should not be able to create a comment without first logging in" do
-			click_on("Create Comment")
+		it "should not be able to create a remark without first logging in" do
+			click_on("Create Remark")
 			current_path.should == new_user_session_path
 		end
 
@@ -168,38 +168,38 @@ describe "Story_Show Page" do
 
 
 ##### COMMENTS SECTION #####
-	it "allows the user to access the comment/new view" do
-		click_on("Create Comment")
-		current_path.should == new_comment_path
+	it "allows the user to access the remark/new view" do
+		click_on("Create Remark")
+		current_path.should == new_remark_path
 	end
 
-	it "includes a listing of all the comments for the story" do
+	it "includes a listing of all the remarks for the story" do
 		should have_content("That was the funniest thing I've ever read...")
-		should_not have_content("I'm a comment not related to this story")
+		should_not have_content("I'm a remark not related to this story")
 	end
 
 	
 
 
-	context "the current user authored the comment" do
-		it { should have_link("Edit Comment") }
+	context "the current user authored the remark" do
+		it { should have_link("Edit Remark") }
 		it { should have_link("Delete") }
 	
 		it "routes the user to edit view when the user presses 'Edit'" do
-			click_on("Edit Comment")
-			current_path.should == edit_comment_path(@comment)
+			click_on("Edit Remark")
+			current_path.should == edit_remark_path(@remark)
 		end
 
 
 	end
 
-	context "the current user did not author the comment" do
+	context "the current user did not author the remark" do
 		before(:each) do
-			FactoryGirl.create(:comment, story_id: @current_story.id, user_id: 9999)
+			FactoryGirl.create(:remark, story_id: @current_story.id, user_id: 9999)
 			visit story_path(@current_story)
 		end
 
-		it { should_not have_link("Edit Comment") }		
+		it { should_not have_link("Edit Remark") }		
 		it { should_not have_link("Delete") }
 
 

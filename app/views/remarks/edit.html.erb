@@ -1,0 +1,15 @@
+
+<h1>Edit My Remark </h1>
+
+
+<%= form_for(@remark, url: remark_path(@remark), html: {method: "put"} ) do |f| %>
+
+
+	<%= f.label :body, "Body:", for: "body" %>
+	<%= f.text_area :body, id: "body" %>
+
+	<br>
+	<%= submit_tag "Update" %>
+	< %= link_to "Cancel", story_path(@current_story)%>
+
+<%end%>

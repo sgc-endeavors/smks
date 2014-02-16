@@ -5,13 +5,12 @@
 	 <%=link_to "<<", story_path(@previous_story, type: @type)%>
 	 <%end%>
 	 
-	 <%= image_tag @existing_story.image_url(:thumb).to_s %>
-
-	 <!-- <img src="/images/riley.jpg" width="400"/>  -->
 	 
 	 <%if @next_story.blank? == false%>
 	 <%=link_to ">>", story_path(@next_story, type: @type)%>
 	 <%end%>
+
+	<%=image_tag Image.where(story_id: @existing_story.id).first.s3_image_loc_url(:thumb).to_s%>
 
 	<h3><%=@existing_story.title%> </h3>
 
@@ -31,14 +30,14 @@
 
 	<%= render "ratings_partial" %>
 
-	<h4>Comments</h4>
-	<%= link_to "Create Comment", new_comment_path(story_id: @existing_story.id) %> 
+	<h4>Remarks</h4>
+	<%= link_to "Create Remark", new_remark_path(story_id: @existing_story.id) %> 
 <br>
-	<%@comments.each do |comment| %>
-	<%=comment.body%>	- <%=comment.user.first_name.capitalize%>  
-	<%if can? :update, comment %>
-		| <%= link_to "Edit Comment", edit_comment_path(comment)%> 
-		| <%= link_to "Delete", comment_path(comment)%>
+	<%@remarks.each do |remark| %>
+	<%=remark.body%>	- <%=remark.user.first_name.capitalize%>  
+	<%if can? :update, remark %>
+		| <%= link_to "Edit Remark", edit_remark_path(remark)%> 
+		| <%= link_to "Delete", remark_path(remark)%>
 	<%end%>
 	
 		<br>

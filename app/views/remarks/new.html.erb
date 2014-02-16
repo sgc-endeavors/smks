@@ -1,0 +1,14 @@
+<h1>Create a Remark</h1>
+
+
+
+<%= form_for(@new_remark, url: remarks_path(@new_remark)) do |f| %>
+	<%= f.label :body, "Remark", for: "body" %>
+	<%= f.text_area :body, id: "body" %><br>
+
+	<%= f.hidden_field :story_id, value: @story_id%>
+
+	<%= submit_tag "Submit" %>
+
+<%end%>
+
