@@ -10,7 +10,7 @@
 	 <%=link_to ">>", story_path(@next_story, type: @type)%>
 	 <%end%>
 
-	<%=image_tag Image.where(story_id: @existing_story.id).first.s3_image_loc_url(:thumb).to_s%>
+	<%=image_tag Image.where(story_id: @existing_story.id).first.s3_image_loc_url(:thumb).to_s if Image.where(story_id: @existing_story.id).first%>
 
 	<h3><%=@existing_story.title%> </h3>
 
