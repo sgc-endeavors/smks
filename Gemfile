@@ -63,6 +63,9 @@ gem "jquery-rails", "< 3.0.0"
 gem "therubyracer"
 gem "less-rails" #Sprockets (what Rails 3.1 uses for its asset pipeline) supports LESS
 gem "twitter-bootstrap-rails"
+gem 'fog'
+#gem 'carrierwave_direct'
+#gem 'sidekiq'
   
 #gem 'sass-rails', '>=3.2' - already reference above
 #gem 'bootstrap-sass', '~> 3.0.3.0'
