@@ -25,7 +25,7 @@ def sign_up_as_a_new_user(new_user)
     click_on "Create Account"
 end
 
-def submit_a_new_story(new_story)
+def publish_a_new_story(new_story)
   fill_in "title", with: new_story.title
   fill_in "body", with: new_story.body
   select "Junior", from: "Child's First Name:"

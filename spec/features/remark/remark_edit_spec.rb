@@ -29,7 +29,6 @@ describe "Remark_Edit Page" do
   	a_non_authored_remark = FactoryGirl.create(:remark) 
   	visit edit_remark_path(a_non_authored_remark.id)
   	current_path.should == root_path
-
   end
 
 end

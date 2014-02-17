@@ -7,10 +7,8 @@ FactoryGirl.define do
     approved false
     association :user
     association :kid
-    #user_id 1
     share_type "public"
    #published_date Date.new(2012, 12, 3)
     category_id 1
-    picture_id 1
   end
 end

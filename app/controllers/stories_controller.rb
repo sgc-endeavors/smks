@@ -13,13 +13,10 @@ class StoriesController < ApplicationController
  	unless current_user == nil
  		@draft_stories_count = Story.where(status: "draft").where(user_id: current_user.id).count
  	end
-
- 	@type = params[:type]
+	@type = params[:type]
  	if params[:type] == "public" || params[:type] == nil
  		@existing_stories = Story.where(share_type: "public").where(status: "published").order("published_date desc")	
 		@top_stories = Story.joins(:ratings).group("stories.id").count("ratings.id").sort
-		
-
  	elsif params[:type] == "personal"
 		 	@existing_stories = Story.where(status: "published").where(user_id: current_user.id).order("id desc")
  	elsif params[:type] == "draft"
@@ -32,9 +29,9 @@ class StoriesController < ApplicationController
  	@new_story = Story.new
 	@share_type = if params[:type] 
 	 		"public"
-	 	else
-	 		User.find(current_user.id).default_share_preference
-	 	end 
+ 	else
+ 		User.find(current_user.id).default_share_preference
+ 	end 
  	render :new
  end
 
@@ -62,20 +59,15 @@ class StoriesController < ApplicationController
 	def show #(get)
 		@type = params[:type]
 	 	@existing_story = Story.find(params[:id])
-	 	if @type == "public" || params[:type] == nil
+	 	if @type == "public" || @type == nil
  			@next_story = Story.where(share_type: "public").where(status: "published").order(:id).where("id > #{params[:id].to_i}").first
 			@previous_story = Story.where(share_type: "public").where(status: "published").order(:id).where("id < #{params[:id].to_i}").last	 			
 	 	elsif @type == "personal"
-		 	@next_story = Story.where(status: "published").where(user_id: current_user.id).order(:id).where("id > #{params[:id].to_i}").first
+			@next_story = Story.where(status: "published").where(user_id: current_user.id).order(:id).where("id > #{params[:id].to_i}").first
 			@previous_story = Story.where(status: "published").where(user_id: current_user.id).order(:id).where("id < #{params[:id].to_i}").last
 	 	end
 
-	 	# if current_user == nil   
-	 	# 	@rating = Rating.new
-	 	# else
-	 	# 	@rating = Rating.where(story_id: @existing_story.id).where(user_id: current_user.id).first || Rating.new
-	 	# end
-	 	# @ratings = Rating.where(story_id: @existing_story.id)
+	 
 	 	@remarks = Remark.where(story_id: @existing_story.id)
 
 		###### NEED TO ADD TEST SO THAT YOU CAN NOT BACKDOOR SOMEONES STORY VIA TYPING IN THE URL
@@ -87,11 +79,17 @@ class StoriesController < ApplicationController
 
 	def edit #(get)
 		@current_story = Story.find(params[:id])
-		if @current_story.kid != nil
-			@kid_name = @current_story.kid.name
+		@kid_name = if @current_story.kid
+			@current_story.kid.name
 		else
-			@kid_name = nil
+			nil
 		end
+
+		# if @current_story.kid != nil
+		# 	@kid_name = @current_story.kid.name
+		# else
+		# 	@kid_name = nil
+		# end
 
 		authorize! :update, @current_story
 		render :edit

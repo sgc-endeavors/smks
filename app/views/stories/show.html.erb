@@ -1,16 +1,8 @@
 <br><br>
-	 <div align="middle">
-
-	<%if @previous_story.blank? == false%>
-	 <%=link_to "<<", story_path(@previous_story, type: @type)%>
-	 <%end%>
-	 
-	 
-	 <%if @next_story.blank? == false%>
-	 <%=link_to ">>", story_path(@next_story, type: @type)%>
-	 <%end%>
-
-	<%=image_tag Image.where(story_id: @existing_story.id).first.s3_image_loc_url(:thumb).to_s if Image.where(story_id: @existing_story.id).first%>
+	<div align="middle">
+		<%=link_to "<<", story_path(@previous_story, type: @type) if @previous_story%>
+		<%=link_to ">>", story_path(@next_story, type: @type) if @next_story%>
+		<%=image_tag Image.where(story_id: @existing_story.id).first.s3_image_loc_url(:thumb).to_s if Image.where(story_id: @existing_story.id).first%>
 
 	<h3><%=@existing_story.title%> </h3>
 
