@@ -3,50 +3,73 @@ require 'spec_helper'
 describe "User_Index Page" do
 
 	before(:each) do 
-    2.times { FactoryGirl.create(:user) }
+    @user = FactoryGirl.create(:user)
+    @second_user = FactoryGirl.create(:user, email: "robsmith11@gmail.com")
     visit users_path   
   end
   
   subject { page }
 
-  it "shows the page title" do
-    within("h1") { should have_content("User Index") }
+  it "routes the visitor to sign in if they haven't already done so" do
+  	current_path.should == new_user_session_path
   end
 
-  it "shows user information for multiple 'Joes'" do
-		should have_content(User.first.first_name)
-		should have_content(User.last.last_name)
-		should have_content(User.first.email)
-	end
+  context "user has signed in" do
+  	before(:each) do
+  		sign_in_as_existing_user(@user)
+  		visit users_path
+  	end
+	  it "shows the page title" do
+	    within("h1") { should have_content("Find a Friend") }
+	  end
+	 
+	  it "has a search field for the user to find friends" do
+	  	should have_field "search"
+	  	should have_button "Search"
+	  end
 
-	#DISABLED FOLLOWING TESTS DUE TO DEVISE FUNCTIONALITY REQUIRING USER PASSWORD TO MAKE CHANGES TO ACCOUNT
-	# context "user presses the edit link" do
-
-	# 	before(:each) do
-	# 		first(:link, "Edit").click
-	# 	end
-
-	# 	it "has an 'Edit' link for each user" do
-	# 		current_path.should == edit_user_path(User.first)
-	# 	end
+		context "user inputs 'Rob' in the search field and searches" do
+			before(:each) do
+				fill_in "search", with: "Rob"
+				click_on "Search"
+			end
+			
+			it { should have_content("robsmith11@gmail.com") }
+			it { should have_link("Add as Friend") }
 	
-	# end
+			context "user clicks 'Add as Friend'" do
+				before(:each) { click_on "Add as Friend" }
 
-	# context "user presses the delete link" do
-		
-	# 	before(:each) do
-	# 		@destroyed_user = User.first.first_name
-	# 		first(:link, "Delete").click
-	# 	end
+				it "creates a new friendship w/ Rob" do
+					Friendship.last.friend_id.should == @second_user.id
+				end
+				it 'routes user back to the user index view' do
+					current_path.should == users_path
+				end
+			end
 
-	# 	it "has a 'delete' link which destroys the user" do 
-	# 		#search database for @destroyed_user to see if it still exists @destroyed_user.reload.should be_nil>>>> THE TEST WRITTEN THIS WAY DOES NOT PASS.
-	# 		User.first.first_name.should_not == @destroyed_user 
-	# 	end
 
-	# 	it "after destroy it returns the user to the index view" do
-	# 		current_path.should == users_path
-	# 	end
+	  end
 
-	# end
+
+
+
+
+
+
+
+
+
+
+
+	  context "user inputs 'Larry' in the search field and searches" do
+			it "returns 'No user's found with that name. Search again.'" do
+				fill_in "search", with: "Larry"
+				click_on "Search"
+				should have_content("No user's found with that name. Search again.")
+			end
+	  end
+
+
+	end
  end

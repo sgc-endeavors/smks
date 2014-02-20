@@ -1,4 +1,5 @@
 class UsersController < ApplicationController
+  before_filter :authenticate_user!
   
   # def new
   #   @new_user = User.new
@@ -34,7 +35,9 @@ class UsersController < ApplicationController
 	# end
 
 	def index
-		@existing_users = User.all
+		if params[:search] && params[:search] != ""
+			@users = User.where("email ilike ?", "%#{params[:search]}%").all#.where('name not like', "#{current_user.email}").all
+		end
 		render :index
 	end
 

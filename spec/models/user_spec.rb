@@ -10,7 +10,10 @@ describe User do
   it { should have_many(:ratings) }
   it { should have_many(:remarks) }
   it { should have_many(:kids) }
-  it { should have_many(:images)}
+  it { should have_many(:images) }
+  it { should have_many(:friendships) }
+  it { should have_many(:friends) }
+
   it { should validate_presence_of(:email) }
   it { should validate_uniqueness_of(:email) }
 

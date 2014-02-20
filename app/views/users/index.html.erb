@@ -1,9 +1,21 @@
-<h1>User Index</h1>
+<h1>Find a Friend</h1>
 
-<% for existing_user in @existing_users %>
-<%= existing_user.first_name %>
-<%= existing_user.last_name %>
-<%= existing_user.email %>
-<%= existing_user.id %>
-<br>
-<% end %>
+<%=form_tag users_path, method: :get do %>
+
+<%=text_field_tag :search, params[:search]%>
+<%=submit_tag "Search", name: nil%>
+
+<%end%>
+
+<% if @users != [] && @users != nil%>
+	<ul>
+		<%@users.each do |user|%>
+			<li>
+				<%=user.email%>
+				<%=link_to "Add as Friend", friendships_path(friend_id: user), method: :post%>
+			</li>
+		<%end%>
+	</ul>
+<%else%>
+	<p>No user's found with that name. Search again.</p>
+<%end%>
