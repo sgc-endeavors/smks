@@ -34,13 +34,7 @@ class UsersController < ApplicationController
 	# 	redirect_to user_path
 	# end
 
-	def index
-		if params[:search] && params[:search] != ""
-			@users = User.where("email ilike ?", "%#{params[:search]}%").all#.where('name not like', "#{current_user.email}").all
-		end
-		render :index
-	end
-
+	
 	# def destroy
 	# 	destroyed_user = User.find(params[:id])
 	# 	destroyed_user.destroy
