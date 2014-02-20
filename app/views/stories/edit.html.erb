@@ -3,7 +3,7 @@
 
 <%= form_for(@current_story, url: story_path(@current_story), html: {method: "put"} ) do |f| %>
 
-	<%=image_tag Image.where(story_id: @current_story).first.s3_image_loc_url(:thumb).to_s if Image.where(story_id: @current_story.id).first%>
+	<%=image_tag Image.where(story_id: @current_story).first.s3_image_loc_url.to_s if Image.where(story_id: @current_story.id).first%>
 
 	<%= f.label :title, "Title:", for: "title" %>
 	<%= f.text_field :title, id: "title" %> 
