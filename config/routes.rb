@@ -9,9 +9,9 @@ App::Application.routes.draw do
   devise_for :admin_users, ActiveAdmin::Devise.config
   ActiveAdmin.routes(self)
 
-  devise_for :users
+  devise_for :users, :controllers => { registrations: "users/registrations"}
   ActiveAdmin.routes(self)
-
+  
   get "/marketing" => "stories#marketing", as: "marketing"
   get "/landing_page" => "stories#landing_page", as: "landing_page"
 

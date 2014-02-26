@@ -57,6 +57,11 @@ def update_an_existing_remark(remark)
   click_on("Update")
 end
 
+def cancel_account(existing_user)
+  click_on "Profile"
+  click_on "Cancel my account"
+end
+
 
 # class ActionDispatch::IntegrationTest
 #     include Capybara::DSL

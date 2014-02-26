@@ -103,6 +103,10 @@ describe "Story_Index Page" do
 				before(:each) do
 					#private_story above +
 					@another_story = FactoryGirl.create(:story, status: "published", user_id: @user.id, published_date: Date.new(2012, 12, 3), share_type: "public")
+					@image_for_another_story = FactoryGirl.create(:image, story_id: @another_story.id)
+					@rating_for_another_story = FactoryGirl.create(:rating, story_id: @another_story.id)
+					@remark_for_another_story = FactoryGirl.create(:remark, story_id: @another_story.id)
+
 					visit stories_path(type: "public")	
 				end
 
@@ -115,6 +119,23 @@ describe "Story_Index Page" do
 				end
 				it "shows the delete link for only those public published stories authored by the user" do
 					should have_link("Delete", count: 1)
+				end
+
+				context "users wants to delete the story" do
+					before(:each) { click_on "Delete" }
+						it "deletes the story" do
+							expect { Story.find(@another_story.id)}.to raise_error(ActiveRecord::RecordNotFound)	
+						end
+						it "deletes the image associated with the story" do
+							expect { Image.find(@image_for_another_story.id)}.to raise_error(ActiveRecord::RecordNotFound)	
+						end
+						it "deletes the remarks associated with the story" do
+							expect { Remark.find(@remark_for_another_story.id)}.to raise_error(ActiveRecord::RecordNotFound)	
+						end
+						it "deletes the ratings associated with the story" do
+							expect { Rating.find(@rating_for_another_story.id)}.to raise_error(ActiveRecord::RecordNotFound)	
+						end
+
 				end
 			end
 			

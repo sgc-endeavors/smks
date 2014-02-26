@@ -3,10 +3,10 @@ class Story < ActiveRecord::Base
   validates :title, presence: true
   validates :user_id, presence: true
   belongs_to :user
-  has_many :ratings
-  has_many :remarks
+  has_many :ratings, dependent: :destroy
+  has_many :remarks, dependent: :destroy
   belongs_to :kid
-  has_many :images
+  has_many :images, dependent: :destroy
 
   
 end

@@ -2,7 +2,7 @@ class StoriesController < ApplicationController
 	before_filter :authenticate_user!, except: [ :landing_page, :index, :show, :marketing ]
 
  def landing_page
- 	render :landing_page, layout:false
+ 	render :landing_page
  end
 
  def marketing
@@ -113,7 +113,7 @@ class StoriesController < ApplicationController
 	end
 
 	def destroy #(post/delete)
-		Story.find(params[:id]).destroy
+		current_user.stories.find(params[:id]).destroy
 		redirect_to stories_path(type: "personal")
 	end
 end

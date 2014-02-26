@@ -10,12 +10,12 @@ class User < ActiveRecord::Base
     validates :terms, :acceptance => {:accept => true}
     #NEED TO RESOLVE ISSUES W/ THE ABOVE VALIDATION
     
-    has_many :stories
+    has_many :stories, dependent: :destroy
     has_many :ratings
     has_many :remarks
-    has_many :kids
+    has_many :kids, dependent: :destroy
     has_many :images
-    has_many :friendships
+    has_many :friendships, dependent: :destroy
     has_many :friends, through: :friendships
     
 end
