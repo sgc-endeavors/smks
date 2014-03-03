@@ -13,6 +13,7 @@ class FriendshipsController < ApplicationController
 			@users = User.where("email ilike ?", "%#{params[:search]}%").all#.where('name not like', "#{current_user.email}").all
 		end
 		@friendships = current_user.friendships
+    @inverse_friendships = current_user.inverse_friendships
 		render :index
 	end
 

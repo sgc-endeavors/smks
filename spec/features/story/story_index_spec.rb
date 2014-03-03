@@ -41,7 +41,7 @@ describe "Story_Index Page" do
 					visit stories_path(type: "public")
 				end
 				it "shows the average rating for a story with ratings" do	
-					should have_content("Ha-Ha Rating: 4x (per 2 people")
+					should have_content("Awesomeness: 4x (per 2 people")
 				end
 			end
 
@@ -179,8 +179,8 @@ describe "Story_Index Page" do
 				should have_content("My Private Story")
 			end
 
-			it "should be titled 'My Scrapbook'" do
-				should have_content("My Scrapbook")
+			it "should be titled 'My Journal'" do
+				should have_content("My Journal")
 			end
 
 			it "allows user to access the story edit page for their stories" do 
@@ -198,6 +198,53 @@ describe "Story_Index Page" do
 				current_path.should == root_path
 			end
 		end
+
+		context "user wants to see all his and his friend's 'shared w/ friends' stories" do
+			
+			context "user has been friended by someone" do
+				before(:each) do
+					@users_friend = FactoryGirl.create(:user) 
+					FactoryGirl.create(:friendship, friend_id: @user.id, user_id: @users_friend.id)
+					@stranger = FactoryGirl.create(:user)
+				end
+
+				context "user and friend have created stories" do
+					before(:each) do
+						@users_shared_published_story = FactoryGirl.create(:story, user_id: @user.id, title: "A Users Shared Published Story", share_type: "with friends", status: "published")
+						@users_shared_draft_story = FactoryGirl.create(:story, user_id: @user.id, title: "A Users Shared Draft Story", share_type: "with friends", status: "draft")
+						@users_public_published_story = FactoryGirl.create(:story, user_id: @user.id, title: "A Users Public Published Story", share_type: "public", status: "published")
+						@users_private_published_story = FactoryGirl.create(:story, user_id: @user.id, title: "A Users Private Published Story", share_type: "private", status: "published")
+						@users_friends_shared_published_story = FactoryGirl.create(:story, user_id: @users_friend.id, title: "A Friends Shared Published Story", share_type: "with friends", status: "published")
+						@users_friends_public_published_story = FactoryGirl.create(:story, user_id: @users_friend.id, title: "A Friends Public Published Story", share_type: "public", status: "published")						
+						@users_friends_private_published_story = FactoryGirl.create(:story, user_id: @users_friend.id, title: "A Friends Private Published Story", share_type: "private", status: "published")						
+
+						@strangers_shared_published_story = FactoryGirl.create(:story, user_id: @stranger.id, title: "A Non-Friends Shared Published Story", share_type: "with friends", status: "published")
+						visit stories_path(type: "shared")
+					end
+
+					it {should have_content "Me & My Friends' Shared Stories" }
+					it { should have_content "A Users Shared Published Story" }
+					it { should have_content "A Users Public Published Story" }  			#  <-- inlcudes "public" stories as well as "with friends" stories
+					it { should_not have_content "A Users Shared Draft Story" }  			#  <-- only includes "published" stories
+					it { should_not have_content "A Users Private Published Story" }  #  <-- does not inlcude "private" published stories
+					it { should have_content "A Friends Shared Published Story" }
+					it { should_not have_content "A Non-Friends Shared Published Story" }
+					it { should have_content "A Friends Public Published Story" }
+					it { should_not have_content "A Friends Private Published Story" }
+
+				end #context user and friend created stories.
+			end #context user has friends
+		end #context user wants to see friends stories
+
+
+
+
+
+
+
+
+
+
 	end	
 
 	context "visitor has NOT logged in" do

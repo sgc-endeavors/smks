@@ -61,9 +61,9 @@ describe "Friendship_Index Page" do
 		describe "Friendship#List_of_Friends_Section" do
 			it { should have_content "My Friends" }
 
-			context "user has no friends" do
+			context "user has not yet added friends" do
 				before(:each) { visit friendships_path }
-				it { should have_content "Hey Fatty Loser, you have no friends.... cuz your fat... and a loser!" }
+				it { should have_content "You have not yet added any friends." }
 			end
 
 			context "user has friends" do
@@ -88,10 +88,31 @@ describe "Friendship_Index Page" do
 
 
 			end
+		end
 
+		describe "Friendship#List_of_Befriended_Section" do
+			it { should have_content "Friended by" }
 
+			context "user has not yet been befriended" do
+				before(:each) { visit friendships_path }
+				it { should have_content "You have not yet been added as a friend by anyone." }
+			end
+
+			context "user has been befriended by someone" do
+				before(:each) do
+					FactoryGirl.create(:friendship, user_id: @second_user.id, friend_id: user.id)
+					visit friendships_path
+				end
+
+				it "displays the list of people who have 'befriended' the user" do
+					should have_content("Fred")
+					should have_content("Friend")
+				end
+
+			end
 
 		end
+
 	end
 end
 

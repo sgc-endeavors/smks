@@ -24,15 +24,15 @@
 <%end%>
 
 
-<p>Ha-Ha Rating: <%=average_score%> <i>(per <%=@ratings.count%> <%=people%>) </i>
+<p>Awesomeness: <%=average_score%> <i>(per <%=@ratings.count%> <%=people%>) </i>
 	<%if current_user != nil && @existing_story.user_id != current_user.id%>
 		<%if @rating.numeric_score != nil%>
-			<br><%="You gave this #{@rating.numeric_score} Ha-Ha's"%></p>
+			<br><%="You thought this was #{@rating.numeric_score}x Awesome"%></p>
 		<%else%>
 
 			<%= form_for(@rating, url: ratings_path) do |f| %> 
 			 	<div>
-			 	How Many Ha-Ha's?: <br>
+			 	Awesomeness Rating?: <br>
 			 	 
 			 	<%= hidden_field_tag :story_id, @existing_story.id %>
 			 	<%= button_tag "0", name: "rating", value: 0, class: "btn btn-small btn-danger " %>

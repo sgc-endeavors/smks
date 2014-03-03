@@ -17,7 +17,7 @@ describe "Navbar Links" do
 
 	context "visitor has not logged in" do
 		it "does NOT allow visitor to click on the My Personal Journal link" do
-			should_not have_link("My Scrapbook")
+			should_not have_link("My Journal")
 		end
 
 		it "allows visitor to click on the Complete Drafts link" do
@@ -35,8 +35,8 @@ describe "Navbar Links" do
 			visit stories_path(type: "public")
 		end
 
-		it "allows visitor to click on the My Personal Journal link" do
-			should have_link("My Scrapbook")
+		it "allows visitor to click on the 'My Stories' link" do
+			should have_link("My Stories")
 		end
 
 		context "user has unfinished drafts" do

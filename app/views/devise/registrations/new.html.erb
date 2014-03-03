@@ -19,7 +19,7 @@
   <%= f.password_field :password_confirmation, id: "password_confirmation" %></div>
 
   <div> <%= f.label :default_share_preference, "Default Share Preference:", for: "default_share_preference" %>
-  <%= f.select :default_share_preference, options_for_select(["public", "private"]) %></div>
+  <%= f.select :default_share_preference, options_for_select(["public", "with friends", "private"]) %></div>
 
   <div> <%= f.label :default_view_preference, "Default View Preference:", for: "default_view_preference" %>
   <%= f.select :default_view_preference, options_for_select(["All", "Only Mine"], resource.default_view_preference) %></div>

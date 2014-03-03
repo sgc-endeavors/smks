@@ -18,7 +18,7 @@
 	<%= f.text_area :body, id: "body" %><br>
 
 	<%= f.label :share_type%>
-	<%= f.select :share_type, options_for_select(["public", "private"], @current_story.share_type)%>
+	<%= f.select :share_type, options_for_select(["public", "with friends", "private"], @current_story.share_type)%>
 
 	<%= f.label :status, "Status#:"%>
 	<%= f.text_field :status%>

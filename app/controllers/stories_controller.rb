@@ -18,7 +18,20 @@ class StoriesController < ApplicationController
  		@existing_stories = Story.where(share_type: "public").where(status: "published").order("published_date desc")	
 		@top_stories = Story.joins(:ratings).group("stories.id").count("ratings.id").sort
  	elsif params[:type] == "personal"
-		 	@existing_stories = Story.where(status: "published").where(user_id: current_user.id).order("id desc")
+		@existing_stories = Story.where(status: "published").where(user_id: current_user.id).order("id desc")
+	elsif params[:type] == "shared"
+		@existing_stories = Story.where(user_id: current_user.id).where(status: "published").where("share_type not like 'private'")
+			friendships = Friendship.where(friend_id: current_user.id).all
+			friendships.each do |friendship|
+				stories = Story.where(user_id: friendship.user_id).where(status: "published").where("share_type not like 'private'").all
+				stories.each do |story|
+					@existing_stories.push(story)
+				end
+			end
+
+
+
+ 			#@existing_stories = Story.where(user_id: friendships).where(status: "published").where("share_type not like 'private'") + Story.where(user_id: current_user.id).where(status: "published").where("share_type not like 'private'") 
  	elsif params[:type] == "draft"
 		@existing_stories = Story.where(status: "draft").where(user_id: current_user.id).order("id desc")
  	end

@@ -1,7 +1,7 @@
 <% header = if @share_type == "public"
 	"to Share"
 else
-	"for my Scrapbook Only"
+	"for my Journal Only"
 end%>
 
 <h1>Create a Story <%=header%> </h1>
@@ -22,7 +22,7 @@ end%>
 	<%= f.text_area :body, id: "body" %>
 
 	<%= f.label :share_type, "Share Type:", for: "share_type" %>
-	<%= f.select :share_type, options_for_select(["public", "private"], @share_type) %><br>
+	<%= f.select :share_type, options_for_select(["public", "with friends", "private"], @share_type) %><br>
 
 	<%= f.hidden_field :user_id, id: "user_id" %>
 

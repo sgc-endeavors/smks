@@ -15,8 +15,8 @@ describe "Story_Show Page" do
 			should_not have_button("1")
 			should_not have_button("3")
 		end
-		it "should not be able to see 'Show Scrapbook'" do
-			should_not have_link("Show Scrapbook")
+		it "should not be able to see 'Show Journal'" do
+			should_not have_link("Show Journal")
 		end
 		it "should not be able to create a remark without first logging in" do
 			click_on("Create Remark")
@@ -41,7 +41,7 @@ describe "Story_Show Page" do
 			end
 
 			it "shows the total ratings for the story" do	
-				should have_content("Ha-Ha Rating: 4x (per 2 people)")
+				should have_content("Awesomeness: 4x (per 2 people)")
 			end
 
 			context "the story is authored by the current_user" do
@@ -96,7 +96,7 @@ describe "Story_Show Page" do
 						visit story_path(@published_non_authored_story)
 					end
 
-					it { should have_content("You gave this 1 Ha-Ha's") }
+					it { should have_content("You thought this was 1x Awesome") }
 					it { should_not have_button("1") }
 				end
 			end

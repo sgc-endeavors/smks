@@ -23,13 +23,29 @@
 <h2> My Friends </h2>
 
 	<% if @friendships == []%>
-		<p>Hey Fatty Loser, you have no friends.... cuz your fat... and a loser!</p>
+		<p>You have not yet added any friends.</p>
 	<%else%>
 		<% for friendship in @friendships%>
 		<%= friendship.friend.first_name%> 
 		<%= friendship.friend.last_name%> |
 		<%= friendship.friend.email%>
-		<small><%= link_to "Remove as Friend", friendship_path(friendship), method: :delete%></small>
+		<small><%= link_to "(Remove as Friend)", friendship_path(friendship), method: :delete%></small>
 		<br>
 		<%end%>
 	<%end%>
+	<br>
+	<small>These are individuals that you are allowing to view your 'shared' content.</small>
+	<hr />
+
+<h2> Friended by </h2>
+	<% if @inverse_friendships == []%>
+		<p>You have not yet been added as a friend by anyone.</p>
+	<%else%>
+		<%current_user.inverse_friends.each do |user|%>
+			<%=user.first_name%>
+			<%=user.last_name%> | 
+			<%=user.email%>
+		<%end%>
+	<%end%>
+	<br><br>
+	<small>These are individuals that are allowing you to view their 'shared' content</small>
