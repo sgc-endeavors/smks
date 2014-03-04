@@ -40,11 +40,7 @@ class StoriesController < ApplicationController
 
  def new #(get)
  	@new_story = Story.new
-	@share_type = if params[:type] 
-	 		"public"
- 	else
- 		User.find(current_user.id).default_share_preference
- 	end 
+	@share_type = User.find(current_user.id).default_share_preference
  	render :new
  end
 

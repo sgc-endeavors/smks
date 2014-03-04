@@ -95,8 +95,8 @@ describe "Story_Index Page" do
 				current_path.should == root_path
 			end
 
-			it "should be titled 'Too Funny Not to Share'" do
-				should have_content("Too Funny Not to Share")
+			it "should be titled 'Share with Everyone'" do
+				should have_content("Share with Everyone")
 			end	
 
 			context "visitor has authored 1 public story" do
@@ -179,8 +179,8 @@ describe "Story_Index Page" do
 				should have_content("My Private Story")
 			end
 
-			it "should be titled 'My Journal'" do
-				should have_content("My Journal")
+			it "should be titled 'My Stories'" do
+				should have_content("My Stories")
 			end
 
 			it "allows user to access the story edit page for their stories" do 

@@ -25,15 +25,6 @@ describe "Story_New Page" do
 		context "user submits a new story" do
 			let(:last_story) { Story.last }
 
-			context "using the 'Share Funny' link" do
-				before(:each) { click_on "Share Funny" }
-				
-				it "defaults stories 'share type' to 'public'" do
-					publish_a_new_story(new_story)
-		 		 	last_story.share_type.should == 'public'
-				end
-			end
-
 			context "using the 'Create' link" do
 				before(:each) { click_on "Create" }
 				

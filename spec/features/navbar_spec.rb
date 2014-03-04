@@ -7,9 +7,9 @@ describe "Navbar Links" do
 	subject { page }
 
 	context "visitor has or has not logged in" do
-		it "has a link to 'Read Funny'" do
-			should have_link("Read Funny")
-			click_on("Read Funny")
+		it "has a link to 'Public'" do
+			should have_link("Public")
+			click_on("Public")
 			current_path.should == stories_path
 		end
 	end
@@ -57,9 +57,9 @@ describe "Navbar Links" do
 		end
 
 
-		it "allows visitor to click on the Share Funny link" do
-			should have_link("Share Funny")
-			click_on("Share Funny")
+		it "allows visitor to click on the Create New link" do
+			should have_link("Create New")
+			click_on("Create New")
 			current_path.should == new_story_path
 		end
 

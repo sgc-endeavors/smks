@@ -1,10 +1,6 @@
-<% header = if @share_type == "public"
-	"to Share"
-else
-	"for my Journal Only"
-end%>
 
-<h1>Create a Story <%=header%> </h1>
+
+<h1>Create a Story </h1>
 
 <%= form_for(@new_story, html: { multipart: true }, url: stories_path(@new_story)) do |f| %>
 	

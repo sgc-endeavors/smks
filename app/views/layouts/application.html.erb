@@ -25,18 +25,19 @@
             <div class = "nav-collapse collapse">
               <ul class="nav pull-right">
 
+               
+                <li><a href=<%=new_story_path%>>Create New</a></li>                              
                 <% if user_signed_in? %>
-                  <li><a href=<%=stories_path(type: "personal")%>>My Stories</a></li>
-                  <li><a href=<%=stories_path(type: "shared")%>>My Friends'</a></li>
-                  
-                  <li><a href=<%=friendships_path%>>+ Friends</a></li>
                   <% count = Story.where(user_id: current_user.id).where(status: "draft").count%>
                   <%if count > 0%> 
                     <li><a href=<%=stories_path(type: "draft")%>>Finish Drafts(<%=count%>)</a></li>
                   <%end%>
+                  <li><a href=<%=stories_path(type: "personal")%>>My Stories</a></li>
+                  <li><a href=<%=stories_path(type: "shared")%>>My Friends'</a></li>
+                  <li><a href=<%=friendships_path%>>+ Friends</a></li>
                 <%end%>
-                <li><a href=<%=new_story_path(type: "public")%>>Share Funny</a></li>                              
-                <li><a href=<%=stories_path(type: "public")%>>Read Funny</a></li>                              
+               
+                <li><a href=<%=stories_path(type: "public")%>>Public</a></li>                              
                 
                 <% if user_signed_in? %>
                   <li><%= link_to "Profile", edit_user_registration_path %></li>
