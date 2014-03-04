@@ -3,7 +3,7 @@
 <%= form_for(@image, url: images_path, html: {multipart: true} ) do |f| %>
 
 	<%=hidden_field_tag :story_id, @story_id%>
-	<%=f.file_field :s3_image_loc%>
+	<%=file_field_tag :s3_image_loc%>
 	<br><br>
 
 	<%= submit_tag "Submit", class: "btn btn-success btn-small" %>
