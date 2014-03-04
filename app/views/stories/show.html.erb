@@ -9,7 +9,7 @@
 	<p><%=@existing_story.body %>~ <%=@existing_story.kid.name%> - Age: ____</p>
 	
 
-<p>By: <%=@existing_story.user.first_name.capitalize%> | Date: <%=@existing_story.published_date.strftime("%m/%d/%Y") %> | Type: <%=@existing_story.share_type%> | Status: <%=@existing_story.status%>
+<p>By: <%=@existing_story.user.first_name.capitalize%> | Date: <%=@existing_story.published_date.strftime("%m/%d/%Y") if @existing_story.published_date %> | Type: <%=@existing_story.share_type%> | Status: <%=@existing_story.status%>
 
 	<% if can? :update, @existing_story  %>
 		| <%= link_to "Edit Story", edit_story_path(@existing_story) %> |

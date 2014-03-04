@@ -33,6 +33,60 @@ describe "Story_Edit Page" do
      		should have_field("body", with: "Booger eating story...")
         #I'm not sure how to write this test for dropdown boxes.
       end
+
+      context "story does not have an associated image" do
+        before(:each) do
+          @published_story = FactoryGirl.create(:story, published_date: Date.new(2012, 12, 3), user_id: @user.id, title: "Eating Boogers", body: "Booger eating story...")
+          visit edit_story_path(@published_story) 
+        end
+
+        it "displays the 'choose file' button " do
+          pending
+        end
+
+        it { should_not have_link "Delete" }
+        it { should_not have_link "Replace" }
+        it { should have_link "Add Image" }
+
+      end
+
+      context "story has an associated image" do
+        before(:each) do
+          @image = FactoryGirl.create(:image, story_id: @published_story.id, user_id: @user.id)
+          visit edit_story_path(@published_story) 
+        end
+      
+        context "user wants to modify the photo associated with the story" do
+          context "user wants to delete the photo" do
+            it { should have_link "Delete" }
+            context "user presses delete" do
+              before(:each) { click_on "Delete" }
+
+              it "deletes the image" do
+                expect {Image.find(@image)}.to raise_error(ActiveRecord::RecordNotFound)
+              end
+              
+              it "routes the user back to the 'show page'" do
+                current_path.should == edit_story_path(@published_story)
+              end
+            end
+          end
+          context "user wants to change the image" do
+            it { should have_link "Replace" }
+            context "user presses 'Replace' " do
+              before(:each) { click_on "Replace"}
+            
+              it "routes the user to the image edit view" do
+                current_path.should == edit_image_path(@image)
+              end
+            end
+
+          end
+
+
+
+        end
+      end
      
       context "user makes edits to the story" do
         let(:updated_story) { Story.find(@published_story.id) }

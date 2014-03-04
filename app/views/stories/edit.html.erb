@@ -1,10 +1,21 @@
 <h1>Edit My Story </h1>
 
 
-<%= form_for(@current_story, url: story_path(@current_story), html: {method: "put"} ) do |f| %>
+<%= form_for(@current_story, url: story_path(@current_story), html: {multipart: true, method: "put"} ) do |f| %>
 
-	<%=image_tag Image.where(story_id: @current_story).first.s3_image_loc_url.to_s if Image.where(story_id: @current_story.id).first%>
 
+
+	<%if Image.where(story_id: @current_story.id).first%>
+		<%=image_tag Image.where(story_id: @current_story).first.s3_image_loc_url.to_s %>
+		<br>
+		<small>
+			<%=link_to "Delete", image_path(Image.where(story_id: @current_story.id).first), method: :delete, confirm: "Are You Sure?"%>
+			&nbsp;&nbsp;
+			<%=link_to "Replace", edit_image_path(Image.where(story_id: @current_story.id).first)%>
+		<%else%>
+			<%=link_to "Add Image", new_image_path(story_id: @current_story.id)%>
+		</small>
+	<%end%>
 	<%= f.label :title, "Title:", for: "title" %>
 	<%= f.text_field :title, id: "title" %> 
 
