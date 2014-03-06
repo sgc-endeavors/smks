@@ -40,7 +40,7 @@
 	 					<%if existing_story.body.length > 300%>
 	 						<%=link_to "...more", story_path(existing_story, type: @type) %>
 	 					<%end%> ~
-	 					<%=existing_story.kid.name%> - Age: ____<br><br>
+	 					<%=existing_story.kid.name%> - <%=existing_story.date_occurred.strftime("%m/%d/%Y") if existing_story.date_occurred%><br><br>
 
 
 						<%@existing_story = existing_story%>   <!--for ratings and facebook partial -->

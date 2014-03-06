@@ -8,7 +8,7 @@
 
 	<h3><%=@existing_story.title%> </h3>
 
-	<p><%=@existing_story.body %>~ <%=@existing_story.kid.name%> - Age: ____</p>
+	<p><%=@existing_story.body %>~ <%=@existing_story.kid.name%> - <%=@existing_story.date_occurred.strftime("%m/%d/%Y") if @existing_story.date_occurred%></p>
 	
 
 

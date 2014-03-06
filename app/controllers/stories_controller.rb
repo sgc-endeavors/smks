@@ -18,7 +18,7 @@ class StoriesController < ApplicationController
  		@existing_stories = Story.where(share_type: "public").where(status: "published").order("published_date desc")	
 		@top_stories = Story.joins(:ratings).group("stories.id").count("ratings.id").sort
  	elsif params[:type] == "personal"
-		@existing_stories = Story.where(status: "published").where(user_id: current_user.id).order("id desc")
+		@existing_stories = Story.where(status: "published").where(user_id: current_user.id).order("date_occurred desc")
 	elsif params[:type] == "shared"
 		all_shared_stories = Story.where(user_id: current_user.id).where(status: "published").where("share_type not like 'private'") + Story.where(user_id: current_user.inverse_friends).where(status: "published").where("share_type not like 'private'")
 		@existing_stories = all_shared_stories.sort_by { |story| story.published_date.to_i * -1 }
@@ -66,8 +66,9 @@ class StoriesController < ApplicationController
  			@next_story = Story.where(share_type: "public").where(status: "published").order(:id).where("id > #{params[:id].to_i}").first
 			@previous_story = Story.where(share_type: "public").where(status: "published").order(:id).where("id < #{params[:id].to_i}").last	 			
 	 	elsif @type == "personal"
-			@next_story = Story.where(status: "published").where(user_id: current_user.id).order(:id).where("id > #{params[:id].to_i}").first
-			@previous_story = Story.where(status: "published").where(user_id: current_user.id).order(:id).where("id < #{params[:id].to_i}").last
+	 		#date = DateTime.strptime()
+			@next_story = Story.where(status: "published").where(user_id: current_user.id).order(:date_occurred).where("id > #{params[:id].to_i}").first
+			@previous_story = Story.where(status: "published").where(user_id: current_user.id).order(:date_occurred).where("id < #{params[:id].to_i}").last
 	 	
 		elsif @type == "shared"
 			@shared_stories = Story.where(user_id: current_user.id).where(status: "published").where("share_type not like 'private'") + Story.where(user_id: current_user.inverse_friends).where(status: "published").where("share_type not like 'private'")
