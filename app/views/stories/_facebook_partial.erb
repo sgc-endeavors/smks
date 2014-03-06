@@ -1,0 +1,7 @@
+<%if @existing_story.status == "published"%>
+	<% if @existing_story.share_type == "public" || (current_user == @existing_story.user && @existing_story.share_type == "with friends")%>
+		<p>
+		  <div class="fb-like" data-href="http://smks.herokuapp.com/stories/<%=@existing_story.id%>" data-layout="button_count" data-action="like" data-show-faces="true" data-share="true" style="vertical-align:top; padding:0px 0px 6px 0px"></div>
+		</p>
+	<%end%>
+<%end%>

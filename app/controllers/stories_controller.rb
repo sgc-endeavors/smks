@@ -1,8 +1,8 @@
 class StoriesController < ApplicationController
-	before_filter :authenticate_user!, except: [ :landing_page, :index, :show, :marketing ]
+	before_filter :authenticate_user!, except: [ :home, :index, :show, :marketing ]
 
- def landing_page
- 	render :landing_page
+ def home
+ 	render :home
  end
 
  def marketing
@@ -20,14 +20,8 @@ class StoriesController < ApplicationController
  	elsif params[:type] == "personal"
 		@existing_stories = Story.where(status: "published").where(user_id: current_user.id).order("id desc")
 	elsif params[:type] == "shared"
-		@existing_stories = Story.where(user_id: current_user.id).where(status: "published").where("share_type not like 'private'")
-			friendships = Friendship.where(friend_id: current_user.id).all
-			friendships.each do |friendship|
-				stories = Story.where(user_id: friendship.user_id).where(status: "published").where("share_type not like 'private'").all
-				stories.each do |story|
-					@existing_stories.push(story)
-				end
-			end
+		all_shared_stories = Story.where(user_id: current_user.id).where(status: "published").where("share_type not like 'private'") + Story.where(user_id: current_user.inverse_friends).where(status: "published").where("share_type not like 'private'")
+		@existing_stories = all_shared_stories.sort_by { |story| story.published_date.to_i * -1 }
 
 
 
@@ -74,6 +68,13 @@ class StoriesController < ApplicationController
 	 	elsif @type == "personal"
 			@next_story = Story.where(status: "published").where(user_id: current_user.id).order(:id).where("id > #{params[:id].to_i}").first
 			@previous_story = Story.where(status: "published").where(user_id: current_user.id).order(:id).where("id < #{params[:id].to_i}").last
+	 	
+		elsif @type == "shared"
+			@shared_stories = Story.where(user_id: current_user.id).where(status: "published").where("share_type not like 'private'") + Story.where(user_id: current_user.inverse_friends).where(status: "published").where("share_type not like 'private'")
+			@sorted_stories = @shared_stories.sort_by { |story| story.published_date.to_i * -1 }
+			@next_story = @sorted_stories[@sorted_stories.find_index { |item| item.id == @existing_story.id} - 1]
+			@previous_story = @sorted_stories[@sorted_stories.find_index { |item| item.id == @existing_story.id} + 1]
+
 	 	end
 
 	 

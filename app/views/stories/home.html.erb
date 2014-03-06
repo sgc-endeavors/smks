@@ -1,13 +1,26 @@
 <br>
 
-  <div class="container">
+  <%if current_user%>
+    <%default_view_preference = User.find(current_user.id).default_view_preference%>
+    <%if default_view_preference == "My Friends"%>
+      <%@view_preference = "shared"%>
+    <%elsif default_view_preference == "My Stories"%>
+      <%@view_preference = "personal"%>
+    <%else%>
+      <%@view_preference = "public"%>
+    <%end%>
+  <%else%>
+    <%@view_preference = nil%>
+  <%end%>
 
+
+  <div class="container">
             <div class="hero-unit">
               <div align="middle">
                 <img src="" width="300"/>
                 <h1>SMKS</h1>                
                   <p>An online journal for new parents.  <br>
-                <a href=<%=stories_path%>>Enter</a></p>
+                <a href=<%=stories_path(type: @view_preference)%>>Enter</a></p>
             </div>
           </div>
           <div class="row" >

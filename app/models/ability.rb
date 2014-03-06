@@ -4,10 +4,6 @@ class Ability
 	def initialize(user)
 		user ||= User.new
 		
-		if user.is_admin?
-			can :manage, Story
-		
-		else
 			can :read, Story
 			can :update, Story do |story|
 				story.user == user
@@ -15,13 +11,11 @@ class Ability
 			can :destroy, Story do |story|
 				story.user == user
 			end
-		end
 	
-		if user.is_admin?
-			can :manage, Remark
-		elsif user.id != nil
+		if user.id != nil
 			can :create, Remark
 		end
+			
 			can :read, Remark
 			can :update, Remark do |remark|
 				remark.user == user

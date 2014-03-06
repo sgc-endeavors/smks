@@ -57,7 +57,7 @@ describe "Story_Show Page" do
 					@published_non_authored_story = FactoryGirl.create(:story, status: "published", published_date: Date.new(2012, 12, 3), share_type: "private", title: "My Published Private Story")
 					visit story_path(@published_non_authored_story)
 				end
-				it "shows the 'ha-ha scale' buttons" do
+				it "shows the 'awesomeness scale' buttons" do
 					should have_button("0")
 					should have_button("1")
 					should have_button("3")
@@ -101,6 +101,88 @@ describe "Story_Show Page" do
 				end
 			end
 		end
+
+		
+		describe "Show Page #FB Like functionality" do
+			context "the user has authored a story" do
+				context "the story has been published" do
+					context "the story is a 'publicly' shared story" do
+					 	it "can be shared/liked on facebook by the author" do
+					 		visit story_path(@current_public_published_story) 
+					 		should have_css("div.fb-like")
+						end
+					end
+
+					context "the story is shared with friends" do
+						before(:each) do
+							@shared_published_story = FactoryGirl.create(:story, user_id: @user.id, status: "published", share_type: "with friends")
+							visit story_path(@shared_published_story)
+						end
+					 	it "can be shared/liked on facebook by the author" do
+					 		should have_css("div.fb-like")
+						end
+					end
+
+					context "the story is intended to be be a private personal story" do
+						before(:each) do
+							@private_published_story = FactoryGirl.create(:story, user_id: @user.id, status: "published", share_type: "private")
+							visit story_path(@private_published_story)
+						end
+					 	it "can not be shared/liked on facebook by the author" do
+					 		should_not have_css("div.fb-like")
+						end
+					end
+				end
+
+				context "the story has NOT been published" do
+					before(:each) do
+						@shared_draft_story = FactoryGirl.create(:story, user_id: @user.id, status: "draft", share_type: "with friends")
+						visit story_path(@shared_draft_story)
+					end
+				 	it "can not be shared/liked on facebook by the author" do
+				 		should_not have_css("div.fb-like")
+					end
+				end
+			end
+
+
+			context "the user has NOT authored a story" do
+				context "the story has been published" do
+					context "the story is a 'publicly' shared story" do
+	 					before(:each) do
+	 						@non_authored_public_published_story = FactoryGirl.create(:story, status: "published", share_type: "public") 
+	 						visit story_path(@non_authored_public_published_story) 
+	 					end
+
+					 	it "can not be shared/liked on Facebook by the user" do
+					 		should have_css("div.fb-like")
+						end
+					end
+
+					context "the story has been shared with friends" do
+	 					before(:each) do
+	 						@non_authored_public_published_story = FactoryGirl.create(:story, status: "published", share_type: "with friends") 
+	 						visit story_path(@non_authored_public_published_story) 
+	 					end
+
+					 	it "can not be shared/liked on facebook by the user" do
+					 		should_not have_css("div.fb-like")
+						end
+					end
+
+
+
+				end
+			end
+		end
+
+
+
+
+
+
+
+
 
 		describe "ShowPage_comments_section" do
 			before(:each) do

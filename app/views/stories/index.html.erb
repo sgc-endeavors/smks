@@ -7,7 +7,7 @@
 <%elsif @type == "personal"%>
 	<div class="row">
 		<div class="span12">
-	<h1>My Stories</h1>
+	<h1>All of My Stories</h1>
 
 <%elsif @type == "shared"%>
 	<div class="row">
@@ -41,6 +41,11 @@
 	 						<%=link_to "...more", story_path(existing_story, type: @type) %>
 	 					<%end%> ~
 	 					<%=existing_story.kid.name%> - Age: ____<br><br>
+
+
+						<%@existing_story = existing_story%>   <!--for ratings and facebook partial -->
+	 					<%=render "facebook_partial"%>
+
 	 					By: <%=existing_story.user.first_name.capitalize%> on 
 
 	 					<%if existing_story.published_date != nil%>
@@ -57,7 +62,7 @@
 							<%= link_to "Delete", story_path(existing_story), method: :delete, confirm: "Are You Sure?" %>
 						<%end%>	
 	
-						<%@existing_story = existing_story%>
+						
 						<%= render "ratings_partial" %>
 	 				</p>
 		

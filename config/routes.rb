@@ -1,10 +1,6 @@
 App::Application.routes.draw do
   
-  get "friendships/create"
-
-  get "friendships/destroy"
-
-  root :to => "stories#landing_page"
+  root :to => "stories#home"
 
   devise_for :admin_users, ActiveAdmin::Devise.config
   ActiveAdmin.routes(self)
@@ -13,7 +9,7 @@ App::Application.routes.draw do
   ActiveAdmin.routes(self)
   
   get "/marketing" => "stories#marketing", as: "marketing"
-  get "/landing_page" => "stories#landing_page", as: "landing_page"
+  get "/home" => "stories#home", as: "home"
 
   resources :users, :stories, :ratings, :remarks, :kids, :images, :friendships
   # The priority is based upon order of creation:
