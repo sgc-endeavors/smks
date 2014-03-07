@@ -1,9 +1,7 @@
-<h1>Edit My Story </h1>
+<h4>Edit My Story </h4>
 
 
 <%= form_for(@current_story, url: story_path(@current_story), html: {multipart: true, method: "put"} ) do |f| %>
-
-
 
 	<%if Image.where(story_id: @current_story.id).first%>
 		<%=image_tag Image.where(story_id: @current_story).first.s3_image_loc_url.to_s %>
@@ -16,23 +14,25 @@
 			<%=link_to "Add Image", new_image_path(story_id: @current_story.id)%>
 		</small>
 	<%end%>
+
+
 	<%= f.label :title, "Title:", for: "title" %>
 	<%= f.text_field :title, id: "title" %> 
 
 	<br>
 
 	<%= f.label :date_occurred, "Date Occurred:", for: "date_ocurred" %>
-	<%= f.date_select :date_occurred, id: "date_occurred"%>
+	<input type="date" name="date_occurred" value=<%=@current_story.date_occurred%>>
 
 	<%= label_tag :kid_name, "Child's First Name:"%>
-	<%= select_tag :kid_name, options_for_select(Kid.where(user_id: current_user.id).map(&:name), @kid_name)%> <%=link_to "Add Child", new_kid_path%> 
+	<%= select_tag :kid_name, options_for_select(Kid.where(user_id: current_user.id).map(&:name), @kid_name)%> <%=link_to "Add Child", kids_path%> 
 	<br>
 
 	<%= f.label :body, "Body:", for: "body" %>
 	<%= f.text_area :body, id: "body" %><br>
 
 	<%= f.label :share_type%>
-	<%= f.select :share_type, options_for_select(["public", "with friends", "private"], @current_story.share_type)%>
+	<%= f.select :share_type, options_for_select(["public", "with friends", "private"], @share_type)%>
 
 	<%= f.label :status, "Status#:"%>
 	<%= f.text_field :status%>

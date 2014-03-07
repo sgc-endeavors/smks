@@ -1,10 +1,11 @@
 
 
-<h1>Create a Story </h1>
+<h4>Create a Story </h4>
 
 <%= form_for(@new_story, html: { multipart: true }, url: stories_path(@new_story)) do |f| %>
 	
 	<%=file_field_tag :s3_image_loc%>
+
 
 	<%= f.label :title, "Title:", for: "title" %>
 	<%= f.text_field :title, id: "title" %> 
@@ -12,10 +13,11 @@
 	<br>
 
 	<%= f.label :date_occurred, "Date Occurred:", for: "date_ocurred" %>
-	<%= f.date_select :date_occurred, id: "date_occurred"%>
-	
+	<input type="date" name="date_occurred">
+
+
 	<%= label_tag :kid_name, "Child's First Name:"%>
-	<%= select_tag :kid_name, options_for_select(Kid.where(user_id: current_user.id).map(&:name))%> <%=link_to "Add Child", new_kid_path%> 
+	<%= select_tag :kid_name, options_for_select(Kid.where(user_id: current_user.id).map(&:name), @kid_name)%> <%=link_to "Add Child", kids_path%> 
 
 	<%= f.label :body, "Body:", for: "body" %>
 	<%= f.text_area :body, id: "body" %>

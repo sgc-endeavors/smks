@@ -9,7 +9,7 @@ describe "User_New Page" do
   end
 
 	it "shows the page title" do
-		within("h2") { should have_content("Create a New Account")}
+		within("h4") { should have_content("Create a New Account")}
 	end
 
 	it "saves the new users information upon submission" do

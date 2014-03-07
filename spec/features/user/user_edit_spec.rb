@@ -11,7 +11,7 @@ describe "User_Edit Page" do
   subject { page }
 
   it "shows the page title" do
-  	within ("h2") { should have_content("Edit User")}
+  	within ("h4") { should have_content("Edit User")}
   end
 
   it "displays the existing users information in the form" do

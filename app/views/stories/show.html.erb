@@ -6,9 +6,9 @@
 
 		<%=link_to ">>", story_path(@next_story, type: @type) if @next_story%>
 
-	<h3><%=@existing_story.title%> </h3>
+	<h4><%=@existing_story.title%> </h4>
 
-	<p><%=@existing_story.body %>~ <%=@existing_story.kid.name%> - <%=@existing_story.date_occurred.strftime("%m/%d/%Y") if @existing_story.date_occurred%></p>
+	<p><%=@existing_story.body %>~ <%=@existing_story.kid.name%> - <%=@existing_story.date_occurred.strftime("%m/%d/%Y") if @existing_story.date_occurred%> - Age: <%=@age%></p>
 	
 
 
@@ -28,7 +28,7 @@
 
 	<%= render "ratings_partial" %>
 
-	<h4>Remarks</h4>
+	<h5>Remarks</h5>
 	<%= link_to "Create Remark", new_remark_path(story_id: @existing_story.id) %> 
 <br>
 	<%@remarks.each do |remark| %>

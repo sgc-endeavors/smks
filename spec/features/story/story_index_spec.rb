@@ -6,8 +6,8 @@ describe "Story_Index Page" do
 
 	before(:each) do 
 		@user = FactoryGirl.create(:user)
-		@public_published_short_story = FactoryGirl.create(:story, title: "A Public Published Short Story", share_type: "public", status: "published", published_date: Date.new(2012, 12, 3))
-		@private_published_story = FactoryGirl.create(:story, title: "My Private Story", user_id: @user.id, status: "published", published_date: Date.new(2012, 12, 3), share_type: "private")
+		@public_published_short_story = FactoryGirl.create(:story, title: "A Public Published Short Story", share_type: "public", status: "published", date_occurred: Date.new(2012, 12, 1), published_date: Date.new(2012, 12, 3))
+		@private_published_story = FactoryGirl.create(:story, title: "My Private Story", user_id: @user.id, status: "published", date_occurred: Date.new(2012, 12, 1), published_date: Date.new(2012, 12, 3), share_type: "private")
 	end
 
 	context "a visitor has or has not logged in" do
@@ -171,7 +171,7 @@ describe "Story_Index Page" do
 	
 		context "visitor wants to see all his public and private stories" do
 			before(:each) do 
-				@another_story = FactoryGirl.create(:story, title: "My Private Story", user_id: @user.id, status: "published", published_date: Date.new(2012, 12, 3), share_type: "private")
+				@another_story = FactoryGirl.create(:story, title: "My Private Story", user_id: @user.id, status: "published", date_occurred: Date.new(2012, 12, 3), published_date: Date.new(2012, 12, 3), share_type: "private")
 				visit stories_path(type: "personal")
 			end
 			
@@ -185,7 +185,7 @@ describe "Story_Index Page" do
 
 			it "allows user to access the story edit page for their stories" do 
 				first(:link, "Edit Story").click
-				current_path.should == edit_story_path(Story.last)
+				current_path.should == edit_story_path(@another_story.id)
 			end
 			it "shows the edit link for only those stories authored by the user" do
 				should have_link("Edit Story", count: 2)

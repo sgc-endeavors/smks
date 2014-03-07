@@ -1,0 +1,67 @@
+
+<%if @new_story%>
+	<%@story = @new_story%>
+<%else%>
+	<%@story = @current_story%>
+<%end%>
+
+
+<%if @new_story%>
+
+	<%= form_for(@new_story, html: { multipart: true }, url: stories_path(@new_story)) do |f| %>
+	
+	<%=file_field_tag :s3_image_loc%>
+
+	
+
+<%else%>
+
+
+
+	<%=form_for(@story, url: story_path(@story), html: {multipart: true, method: "put"} ) do |f| %>
+
+		<%if Image.where(story_id: @story.id).first%>
+			<%=image_tag Image.where(story_id: @story).first.s3_image_loc_url.to_s %>
+			<br>
+			<small>
+				<%=link_to "Delete", image_path(Image.where(story_id: @story.id).first), method: :delete, confirm: "Are You Sure?"%>
+				&nbsp;&nbsp;
+				<%=link_to "Replace", edit_image_path(Image.where(story_id: @story.id).first)%>
+			<%else%>
+				<%=link_to "Add Image", new_image_path(story_id: @story.id)%>
+			</small>
+		<%end%>
+
+<%end%
+
+		<%= f.label :title, "Title:", for: "title" %>
+		<%= f.text_field :title, id: "title" %> 
+
+		<br>
+
+		<%= f.label :date_occurred, "Date Occurred:", for: "date_ocurred" %>
+		<input type="date" name="date_occurred" value=<%=@story.date_occurred%>>
+
+		<%= label_tag :kid_name, "Child's First Name:"%>
+		<%= select_tag :kid_name, options_for_select(Kid.where(user_id: current_user.id).map(&:name), @kid_name)%> <%=link_to "Add Child", new_kid_path%> 
+		<br>
+
+		<%= f.label :body, "Body:", for: "body" %>
+		<%= f.text_area :body, id: "body" %><br>
+
+		<%= f.label :share_type%>
+		<%= f.select :share_type, options_for_select(["public", "with friends", "private"], @share_type)%>
+
+		<%= f.label :status, "Status#:"%>
+		<%= f.text_field :status%>
+
+		<br>
+		<%= button_tag "Publish", name: "publish", class: "btn btn-success btn-small" %>
+		<%= button_tag "Save as Draft", name: "save_as_draft", class: "btn btn-small" %>
+		<%= link_to "Cancel", story_path(@story)%>
+
+<%end%>
+
+
+<%end%>
+	

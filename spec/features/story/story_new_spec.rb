@@ -41,7 +41,7 @@ describe "Story_New Page" do
 			  	before(:each) { click_on "Add Child" }
 			  	
 			  	it "routes the user to the new kid path" do
-			  		current_path.should == new_kid_path
+			  		current_path.should == kids_path
 			  	end
 			  end
 

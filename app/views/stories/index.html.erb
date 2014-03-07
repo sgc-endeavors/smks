@@ -3,21 +3,21 @@
 <%if @type == "public" || @type == nil%>
 	<div class="row">
 		<div class="span9">
-			<h1>Share with Everyone</h1>
+			<h4>Share with Everyone</h4>
 <%elsif @type == "personal"%>
 	<div class="row">
 		<div class="span12">
-	<h1>All of My Stories</h1>
+	<h4>All of My Stories</h4>
 
 <%elsif @type == "shared"%>
 	<div class="row">
 		<div class="span12">
-	<h1>Me & My Friends' Shared Stories</h1>
+	<h4>Me & My Friends' Shared Stories</h4>
 
 <%else%>
 	<div class="row">
 		<div class="span12">
-	<h1>My Draft Stories</h1>
+	<h4>My Draft Stories</h4>
 <%end%>
 
 

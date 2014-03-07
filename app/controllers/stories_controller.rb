@@ -34,6 +34,7 @@ class StoriesController < ApplicationController
 
  def new #(get)
  	@new_story = Story.new
+ 	@kid_name = Kid.new
 	@share_type = User.find(current_user.id).default_share_preference
  	render :new
  end
@@ -42,6 +43,7 @@ class StoriesController < ApplicationController
  	new_story = Story.new(params[:story])
  	new_story.kid_id = Kid.where(name: params[:kid_name]).where(user_id: current_user.id).first.id
  	new_story.user_id = current_user.id
+ 	new_story.date_occurred = params[:date_occurred]
 
  	if params[:publish]
  		new_story.status = "published"
@@ -60,8 +62,22 @@ class StoriesController < ApplicationController
  end
 
 	def show #(get)
+
 		@type = params[:type]
 	 	@existing_story = Story.find(params[:id])
+	 	if @existing_story.date_occurred && @existing_story.kid.birthdate
+	 		age = (@existing_story.date_occurred - @existing_story.kid.birthdate) / 86400
+	 		if age < 7
+	 			@age = "#{age.round(0)} days"
+	 		elsif age < 84
+	 			@age = "#{(age / 7).round(0)} weeks"
+	 		elsif age < 725
+	 			@age = "#{(age / 30.417).round(0)} months"
+	 		else
+	 			@age = "#{(age / 365).round(0)} years"
+	 		end
+
+	 	end
 	 	if @type == "public" || @type == nil
  			@next_story = Story.where(share_type: "public").where(status: "published").order(:id).where("id > #{params[:id].to_i}").first
 			@previous_story = Story.where(share_type: "public").where(status: "published").order(:id).where("id < #{params[:id].to_i}").last	 			
@@ -90,6 +106,7 @@ class StoriesController < ApplicationController
 
 	def edit #(get)
 		@current_story = Story.find(params[:id])
+		@share_type = @current_story.share_type
 		@kid_name = if @current_story.kid
 			@current_story.kid.name
 		else
@@ -119,6 +136,7 @@ class StoriesController < ApplicationController
  			updated_story.status = "draft"
  		end
  		updated_story.kid_id = Kid.where(name: params[:kid_name]).where(user_id: current_user.id).first.id
+ 		updated_story.date_occurred = params[:date_occurred]
  		updated_story.save!
 		redirect_to story_path(updated_story)
 	end

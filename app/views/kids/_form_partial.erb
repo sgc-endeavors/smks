@@ -1,0 +1,10 @@
+
+<%=form_for(@kid) do |f| %>
+	<%= f.label :name, "Child's First Name:", for: "name" %>
+	<%= f.text_field :name, id: "name" %> <br>
+	<%= f.label :birthdate, "Child's Birth Date:", for: "birthdate" %>
+	<input type="date" name="birthdate"><br>
+	<%=submit_tag "Submit"%>
+	<%=link_to "Cancel", kids_path%>
+
+<%end%>

@@ -3,6 +3,7 @@
 FactoryGirl.define do
   factory :kid do
     name "Junior"
+  	birthdate Date.new(2011, 12, 5)
     association :user
   end
 end

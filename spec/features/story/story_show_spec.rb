@@ -5,7 +5,8 @@ describe "Story_Show Page" do
 	
 	before(:each) do
 		@user = FactoryGirl.create(:user)
-		@current_public_published_story = FactoryGirl.create(:story, user_id: @user.id, id: 6, title: "Current Publich Published Story", status: "published", published_date: Date.new(2012, 12, 6), share_type: "public", title: "Eating Boogers", body: "Booger eating story...")
+		@kid = FactoryGirl.create(:kid, user_id: @user.id, birthdate: Date.new(2011, 12, 5))
+		@current_public_published_story = FactoryGirl.create(:story, user_id: @user.id, id: 6, kid_id: @kid.id, title: "Current Publich Published Story", status: "published", date_occurred: Date.new(2012, 12, 5), published_date: Date.new(2012, 12, 6), share_type: "public", title: "Eating Boogers", body: "Booger eating story...")
 	end
 	
 	context "site visitor has not logged in" do
@@ -38,6 +39,12 @@ describe "Story_Show Page" do
 				should have_content("Eating Boogers")
 				should have_content("Booger eating story...")
 				should have_content("Junior")
+			end
+
+			it "calculates the approximate age based on the 'date occurred and birth date'" do
+				should have_content("12 months")
+
+
 			end
 
 			it "shows the total ratings for the story" do	
@@ -225,10 +232,10 @@ describe "Story_Show Page" do
 
 		context "there are previous published stories and a newer published stories as it relates to the current story" do
 			before(:each) do
-				@previous_public_published_story = FactoryGirl.create(:story, user_id: @user.id, id: 4, title: "Previous Public Published Story", status: "published", published_date: Date.new(2012, 12, 4), share_type: "public", title: "Eating Boogers", body: "Booger eating story...")
-				@previous_private_published_story = FactoryGirl.create(:story, user_id: @user.id, id: 5, title: "Previous Private Published Story",status: "published", published_date: Date.new(2012, 12, 5), share_type: "private", title: "Eating Boogers", body: "Booger eating story...")
-				@next_private_published_story = FactoryGirl.create(:story, user_id: @user.id, id: 7, title: "Newer Private Published Story", status: "published", published_date: Date.new(2012, 12, 7), share_type: "private", title: "Eating Boogers", body: "Booger eating story...")
-				@next_public_published_story = FactoryGirl.create(:story,  user_id: @user.id, id: 8, title: "Newer Public Published Story", status: "published", published_date: Date.new(2012, 12, 8), share_type: "public", title: "Eating Boogers", body: "Booger eating story...")
+				@previous_public_published_story = FactoryGirl.create(:story, user_id: @user.id, id: 4, title: "Previous Public Published Story", status: "published", date_occurred: Date.new(2012, 12, 3), published_date: Date.new(2012, 12, 4), share_type: "public", title: "Eating Boogers", body: "Booger eating story...")
+				@previous_private_published_story = FactoryGirl.create(:story, user_id: @user.id, id: 5, title: "Previous Private Published Story",status: "published", date_occurred: Date.new(2012, 12, 4), published_date: Date.new(2012, 12, 5), share_type: "private", title: "Eating Boogers", body: "Booger eating story...")
+				@next_private_published_story = FactoryGirl.create(:story, user_id: @user.id, id: 7, title: "Newer Private Published Story", status: "published", date_occurred: Date.new(2012, 12, 6), published_date: Date.new(2012, 12, 7), share_type: "private", title: "Eating Boogers", body: "Booger eating story...")
+				@next_public_published_story = FactoryGirl.create(:story,  user_id: @user.id, id: 8, title: "Newer Public Published Story", status: "published", date_occurred: Date.new(2012, 12, 7), published_date: Date.new(2012, 12, 8), share_type: "public", title: "Eating Boogers", body: "Booger eating story...")
 			end
 
 			context "user visits the show page for a public story via the index page or 'Read Funny'" do
