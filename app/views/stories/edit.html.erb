@@ -24,8 +24,8 @@
 	<%= f.label :date_occurred, "Date Occurred:", for: "date_ocurred" %>
 	<input type="date" name="date_occurred" value=<%=@current_story.date_occurred%>>
 
-	<%= label_tag :kid_name, "Attribute to:"%>
-	<%= select_tag :kid_name, options_for_select(Kid.where(user_id: current_user.id).map(&:name), @kid_name)%> <%=link_to "Add Child", kids_path%> 
+	<%= label_tag :person_name, "Attribute to:"%>
+	<%= select_tag :person_name, options_for_select(Person.where(user_id: current_user.id).map(&:name), @person_name)%> <%=link_to "Add Child/Person", people_path%> 
 	<br>
 
 	<%= f.label :body, "Body:", for: "body" %>

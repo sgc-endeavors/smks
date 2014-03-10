@@ -6,7 +6,7 @@ FactoryGirl.define do
     body "The body of the text is this long"
     approved false
     association :user
-    association :kid
+    association :person
     share_type "public"
    #published_date Date.new(2012, 12, 3)
     category_id 1

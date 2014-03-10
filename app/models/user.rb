@@ -13,7 +13,7 @@ class User < ActiveRecord::Base
     has_many :stories, dependent: :destroy
     has_many :ratings
     has_many :remarks
-    has_many :kids, dependent: :destroy
+    has_many :people, dependent: :destroy
     has_many :images
     has_many :friendships, dependent: :destroy
     has_many :friends, through: :friendships

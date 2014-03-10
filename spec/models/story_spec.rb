@@ -9,7 +9,7 @@ describe Story do
   it { should belong_to(:user) }
   it { should have_many(:ratings) }
   it { should have_many(:remarks) }
-  it { should belong_to(:kid) }
+  it { should belong_to(:person) }
   it { should have_many(:images) }
 
   it { should validate_presence_of(:title) }

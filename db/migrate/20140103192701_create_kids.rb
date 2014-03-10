@@ -1,6 +1,6 @@
-class CreateKids < ActiveRecord::Migration
+class CreatePeople < ActiveRecord::Migration
   def change
-    create_table :kids do |t|
+    create_table :people do |t|
       t.string :name
       t.integer :user_id
       t.integer :story_id

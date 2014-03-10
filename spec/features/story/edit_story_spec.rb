@@ -24,7 +24,7 @@ describe "Story_Edit Page" do
     context "user wants to edit an authored published story" do
       before(:each) do
     		@published_story = FactoryGirl.create(:story, published_date: Date.new(2012, 12, 3), user_id: @user.id, title: "Eating Boogers", body: "Booger eating story...")
-        second_kid = FactoryGirl.create(:kid, name: "Jasmine", user_id: @user.id)
+        second_person = FactoryGirl.create(:person, name: "Jasmine", user_id: @user.id)
         visit edit_story_path(@published_story)	
     	end
 
@@ -99,7 +99,7 @@ describe "Story_Edit Page" do
             updated_story.title.should == "Eating Burgers"
             updated_story.body.should == "Burger eating story..."
             updated_story.share_type.should == "private"
-            updated_story.kid.name.should == "Jasmine"
+            updated_story.person.name.should == "Jasmine"
             updated_story.status.should == "published"
           end
 
@@ -150,7 +150,7 @@ describe "Story_Edit Page" do
     context "user wants to edit an authored unpublished story" do
       before(:each) do
         @unpublished_story = FactoryGirl.create(:story, user_id: @user.id, title: "Eating Boogers", body: "Booger eating story...")
-        second_kid = FactoryGirl.create(:kid, name: "Jasmine", user_id: @user.id)
+        second_person = FactoryGirl.create(:person, name: "Jasmine", user_id: @user.id)
         visit edit_story_path(@unpublished_story) 
       end
 

@@ -36,14 +36,14 @@ class StoriesController < ApplicationController
 
  def new #(get)
  	@new_story = Story.new
- 	@kid_name = Kid.new
+ 	@person_name = Person.new
 	@share_type = User.find(current_user.id).default_share_preference
  	render :new
  end
 
  def create #(post)
  	new_story = Story.new(params[:story])
- 	new_story.kid_id = Kid.where(name: params[:kid_name]).where(user_id: current_user.id).first.id
+ 	new_story.person_id = Person.where(name: params[:person_name]).where(user_id: current_user.id).first.id
  	new_story.user_id = current_user.id
  	new_story.date_occurred = params[:date_occurred]
 
@@ -71,7 +71,7 @@ class StoriesController < ApplicationController
 	 	@existing_story = Story.find(params[:id])
 
 
-	 	if @existing_story.date_occurred && @existing_story.kid.birthdate
+	 	if @existing_story.date_occurred && @existing_story.person.birthdate
 	 		@age = @existing_story.calculate_story_age
 	 	end
 
@@ -104,16 +104,16 @@ class StoriesController < ApplicationController
 	def edit #(get)
 		@current_story = Story.find(params[:id])
 		@share_type = @current_story.share_type
-		@kid_name = if @current_story.kid
-			@current_story.kid.name
+		@person_name = if @current_story.person
+			@current_story.person.name
 		else
 			nil
 		end
 
-		# if @current_story.kid != nil
-		# 	@kid_name = @current_story.kid.name
+		# if @current_story.person != nil
+		# 	@person_name = @current_story.person.name
 		# else
-		# 	@kid_name = nil
+		# 	@person_name = nil
 		# end
 
 		authorize! :update, @current_story
@@ -132,7 +132,7 @@ class StoriesController < ApplicationController
  		else
  			updated_story.status = "draft"
  		end
- 		updated_story.kid_id = Kid.where(name: params[:kid_name]).where(user_id: current_user.id).first.id
+ 		updated_story.person_id = Person.where(name: params[:person_name]).where(user_id: current_user.id).first.id
  		updated_story.date_occurred = params[:date_occurred]
  		updated_story.save!
 		redirect_to story_path(updated_story)

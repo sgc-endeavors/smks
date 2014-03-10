@@ -9,7 +9,7 @@ describe User do
   it { should have_many(:stories) }
   it { should have_many(:ratings) }
   it { should have_many(:remarks) }
-  it { should have_many(:kids) }
+  it { should have_many(:people) }
   it { should have_many(:images) }
   it { should have_many(:friendships) }
   it { should have_many(:friends) }

@@ -1,0 +1,15 @@
+
+<%=form_for(@person) do |f| %>
+	<%= f.label :name, "Person's First Name:", for: "name" %>
+	<%= f.text_field :name, id: "name" %> <br>
+	<%= f.label :birthdate, "Birth Date (if appl.*)", for: "birthdate" %>
+	<input type="date" name="birthdate">
+	<small>
+		<br>
+		*Note: Birthdate is only applicable for children
+	</small>
+	<br><br>
+	<%=submit_tag "Submit"%>
+	<%=link_to "Cancel", people_path%>
+
+<%end%>

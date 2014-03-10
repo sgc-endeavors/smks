@@ -9,7 +9,7 @@ describe "Devise#cancel_my_account" do
 	context "visitor has logged in as a user" do
 		before(:each) { sign_in_as_existing_user(user) }
 		
-		context " user has created 2 stories, 2 images, remarks, ratings and kids" do
+		context " user has created 2 stories, 2 images, remarks, ratings and people" do
 			before(:each) do 
 				@story1 = FactoryGirl.create(:story, user_id: user.id)
 				@story2 = FactoryGirl.create(:story, user_id: user.id)
@@ -19,7 +19,7 @@ describe "Devise#cancel_my_account" do
 				@others_remark_about_story1 = FactoryGirl.create(:remark, story_id: @story1.id)
 				@users_rating = FactoryGirl.create(:rating, user_id: user.id)
 				@others_rating_about_story1 = FactoryGirl.create(:rating, story_id: @story1.id)
-				@users_kid = FactoryGirl.create(:kid, user_id: user.id)
+				@users_person = FactoryGirl.create(:person, user_id: user.id)
 				@users_friendship = FactoryGirl.create(:friendship, user_id: user.id)
 				@user_befriended = FactoryGirl.create(:friendship, friend_id: user.id)
 			end
@@ -39,8 +39,8 @@ describe "Devise#cancel_my_account" do
 						expect { Story.find(@story2.id)}.to raise_error(ActiveRecord::RecordNotFound)	
 				end
 
-				it "deletes each kid associated w/ a deleted user" do
-					expect { Kid.find(@users_kid.id)}.to raise_error(ActiveRecord::RecordNotFound)
+				it "deletes each person associated w/ a deleted user" do
+					expect { Person.find(@users_person.id)}.to raise_error(ActiveRecord::RecordNotFound)
 				end
 
 				it "deletes each friendship associated w/ a deleted user" do

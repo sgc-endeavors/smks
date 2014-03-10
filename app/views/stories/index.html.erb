@@ -50,9 +50,9 @@
 	 					<%if existing_story.body.length > @story_length%>
 	 						<%=link_to "...more", story_path(existing_story, type: @type) %>
 	 					<%end%> ~
-	 					<%=existing_story.kid.name%> - <%=existing_story.date_occurred.strftime("%m/%d/%Y") if existing_story.date_occurred%>
+	 					<%=existing_story.person.name%> - <%=existing_story.date_occurred.strftime("%m/%d/%Y") if existing_story.date_occurred%>
 
-	 					<%if existing_story.date_occurred && existing_story.kid.birthdate%>
+	 					<%if existing_story.date_occurred && existing_story.person.birthdate%>
 	 						- Age: <%=existing_story.calculate_story_age%>
 	 					<%end%>
 	 					  <br><br>

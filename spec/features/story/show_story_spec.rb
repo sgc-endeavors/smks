@@ -5,8 +5,8 @@ describe "Story_Show Page" do
 	
 	before(:each) do
 		@user = FactoryGirl.create(:user)
-		@kid = FactoryGirl.create(:kid, user_id: @user.id, birthdate: Date.new(2011, 12, 5))
-		@current_public_published_story = FactoryGirl.create(:story, user_id: @user.id, id: 6, kid_id: @kid.id, title: "Current Publich Published Story", status: "published", date_occurred: Date.new(2012, 12, 5), published_date: Date.new(2012, 12, 6), share_type: "public", title: "Eating Boogers", body: "Booger eating story...")
+		@person = FactoryGirl.create(:person, user_id: @user.id, birthdate: Date.new(2011, 12, 5))
+		@current_public_published_story = FactoryGirl.create(:story, user_id: @user.id, id: 6, person_id: @person.id, title: "Current Publich Published Story", status: "published", date_occurred: Date.new(2012, 12, 5), published_date: Date.new(2012, 12, 6), share_type: "public", title: "Eating Boogers", body: "Booger eating story...")
 	end
 	
 	context "site visitor has not logged in" do

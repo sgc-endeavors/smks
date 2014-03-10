@@ -15,9 +15,9 @@ describe "Story_New Page" do
 
 	context "visitor signs in as a user and visits the stories path" do
 		let(:user) { FactoryGirl.create(:user, default_share_preference: "private") }		
-		let(:new_story) { FactoryGirl.build(:story, user_id: user.id, kid_id: @kid.id) }
+		let(:new_story) { FactoryGirl.build(:story, user_id: user.id, person_id: @person.id) }
 		before(:each) do 
-			@kid = FactoryGirl.create(:kid, user_id: user.id)
+			@person = FactoryGirl.create(:person, user_id: user.id)
 			sign_in_as_existing_user(user)
 			visit stories_path
 		end
@@ -38,10 +38,10 @@ describe "Story_New Page" do
 				before(:each) { visit new_story_path }		
 
 			  context "user wants to assign a child's name to the story" do
-			  	before(:each) { click_on "Add Child" }
+			  	before(:each) { click_on "Add Child/Person" }
 			  	
-			  	it "routes the user to the new kid path" do
-			  		current_path.should == kids_path
+			  	it "routes the user to the new person path" do
+			  		current_path.should == people_path
 			  	end
 			  end
 
@@ -52,7 +52,7 @@ describe "Story_New Page" do
 				 		last_story.title.should == new_story.title
 				 		last_story.body.should == new_story.body
 				 		last_story.share_type.should == "private"
-				 		last_story.kid.name.should == "Junior"
+				 		last_story.person.name.should == "Junior"
 				 		last_story.user_id.should == new_story.user_id	
 				 		last_story.status.should == "published"
 				 		last_story.published_date.should_not be_nil	

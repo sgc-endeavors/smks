@@ -1,9 +1,9 @@
-class IncludeKidBirthdateInKidsTable < ActiveRecord::Migration
+class IncludePersonBirthdateInPeopleTable < ActiveRecord::Migration
   def up
-	  add_column :kids, :birthdate, :datetime
+	  add_column :people, :birthdate, :datetime
   end
 
   def down
-  	remove_column :kids, :birthdate
+  	remove_column :people, :birthdate
   end
 end

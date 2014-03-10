@@ -10,7 +10,7 @@
 
 	<p align="left"><%=raw(@existing_story.body.gsub("\n", "<br>")) %>
 		<br>
-		~ <%=@existing_story.kid.name%> - <%=@existing_story.date_occurred.strftime("%m/%d/%Y") if @existing_story.date_occurred%> - Age: <%=@age%></p>
+		~ <%=@existing_story.person.name%> - <%=@existing_story.date_occurred.strftime("%m/%d/%Y") if @existing_story.date_occurred%> - Age: <%=@age%></p>
 	
 
 	<%=render "facebook_partial"%>

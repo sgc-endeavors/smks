@@ -1,0 +1,16 @@
+<h4>Kids / Other People</h4>
+
+<%=link_to "Add Person", new_person_path%>
+
+<br>
+
+<%@people.each do |person|%>
+	<%=person.name%>
+	<%=person.birthdate.strftime("%m/%d/%Y") if person.birthdate%>
+	<small>
+		<%=link_to "Edit", edit_person_path(person)%>
+	</small>
+		<br>
+<%end%>
+
+<br>
