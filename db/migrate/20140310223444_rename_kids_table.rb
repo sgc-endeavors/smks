@@ -1,4 +1,4 @@
-class RenamePeopleTable < ActiveRecord::Migration
+class RenameKidsTable < ActiveRecord::Migration
   def up
   	rename_table :kids, :people
   end
