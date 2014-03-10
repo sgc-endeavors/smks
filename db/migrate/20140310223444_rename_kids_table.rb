@@ -1,9 +1,9 @@
 class RenamePeopleTable < ActiveRecord::Migration
   def up
-  	rename_table :people, :people
+  	rename_table :kids, :people
   end
 
   def down
-  	rename_talbe :people, :people
+  	rename_table :people, :kids
   end
 end
