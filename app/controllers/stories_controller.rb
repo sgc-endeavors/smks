@@ -13,6 +13,7 @@ class StoriesController < ApplicationController
  	unless current_user == nil
  		@draft_stories_count = Story.where(status: "draft").where(user_id: current_user.id).count
  	end
+
 	@type = params[:type]
  	if params[:type] == "public" || params[:type] == nil
  		@existing_stories = Story.where(share_type: "public").where(status: "published").order("published_date desc")	
@@ -20,7 +21,8 @@ class StoriesController < ApplicationController
  	elsif params[:type] == "personal"
 		@existing_stories = Story.where(status: "published").where(user_id: current_user.id).order("date_occurred desc")
 	elsif params[:type] == "shared"
-		all_shared_stories = Story.where(user_id: current_user.id).where(status: "published").where("share_type not like 'private'") + Story.where(user_id: current_user.inverse_friends).where(status: "published").where("share_type not like 'private'")
+		wanted_users_friends = current_user.inverse_friendships.where(hide_content: false).map(&:user_id)
+		all_shared_stories = Story.where(user_id: current_user.id).where(status: "published").where("share_type not like 'private'") + Story.where(user_id: wanted_users_friends).where(status: "published").where("share_type not like 'private'")
 		@existing_stories = all_shared_stories.sort_by { |story| story.published_date.to_i * -1 }
 
 
@@ -52,12 +54,14 @@ class StoriesController < ApplicationController
  		new_story.status = "draft"
  	end
  	new_story.save!
- 	new_image = Image.new
- 	new_image.s3_image_loc = params[:s3_image_loc]
- 	new_image.user_id = current_user.id
- 	new_image.story_id = new_story.id
- 	new_image.save!
-
+ 	
+ 	if params[:s3_image_loc]	 	
+ 		new_image = Image.new
+	 	new_image.s3_image_loc = params[:s3_image_loc]
+	 	new_image.user_id = current_user.id
+	 	new_image.story_id = new_story.id
+	 	new_image.save!
+ 	end
  	redirect_to story_path(new_story)
  end
 
@@ -65,19 +69,12 @@ class StoriesController < ApplicationController
 
 		@type = params[:type]
 	 	@existing_story = Story.find(params[:id])
-	 	if @existing_story.date_occurred && @existing_story.kid.birthdate
-	 		age = (@existing_story.date_occurred - @existing_story.kid.birthdate) / 86400
-	 		if age < 7
-	 			@age = "#{age.round(0)} days"
-	 		elsif age < 84
-	 			@age = "#{(age / 7).round(0)} weeks"
-	 		elsif age < 725
-	 			@age = "#{(age / 30.417).round(0)} months"
-	 		else
-	 			@age = "#{(age / 365).round(0)} years"
-	 		end
 
+
+	 	if @existing_story.date_occurred && @existing_story.kid.birthdate
+	 		@age = @existing_story.calculate_story_age
 	 	end
+
 	 	if @type == "public" || @type == nil
  			@next_story = Story.where(share_type: "public").where(status: "published").order(:id).where("id > #{params[:id].to_i}").first
 			@previous_story = Story.where(share_type: "public").where(status: "published").order(:id).where("id < #{params[:id].to_i}").last	 			

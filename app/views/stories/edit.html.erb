@@ -24,7 +24,7 @@
 	<%= f.label :date_occurred, "Date Occurred:", for: "date_ocurred" %>
 	<input type="date" name="date_occurred" value=<%=@current_story.date_occurred%>>
 
-	<%= label_tag :kid_name, "Child's First Name:"%>
+	<%= label_tag :kid_name, "Attribute to:"%>
 	<%= select_tag :kid_name, options_for_select(Kid.where(user_id: current_user.id).map(&:name), @kid_name)%> <%=link_to "Add Child", kids_path%> 
 	<br>
 
@@ -34,8 +34,7 @@
 	<%= f.label :share_type%>
 	<%= f.select :share_type, options_for_select(["public", "with friends", "private"], @share_type)%>
 
-	<%= f.label :status, "Status#:"%>
-	<%= f.text_field :status%>
+	<%= f.hidden_field :status%>
 
 	<br>
 	<%= button_tag "Publish", name: "publish", class: "btn btn-success btn-small" %>

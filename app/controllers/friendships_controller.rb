@@ -3,6 +3,7 @@ class FriendshipsController < ApplicationController
 
   def create
   	@friendship = current_user.friendships.build(friend_id: params[:friend_id])
+    @friendship.hide_content = false
   	@friendship.save!
   	redirect_to friendships_path
   end
@@ -16,6 +17,17 @@ class FriendshipsController < ApplicationController
     @inverse_friendships = current_user.inverse_friendships
 		render :index
 	end
+
+  def update
+    @friendship = Friendship.find(params[:id])
+    if @friendship.hide_content == true
+      @friendship.hide_content = false
+    else
+      @friendship.hide_content = true
+    end
+    @friendship.save!
+    redirect_to friendships_path
+  end
 
 
   def destroy

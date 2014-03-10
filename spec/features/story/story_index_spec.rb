@@ -46,20 +46,35 @@ describe "Story_Index Page" do
 			end
 
 			context "a story has more than 300 characters" do
-				before(:each) do
-					@public_published_long_story = FactoryGirl.create(:story, title: "A Long Story", status: "published", published_date: Date.new(2012, 12, 3), share_type: "public", body: "Ice cream macaroon croissant cookie wafer jujubes. Lollipop lemon drops oat cake croissant dessert. Cookie cupcake lemon drops cotton candy cookie pudding caramels. Lollipop sweet biscuit cotton candy. Drage pastry jujubes cotton candy sesame snaps chocolate bar dessert lollipop. Sweet tiramisu donut.")
-					visit stories_path(type: "public")
+				context " the story has an image" do
+					before(:each) do
+						@public_published_long_story = FactoryGirl.create(:story, title: "A Long Story", status: "published", published_date: Date.new(2012, 12, 3), share_type: "public", body: "Ice cream macaroon croissant cookie wafer jujubes. Lollipop lemon drops oat cake croissant dessert. Cookie cupcake lemon drops cotton candy cookie pudding caramels. Lollipop sweet biscuit cotton candy. Drage pastry jujubes cotton candy sesame snaps chocolate bar dessert lollipop. Sweet tiramisu donut.")
+						FactoryGirl.create(:image, story_id: @public_published_long_story.id)						
+						visit stories_path(type: "public")
+					end
+
+					it "shows the first 300 characters of the story" do
+						should have_content(@public_published_long_story.body[0..299])
+					end
+					it { should have_link("...more") }
+				end
+				context "the story does NOT have an image" do
+					before(:each) do
+						@public_published_long_story = FactoryGirl.create(:story, title: "A Long Story", status: "published", published_date: Date.new(2012, 12, 3), share_type: "public", body: "Ice cream macaroon croissant cookie wafer jujubes. Lollipop lemon drops oat cake croissant dessert. Cookie cupcake lemon drops cotton candy cookie pudding caramels. Lollipop sweet biscuit cotton candy. Drage pastry jujubes cotton candy sesame snaps chocolate bar dessert lollipop. Sweet tiramisu donut.")
+						visit stories_path(type: "public")
+					end
+
+					it "shows 600 characters of th story's body" do
+						should have_content(@public_published_long_story.body)
+					end
+
 				end
 
-				it "shows the first 300 characters of the story" do
-					should have_content(@public_published_long_story.body[0..299])
-				end
-				it { should have_link("...more") }
 
 			end
 
 			it "shows the author's first name" do
-				should have_content("By: #{@public_published_short_story.user.first_name}")
+				should have_content("by #{@public_published_short_story.user.first_name}")
 			end
 
 			it "shows the date last_updated" do
@@ -202,37 +217,61 @@ describe "Story_Index Page" do
 		context "user wants to see all his and his friend's 'shared w/ friends' stories" do
 			
 			context "user has been friended by someone" do
-				before(:each) do
-					@users_friend = FactoryGirl.create(:user) 
-					FactoryGirl.create(:friendship, friend_id: @user.id, user_id: @users_friend.id)
-					@stranger = FactoryGirl.create(:user)
-				end
-
-				context "user and friend have created stories" do
 					before(:each) do
-						@users_shared_published_story = FactoryGirl.create(:story, user_id: @user.id, title: "A Users Shared Published Story", share_type: "with friends", status: "published")
-						@users_shared_draft_story = FactoryGirl.create(:story, user_id: @user.id, title: "A Users Shared Draft Story", share_type: "with friends", status: "draft")
-						@users_public_published_story = FactoryGirl.create(:story, user_id: @user.id, title: "A Users Public Published Story", share_type: "public", status: "published")
-						@users_private_published_story = FactoryGirl.create(:story, user_id: @user.id, title: "A Users Private Published Story", share_type: "private", status: "published")
-						@users_friends_shared_published_story = FactoryGirl.create(:story, user_id: @users_friend.id, title: "A Friends Shared Published Story", share_type: "with friends", status: "published")
-						@users_friends_public_published_story = FactoryGirl.create(:story, user_id: @users_friend.id, title: "A Friends Public Published Story", share_type: "public", status: "published")						
-						@users_friends_private_published_story = FactoryGirl.create(:story, user_id: @users_friend.id, title: "A Friends Private Published Story", share_type: "private", status: "published")						
-
-						@strangers_shared_published_story = FactoryGirl.create(:story, user_id: @stranger.id, title: "A Non-Friends Shared Published Story", share_type: "with friends", status: "published")
-						visit stories_path(type: "shared")
+						@users_friend = FactoryGirl.create(:user) 
+						@friendship = FactoryGirl.create(:friendship, friend_id: @user.id, user_id: @users_friend.id, hide_content: false)
+						@stranger = FactoryGirl.create(:user)
 					end
 
-					it {should have_content "Me & My Friends' Shared Stories" }
-					it { should have_content "A Users Shared Published Story" }
-					it { should have_content "A Users Public Published Story" }  			#  <-- inlcudes "public" stories as well as "with friends" stories
-					it { should_not have_content "A Users Shared Draft Story" }  			#  <-- only includes "published" stories
-					it { should_not have_content "A Users Private Published Story" }  #  <-- does not inlcude "private" published stories
-					it { should have_content "A Friends Shared Published Story" }
-					it { should_not have_content "A Non-Friends Shared Published Story" }
-					it { should have_content "A Friends Public Published Story" }
-					it { should_not have_content "A Friends Private Published Story" }
+					context "user and friend have created stories" do
+						before(:each) do
+							@users_shared_published_story = FactoryGirl.create(:story, user_id: @user.id, title: "A Users Shared Published Story", share_type: "with friends", status: "published")
+							@users_shared_draft_story = FactoryGirl.create(:story, user_id: @user.id, title: "A Users Shared Draft Story", share_type: "with friends", status: "draft")
+							@users_public_published_story = FactoryGirl.create(:story, user_id: @user.id, title: "A Users Public Published Story", share_type: "public", status: "published")
+							@users_private_published_story = FactoryGirl.create(:story, user_id: @user.id, title: "A Users Private Published Story", share_type: "private", status: "published")
+							@users_friends_shared_published_story = FactoryGirl.create(:story, user_id: @users_friend.id, title: "A Friends Shared Published Story", share_type: "with friends", status: "published")
+							@users_friends_public_published_story = FactoryGirl.create(:story, user_id: @users_friend.id, title: "A Friends Public Published Story", share_type: "public", status: "published")						
+							@users_friends_private_published_story = FactoryGirl.create(:story, user_id: @users_friend.id, title: "A Friends Private Published Story", share_type: "private", status: "published")						
 
-				end #context user and friend created stories.
+							@strangers_shared_published_story = FactoryGirl.create(:story, user_id: @stranger.id, title: "A Non-Friends Shared Published Story", share_type: "with friends", status: "published")
+							visit stories_path(type: "shared")
+						end
+
+						context "user has indicated that they want to see the individual's content" do
+							it { should have_content "Me & My Friends' Shared Stories" }
+							it { should have_content "A Users Shared Published Story" }
+							it { should have_content "A Users Public Published Story" }  			#  <-- inlcudes "public" stories as well as "with friends" stories
+							it { should_not have_content "A Users Shared Draft Story" }  			#  <-- only includes "published" stories
+							it { should_not have_content "A Users Private Published Story" }  #  <-- does not inlcude "private" published stories
+							it { should have_content "A Friends Shared Published Story" }
+							it { should_not have_content "A Non-Friends Shared Published Story" }
+							it { should have_content "A Friends Public Published Story" }
+							it { should_not have_content "A Friends Private Published Story" }
+						end #context they want to see the persons content
+						
+						context "user has indicated they do not want to see the friend's shared content" do
+							before(:each) do
+								non_sharing_friendship = Friendship.find(@friendship.id)
+								non_sharing_friendship.hide_content = true
+								non_sharing_friendship.save!
+								visit stories_path(type: "shared")
+							end
+
+							it { should have_content "Me & My Friends' Shared Stories" }
+							it { should have_content "A Users Shared Published Story" }
+							it { should have_content "A Users Public Published Story" }  			#  <-- inlcudes "public" stories as well as "with friends" stories
+							it { should_not have_content "A Users Shared Draft Story" }  			#  <-- only includes "published" stories
+							it { should_not have_content "A Users Private Published Story" }  #  <-- does not inlcude "private" published stories
+							it { should_not have_content "A Friends Shared Published Story" }
+							it { should_not have_content "A Non-Friends Shared Published Story" }
+							it { should_not have_content "A Friends Public Published Story" }
+							it { should_not have_content "A Friends Private Published Story" }
+
+						end
+
+
+
+					end #context user and friend created stories.
 			end #context user has friends
 		end #context user wants to see friends stories
 

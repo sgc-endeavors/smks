@@ -45,7 +45,13 @@
 			<%=user.first_name%>
 			<%=user.last_name%> | 
 			<%=user.email%>
+			<%if Friendship.where(user_id: user.id).where(friend_id: current_user.id).first.hide_content?%>
+				<small><%= link_to "(Show Their Content)", friendship_path(Friendship.where(user_id: user.id).where(friend_id: current_user.id).first), method: :put%></small>
+			<%else%>
+				<small><%= link_to "(Hide Their Content)", friendship_path(Friendship.where(user_id: user.id).where(friend_id: current_user.id).first), method: :put%></small>
+			<%end%>
+			<br>
 		<%end%>
 	<%end%>
-	<br><br>
-	<small>These are individuals that are allowing you to view their 'shared' content</small>
+	<br>
+	<small>These are individuals that are allowing you to view their 'shared' content.</small>

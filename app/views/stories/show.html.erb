@@ -1,4 +1,4 @@
-<br><br>
+
 	<div align="middle">
 		<%=link_to "<<", story_path(@previous_story, type: @type) if @previous_story%>
 		
@@ -8,25 +8,35 @@
 
 	<h4><%=@existing_story.title%> </h4>
 
-	<p><%=@existing_story.body %>~ <%=@existing_story.kid.name%> - <%=@existing_story.date_occurred.strftime("%m/%d/%Y") if @existing_story.date_occurred%> - Age: <%=@age%></p>
+	<p align="left"><%=raw(@existing_story.body.gsub("\n", "<br>")) %>
+		<br>
+		~ <%=@existing_story.kid.name%> - <%=@existing_story.date_occurred.strftime("%m/%d/%Y") if @existing_story.date_occurred%> - Age: <%=@age%></p>
 	
-
 
 	<%=render "facebook_partial"%>
 
+<small>
+	<%=@existing_story.status.capitalize%>
+	by: <%=@existing_story.user.first_name.capitalize%> 
 
-<p>By: <%=@existing_story.user.first_name.capitalize%> | Date: <%=@existing_story.published_date.strftime("%m/%d/%Y") if @existing_story.published_date %> | Type: <%=@existing_story.share_type%> | Status: <%=@existing_story.status%>
+	<%if @existing_story.published_date != nil && @existing_story.status == "published"%>
+		<%="on #{@existing_story.published_date.strftime("%m/%d/%Y")}" %> 
+		| <%=@existing_story.share_type%>
+		<br>
+	<%end%>
 
 	<% if can? :update, @existing_story  %>
 		| <%= link_to "Edit Story", edit_story_path(@existing_story) %> |
 		<%= link_to "Delete Story", story_path(@existing_story), method: :delete, confirm: "Are You Sure?" %>
 
 	<%end%>
-</p>
+
 	
 	<br>
 
 	<%= render "ratings_partial" %>
+
+</small>
 
 	<h5>Remarks</h5>
 	<%= link_to "Create Remark", new_remark_path(story_id: @existing_story.id) %> 
@@ -42,3 +52,4 @@
 	<%end%>
 
 </div>
+<br>

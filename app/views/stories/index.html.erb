@@ -31,41 +31,57 @@
 
 <div class="row-fluid thumbnail">
 
-	<div class= "span3">
-		<%=image_tag Image.where(story_id: existing_story.id).first.s3_image_loc_url.to_s if Image.where(story_id: existing_story.id).first%>
-	</div>
-	<div class= "span9" >
+	<%if existing_story.images.first%>
+		<div class= "span3">
+			<%=image_tag Image.where(story_id: existing_story.id).first.s3_image_loc_url.to_s if Image.where(story_id: existing_story.id).first%>
+		</div>
+		<%@story_length = 300%>
+
+		<%@text_span = "span9"%>
+	<%else%>
+		<%@text_span = "span12"%>
+		<%@story_length = 600%>
+	<%end%> 
+
+	
+	<div class= <%=@text_span%> >
 		<h4 style="display: inline"><%= link_to existing_story.title, story_path(existing_story, type: @type) %></h4>
-      		<p><%= existing_story.body[0..299]%>
-	 					<%if existing_story.body.length > 300%>
+      		<p><%= existing_story.body[0..(@story_length - 1)]%>
+	 					<%if existing_story.body.length > @story_length%>
 	 						<%=link_to "...more", story_path(existing_story, type: @type) %>
 	 					<%end%> ~
-	 					<%=existing_story.kid.name%> - <%=existing_story.date_occurred.strftime("%m/%d/%Y") if existing_story.date_occurred%><br><br>
+	 					<%=existing_story.kid.name%> - <%=existing_story.date_occurred.strftime("%m/%d/%Y") if existing_story.date_occurred%>
 
-
-						<%@existing_story = existing_story%>   <!--for ratings and facebook partial -->
-	 					<%=render "facebook_partial"%>
-
-	 					By: <%=existing_story.user.first_name.capitalize%> on 
-
-	 					<%if existing_story.published_date != nil%>
-	 						<%=existing_story.published_date.strftime("%m/%d/%Y") %> 
-	 					<%else%>
-	 						<%="'not yet published'"%>
+	 					<%if existing_story.date_occurred && existing_story.kid.birthdate%>
+	 						- Age: <%=existing_story.calculate_story_age%>
 	 					<%end%>
-	 					<br>
+	 					  <br><br>
 
-	 					<% if can? :update, existing_story  %>
-							<%= link_to "Edit Story", edit_story_path(existing_story) %> |
-						<%end%>
-						<% if can? :destroy, existing_story  %>
-							<%= link_to "Delete", story_path(existing_story), method: :delete, confirm: "Are You Sure?" %>
-						<%end%>	
-	
-						
-						<%= render "ratings_partial" %>
-	 				</p>
+		 				<small>	  
+							<%@existing_story = existing_story%>   <!--for ratings and facebook partial -->
+		 					<%=render "facebook_partial"%>
+
+		 					<%=existing_story.status.capitalize%>
+
+		 					by <%=existing_story.user.first_name.capitalize%>
+
+		 					<%if existing_story.published_date != nil && existing_story.status == "published"%>
+		 						<%="on #{existing_story.published_date.strftime("%m/%d/%Y")}" %> 
+		 					| <%=existing_story.share_type%>
+		 					<br>
+		 					<%end%>
+		 					
+
+		 					<% if can? :update, existing_story  %>
+								<%= link_to "Edit Story", edit_story_path(existing_story) %> |
+							<%end%>
+							<% if can? :destroy, existing_story  %>
+								<%= link_to "Delete", story_path(existing_story), method: :delete, confirm: "Are You Sure?" %>
+							<%end%>	
 		
+							<%= render "ratings_partial" %>
+		 				</p>
+		 				</small>	
 	</div>
 </div>
 <br>

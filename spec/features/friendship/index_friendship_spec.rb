@@ -99,16 +99,36 @@ describe "Friendship_Index Page" do
 			end
 
 			context "user has been befriended by someone" do
-				before(:each) do
-					FactoryGirl.create(:friendship, user_id: @second_user.id, friend_id: user.id)
-					visit friendships_path
+				
+				context "user has not yet decided to hide the friend's content" do
+					before(:each) do
+						FactoryGirl.create(:friendship, user_id: @second_user.id, friend_id: user.id)
+						visit friendships_path
+					end
+
+					it "displays the list of people who have 'befriended' the user" do
+						should have_content("Fred")
+						should have_content("Friend")
+					end
+					
+					it { should have_link ("Hide Their Content") }
+
+					context "the user wishes to hide the friend's content" do
+						it "now has a link to 'Show Their Content'" do
+							click_on "Hide Their Content" 
+							#should_not have_link "Hide Their Content"
+							Friendship.where(user_id: @second_user.id).where(friend_id: user.id).first.hide_content.should == true
+						end
+					end
 				end
 
-				it "displays the list of people who have 'befriended' the user" do
-					should have_content("Fred")
-					should have_content("Friend")
-				end
-
+				context "user has hidden the friend's content because they overshare" do
+					before(:each) do
+						FactoryGirl.create(:friendship, user_id: @second_user.id, friend_id: user.id, hide_content: true)
+						visit friendships_path
+					end
+					it { should have_link("Show Their Content") }
+				end			
 			end
 
 		end

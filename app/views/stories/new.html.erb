@@ -13,10 +13,10 @@
 	<br>
 
 	<%= f.label :date_occurred, "Date Occurred:", for: "date_ocurred" %>
-	<input type="date" name="date_occurred">
+	<input type="date" name="date_occurred" value=<%=Date.current%>>
 
 
-	<%= label_tag :kid_name, "Child's First Name:"%>
+	<%= label_tag :kid_name, "Attribute to:"%>
 	<%= select_tag :kid_name, options_for_select(Kid.where(user_id: current_user.id).map(&:name), @kid_name)%> <%=link_to "Add Child", kids_path%> 
 
 	<%= f.label :body, "Body:", for: "body" %>

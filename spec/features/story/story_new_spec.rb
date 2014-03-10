@@ -62,6 +62,10 @@ describe "Story_New Page" do
 				  end
 				end
 			
+				#context "user did not want to save an image" do
+					#it does not try to save a new image.
+				#end
+
 				context "user wants to save the new story as a draft for the time being" do
 				  before(:each) { save_draft_of_a_new_story(new_story) }
 				  it "saves the new story information upon submission" do

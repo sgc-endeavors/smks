@@ -28,13 +28,13 @@ end
 def publish_a_new_story(new_story)
   fill_in "title", with: new_story.title
   fill_in "body", with: new_story.body
-  select "Junior", from: "Child's First Name:"
+  select "Junior", from: "Attribute to:"
   click_on "Publish"
 end
 
 def save_draft_of_a_new_story(new_story)
   fill_in "title", with: new_story.title
-  select "Junior", from: "Child's First Name:"
+  select "Junior", from: "Attribute to:"
   fill_in "body", with: new_story.body
   click_on "Save as Draft"
 end
@@ -43,7 +43,7 @@ end
 def update_existing_story
   fill_in "title", with: "Eating Burgers"
   fill_in "body", with: "Burger eating story..."
-  select "Jasmine", from: "Child's First Name:"
+  select "Jasmine", from: "Attribute to:"
   select "private", from: "Share type" 
 end
 
