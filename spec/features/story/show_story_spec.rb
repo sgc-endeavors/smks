@@ -41,11 +41,23 @@ describe "Story_Show Page" do
 				should have_content("Junior")
 			end
 
-			it "calculates the approximate age based on the 'date occurred and birth date'" do
-				should have_content("12 months")
-
-
+			
+			context "a birthdate has been input for the person the story is attributed to" do
+				it "calculates the approximate age based on the 'date occurred and birth date'" do
+					should have_content("Age: 12 months")
+				end
 			end
+
+			context "a birthdate has not been input for the person the story is attributed to" do
+				it "does not show the calculated 'Age'" do
+					@adult = FactoryGirl.create(:person, user_id: @user.id, birthdate: nil)
+					@story = FactoryGirl.create(:story, user_id: @user.id, id: 12, person_id: @adult.id, title: "Current Publich Published Story", status: "published", date_occurred: Date.new(2012, 12, 5), published_date: Date.new(2012, 12, 6), share_type: "public", title: "Eating Boogers", body: "Booger eating story...")
+					visit story_path(@story)
+					should_not have_content("Age:")
+				end
+			end
+
+
 
 			it "shows the total ratings for the story" do	
 				should have_content("Awesomeness: 4x (per 2 people)")

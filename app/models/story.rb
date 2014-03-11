@@ -1,5 +1,5 @@
 class Story < ActiveRecord::Base
-  attr_accessible :approved, :body, :category_id, :picture_id, :title, :user_id, :status, :share_type, :people_age, :date_occurred
+  attr_accessible :approved, :body, :category_id, :picture_id, :title, :user_id, :status, :share_type, :date_occurred, :person_id
   validates :title, presence: true
   validates :user_id, presence: true
   belongs_to :user

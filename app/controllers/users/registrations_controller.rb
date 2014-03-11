@@ -9,13 +9,10 @@ class Users::RegistrationsController < Devise::RegistrationsController
     super
   end
 
-  # def create
-  # 	super
-
-  # 	new_person = Person.new
-  # 	new_person.name = params[:user][:first_name]
-  # 	new_person.save!
-  # end
-
+  def create
+   super
+    Person.create_new_person_at_registration(params[:user])
+	 
+  end
 
 end

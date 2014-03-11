@@ -43,7 +43,7 @@ class StoriesController < ApplicationController
 
  def create #(post)
  	new_story = Story.new(params[:story])
- 	new_story.person_id = Person.where(name: params[:person_name]).where(user_id: current_user.id).first.id
+ 	#new_story.person_id = Person.where(name: params[:person_name]).where(user_id: current_user.id).first.id
  	new_story.user_id = current_user.id
  	new_story.date_occurred = params[:date_occurred]
 
@@ -72,7 +72,7 @@ class StoriesController < ApplicationController
 
 
 	 	if @existing_story.date_occurred && @existing_story.person.birthdate
-	 		@age = @existing_story.calculate_story_age
+	 		@age = "- Age: #{@existing_story.calculate_story_age}"
 	 	end
 
 	 	if @type == "public" || @type == nil
@@ -132,7 +132,7 @@ class StoriesController < ApplicationController
  		else
  			updated_story.status = "draft"
  		end
- 		updated_story.person_id = Person.where(name: params[:person_name]).where(user_id: current_user.id).first.id
+ 		#updated_story.person_id = Person.where(name: params[:person_name]).where(user_id: current_user.id).first.id
  		updated_story.date_occurred = params[:date_occurred]
  		updated_story.save!
 		redirect_to story_path(updated_story)
