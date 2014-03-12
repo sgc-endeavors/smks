@@ -5,8 +5,12 @@ App::Application.routes.draw do
   devise_for :admin_users, ActiveAdmin::Devise.config
   ActiveAdmin.routes(self)
 
-  devise_for :users, :controllers => { registrations: "users/registrations"}
+  # devise_for :users, :controllers => { registrations: "users/registrations"}
+  # ActiveAdmin.routes(self)
+
+  devise_for :users, controllers: {registrations: "users/registrations", omniauth_callbacks: "omniauth_callbacks"}
   ActiveAdmin.routes(self)
+ 
   
   get "/marketing" => "stories#marketing", as: "marketing"
   get "/home" => "stories#home", as: "home"

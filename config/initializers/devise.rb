@@ -217,6 +217,7 @@ config.secret_key = 'f48d11215e4f089ab36cc1f8a5d2e6f311cf09607c42e00a3706c8e14d2
   # Add a new OmniAuth provider. Check the wiki for more information on setting
   # up on your models and hooks.
   # config.omniauth :github, 'APP_ID', 'APP_SECRET', :scope => 'user,public_repo'
+  config.omniauth :facebook, ENV['FACEBOOK_APP_ID'] || raise("missing FACEBOOK_APP_ID"), ENV['FACEBOOK_APP_SEC'] || raise("Missing FACEBOOK_APP_SEC"), {:client_options => {:ssl => {:ca_path => "/System/Library/OpenSSL/certs"}}}
 
   # ==> Warden configuration
   # If you want to use other strategies, that are not supported by Devise, or
