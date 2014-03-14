@@ -30,3 +30,7 @@
 .story_caption {
 	vertical-align: top
 }
+
+.dropdown-backdrop{
+    position: static;
+}
