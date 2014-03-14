@@ -1,0 +1,20 @@
+
+
+<%= form_for(@image, html: {multipart: true} ) do |f| %>
+
+	<%=file_field_tag :s3_image_loc%>
+	<%=hidden_field_tag :story_id, @story_id%>
+	<%=hidden_field_tag :type_of_image, @type%>
+	
+	<br><br>
+
+	<%= submit_tag "Submit", class: "btn btn-success btn-small" %>
+	
+	<%if @type%>
+		<%= link_to "Cancel", root_path, class: "btn btn-small"%>
+	<%else%>
+		<%= link_to "Cancel", edit_story_path(@story_id), class: "btn btn-small"%>
+	<%end%>
+<%end%>
+
+

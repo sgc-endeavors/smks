@@ -1,16 +1,24 @@
 <h4>Kids / Other People</h4>
+<small>Add people to this list if you want to be able to attribute a story to them.  Include kids of course, as well as yourself, your spouse, grandparents, etc.
 
-<%=link_to "Add Person", new_person_path%>
 
 <br>
 
+<h5>Name | Birthdate</h5>
 <%@people.each do |person|%>
-	<%=person.name%>
+	
+	<%=person.name%>  | 
 	<%=person.birthdate.strftime("%m/%d/%Y") if person.birthdate%>
 	<small>
-		<%=link_to "Edit", edit_person_path(person)%>
+		<%=link_to "(Edit)", edit_person_path(person)%>
 	</small>
 		<br>
 <%end%>
 
+<br>
+<%=link_to "Add a Person", new_person_path%>
+
+
+
+<br>
 <br>

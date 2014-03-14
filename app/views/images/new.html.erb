@@ -1,14 +1,5 @@
 <h4> Add Image </h4>
 
-<%= form_for(@image, url: images_path, html: {multipart: true} ) do |f| %>
-
-	<%=hidden_field_tag :story_id, @story_id%>
-	<%=file_field_tag :s3_image_loc%>
-	<br><br>
-
-	<%= submit_tag "Submit", class: "btn btn-success btn-small" %>
-	<%= link_to "Cancel", edit_story_path(@story_id), class: "btn btn-small"%>
-
-<%end%>
+<%=render "form_partial"%>
 
 

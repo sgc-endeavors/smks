@@ -29,7 +29,7 @@ describe "Edit Image Page" do
 		  context "user wishes to replace the existing image" do
 		  	before(:each) { visit edit_image_path(@existing_image) }
 
-		  	it { should have_content("Update Image") }
+		  	it { should have_content("Update Story's Image") }
 		  	it { should have_button("Submit") }
 		  	it { should have_link("Cancel") }
 

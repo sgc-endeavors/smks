@@ -53,7 +53,7 @@ describe "Friendship_Index Page" do
 				it "returns 'No user's found with that name. Search again.'" do
 					fill_in "search", with: "Larry"
 					click_on "Search"
-					should have_content("No user's found with that name. Search again.")
+					should have_content("No users were found with that email. Search again.")
 				end
 		  end
 		end

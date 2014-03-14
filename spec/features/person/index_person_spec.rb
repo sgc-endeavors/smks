@@ -25,19 +25,19 @@ describe "Person#Index Page" do
 		end
 
 		it { should have_content("Kids / Other People") }	
-		it { should have_link("Add Person")}
+		it { should have_link("Add a Person")}
 		it { should have_content("Adam") }
 		it { should have_link("Edit") }
 		context "user wants to add a person" do
 			it "routes the user to the new_person_path" do
-				click_on "Add Person"
+				click_on "Add a Person"
 				current_path.should == new_person_path
 			end
 		end
 
 		context "user wants to edit a person" do
 			it "routes the user to the edit_person_path" do
-				click_on "Edit"
+				click_on "(Edit)"
 				current_path.should == edit_person_path(@person)
 			end
 		end

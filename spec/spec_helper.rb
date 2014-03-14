@@ -58,7 +58,7 @@ def update_an_existing_remark(remark)
 end
 
 def cancel_account(existing_user)
-  click_on "Profile"
+  click_on "Edit Profile"
   click_on "Cancel my account"
 end
 

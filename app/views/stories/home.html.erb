@@ -15,10 +15,14 @@
 
 
   <div class="container">
-            <div class="hero-unit">
+            <div class="hero-unit" style="padding-top:30px; padding-left:25px; padding-bottom:25px; padding-right:25px;">
               <div align="middle">
-                <img src="" width="300"/>
-                <h1>SMKS</h1>                
+                <%if @image%>
+                <a href=<%=edit_image_path(@image, type: "homepage_image")%>>
+                  <img src=<%=@image.s3_image_loc%> width="300"/>
+                </a>
+                <%end%>
+                <h2>SMKS</h2>                
                   <p>An online journal for new parents.  <br>
                 <a href=<%=stories_path(type: @view_preference)%>>Enter</a></p>
             </div>
@@ -42,10 +46,7 @@
             
           </div>
         <hr />
-        <div class="footer">
-          <p><i>  &copy; 2013 SGC Endeavors, Inc.  All rights reserved. A Ruby-on-Rails / Twitter-Bootstrap Design. <br></p>
-        </div><br>
-
+        
 
       </div>
   

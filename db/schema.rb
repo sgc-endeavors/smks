@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20140312173746) do
+ActiveRecord::Schema.define(:version => 20140314193815) do
 
   create_table "active_admin_comments", :force => true do |t|
     t.string   "resource_id",   :null => false
@@ -58,8 +58,9 @@ ActiveRecord::Schema.define(:version => 20140312173746) do
     t.string   "s3_image_loc"
     t.integer  "user_id"
     t.integer  "story_id"
-    t.datetime "created_at",   :null => false
-    t.datetime "updated_at",   :null => false
+    t.datetime "created_at",       :null => false
+    t.datetime "updated_at",       :null => false
+    t.boolean  "show_on_homepage"
   end
 
   create_table "people", :force => true do |t|

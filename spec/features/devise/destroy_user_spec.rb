@@ -9,12 +9,13 @@ describe "Devise#cancel_my_account" do
 	context "visitor has logged in as a user" do
 		before(:each) { sign_in_as_existing_user(user) }
 		
-		context " user has created 2 stories, 2 images, remarks, ratings and people" do
+		context " user has created 2 stories, 2 story images, a homepage_image, remarks, ratings and people" do
 			before(:each) do 
 				@story1 = FactoryGirl.create(:story, user_id: user.id)
 				@story2 = FactoryGirl.create(:story, user_id: user.id)
 				@image1 = FactoryGirl.create(:image, user_id: user.id, story_id: @story1.id)
 				@image2 = FactoryGirl.create(:image, user_id: user.id, story_id: @story2.id)
+				@homepage_image = FactoryGirl.create(:image, user_id: user.id, story_id: nil, show_on_homepage: true)
 				@users_remark = FactoryGirl.create(:remark, user_id: user.id)
 				@others_remark_about_story1 = FactoryGirl.create(:remark, story_id: @story1.id)
 				@users_rating = FactoryGirl.create(:rating, user_id: user.id)
@@ -54,6 +55,7 @@ describe "Devise#cancel_my_account" do
 				it "deletes each image associated w/ a story of the deleted user" do
 					expect { Image.find(@image1.id)}.to raise_error(ActiveRecord::RecordNotFound)
 					expect { Image.find(@image2.id)}.to raise_error(ActiveRecord::RecordNotFound)
+					expect { Image.find(@homepage_image.id)}.to raise_error(ActiveRecord::RecordNotFound)
 				end
 
 				it "deletes each remark associated w/ a story of the deleted user" do

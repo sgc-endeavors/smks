@@ -50,31 +50,78 @@
           
             <div class = "nav-collapse collapse">
               <ul class="nav pull-right">
+                
+
+                <li class="dropdown">
+                  <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                    Create
+                    <b class="caret"></b>
+                  </a>
+                  <ul class="dropdown-menu" role="menu" aria-labelledby="dLabel1">
+                    <li><%=link_to "New Story", new_story_path%></li>
+                    <%if user_signed_in?%>
+                      <%count = Story.where(user_id: current_user.id).where(status: "draft").count%>
+                      <%if count > 0%> 
+                        <li><a href=<%=stories_path(type: "draft")%>>Finish Drafts(<%=count%>)</a></li>
+                      <%end%>
+                    <%end%>
+                  </ul>
+                </li>
+
+
+
+                <%if user_signed_in?%>
+                <li><a href=<%=stories_path(type: "personal")%>>My Stories</a></li>
+                <li class="dropdown">
+                  <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                    Shared Stories
+                    <b class="caret"></b>
+                  </a>
+                  <ul class="dropdown-menu" role="menu" aria-labelledby="dLabel1">
+                    
+                    <li><a href=<%=stories_path(type: "shared")%>>Me & My Friends'</a></li>
+                    <li><a href=<%=stories_path(type: "public")%>>Everyone's</a></li> 
+                  </ul>
+                </li>
+                <%else%>
+                  <li><a href=<%=stories_path(type: "public")%>>Shared Stories</a></li> 
+                <%end%>
+
+                <%if user_signed_in?%>
+
+                <li class="dropdown">
+                  <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                    Housekeeping
+                    <b class="caret"></b>
+                  </a>
+                  <ul class="dropdown-menu" role="menu" aria-labelledby="dLabel1">
+                    <li><%=link_to "Edit Profile", edit_user_registration_path%></li>
+                    <li><%= link_to "Add/Edit Friendships", friendships_path%></li>
+                    <li><%= link_to "Add Kids to My List", people_path%></li>
+                    <li><%= link_to "Add/Edit Homepage Pic", new_image_path(type: "homepage_image")%></li>
+                    <li><%= link_to 'Admin', admin_root_path if User.find(current_user.id).is_admin%></li>
+                  </ul>
+                </li>
+                <li><%= link_to 'Logout', destroy_user_session_path, method: :delete %></li> 
+        
+                <%else%>
+                 
+                  <li><%= link_to "Login", new_user_session_path %></li>  
+                  <!--<li>< %= link_to "Sign in with Facebook", user_omniauth_authorize_path(:facebook)%></li>-->
+                  <li><%= link_to "Sign up", new_user_registration_path %></li>
+                 
+                <%end%>
+
 
                
-                <li><a href=<%=new_story_path%>>Create New</a></li>                              
-                <% if user_signed_in? %>
-                  <% count = Story.where(user_id: current_user.id).where(status: "draft").count%>
-                  <%if count > 0%> 
-                    <li><a href=<%=stories_path(type: "draft")%>>Finish Drafts(<%=count%>)</a></li>
-                  <%end%>
-                  <li><a href=<%=stories_path(type: "personal")%>>My Stories</a></li>
-                  <li><a href=<%=stories_path(type: "shared")%>>My Friends'</a></li>
-                  <li><a href=<%=friendships_path%>>+ Friends</a></li>
-                <%end%>
-               
-                <li><a href=<%=stories_path(type: "public")%>>Public</a></li>                              
-                
-                <% if user_signed_in? %>
-                  <li><%= link_to "Profile", edit_user_registration_path %></li>
-                  <li><%= link_to 'Logout', destroy_user_session_path, method: :delete %></li>  
-            
-                <%else%>
-                  <li><%= link_to "Login", new_user_session_path %></li>  
-                  <li><%= link_to "Sign in with Facebook", user_omniauth_authorize_path(:facebook)%></li>
-                  <li><%= link_to "Sign up", new_user_registration_path %></li>
-                  </ul>
-                  <%end%>
+
+
+
+ </ul>
+
+
+
+
 
 
 
@@ -98,7 +145,11 @@
 
 
     <%= yield %>
-  </div>
+  
 
 </body>
+  <div class="footer">
+    <i><small>  &copy; 2014 SGC Endeavors, LLC  All rights reserved.</i></small> <br><br><br>
+  </div>
+  </div>
 </html>

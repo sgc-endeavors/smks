@@ -1,11 +1,7 @@
-<h4> Update Image </h4>
-
-<%= form_for(@image, url: image_path(@image), html: {multipart: true} ) do |f| %>
-
-	<%=file_field_tag :s3_image_loc%>
-	<br><br>
-
-	<%= submit_tag "Submit", class: "btn btn-success btn-small" %>
-	<%= link_to "Cancel", edit_story_path(@image.story_id), class: "btn btn-small"%>
-
+<%if @type%>
+	<h4> Update Homepage Image </h4>
+<%else%>
+	<h4> Update Story's Image </h4>
 <%end%>
+<%=render "form_partial" %>
+

@@ -2,6 +2,9 @@ class StoriesController < ApplicationController
 	before_filter :authenticate_user!, except: [ :home, :index, :show, :marketing ]
 
  def home
+ 	if user_signed_in?
+ 		@image = Image.where(user_id: current_user.id).where(show_on_homepage: true).first
+ 	end
  	render :home
  end
 
@@ -24,8 +27,6 @@ class StoriesController < ApplicationController
 		wanted_users_friends = current_user.inverse_friendships.where(hide_content: false).map(&:user_id)
 		all_shared_stories = Story.where(user_id: current_user.id).where(status: "published").where("share_type not like 'private'") + Story.where(user_id: wanted_users_friends).where(status: "published").where("share_type not like 'private'")
 		@existing_stories = all_shared_stories.sort_by { |story| story.published_date.to_i * -1 }
-
-
 
  			#@existing_stories = Story.where(user_id: friendships).where(status: "published").where("share_type not like 'private'") + Story.where(user_id: current_user.id).where(status: "published").where("share_type not like 'private'") 
  	elsif params[:type] == "draft"

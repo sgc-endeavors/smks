@@ -2,12 +2,13 @@
 
 <%=form_tag friendships_path, method: :get do %>
 
-<%=text_field_tag :search, params[:search]%>
+<%=text_field_tag :search, params[:search], placeholder: "your friend's email"%>
 <%=submit_tag "Search", name: nil%>
 
 <%end%>
 
-<% if @users != [] && @users != nil%>
+<% if @users%>
+	<%if @users != []%>
 	<ul>
 		<%@users.each do |user|%>
 			<li>
@@ -16,34 +17,35 @@
 			</li>
 		<%end%>
 	</ul>
-<%else%>
-	<p>No user's found with that name. Search again.</p>
+	<%else%>
+		<p>No users were found with that email. Search again.</p>
+	<%end%>
 <%end%>
-
-<h2> My Friends </h2>
+<br>
+<h4> My Friends </h4>
 
 	<% if @friendships == []%>
 		<p>You have not yet added any friends.</p>
 	<%else%>
 		<% for friendship in @friendships%>
 		<%= friendship.friend.first_name%> 
-		<%= friendship.friend.last_name%> |
+		<%= friendship.friend.last_name[0]+"."%> |
 		<%= friendship.friend.email%>
 		<small><%= link_to "(Remove as Friend)", friendship_path(friendship), method: :delete%></small>
 		<br>
 		<%end%>
 	<%end%>
 	<br>
-	<small>These are individuals that you are allowing to view your 'shared' content.</small>
+	<small>These are individuals that you are allowing to view your 'shared with friends' content.</small>
 	<hr />
 
-<h2> Friended by </h2>
+<h4> Friended by </h4>
 	<% if @inverse_friendships == []%>
 		<p>You have not yet been added as a friend by anyone.</p>
 	<%else%>
 		<%current_user.inverse_friends.each do |user|%>
 			<%=user.first_name%>
-			<%=user.last_name%> | 
+			<%=user.last_name[0]+"."%> | 
 			<%=user.email%>
 			<%if Friendship.where(user_id: user.id).where(friend_id: current_user.id).first.hide_content?%>
 				<small><%= link_to "(Show Their Content)", friendship_path(Friendship.where(user_id: user.id).where(friend_id: current_user.id).first), method: :put%></small>

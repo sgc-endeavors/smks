@@ -26,7 +26,7 @@ describe "Story_New Page" do
 			let(:last_story) { Story.last }
 
 			context "using the 'Create' link" do
-				before(:each) { click_on "Create" }
+				before(:each) { click_on "New Story" }
 				
 				it "defaults to the user's share preference unless it is overwrittern" do
 					publish_a_new_story(new_story)

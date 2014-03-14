@@ -33,6 +33,17 @@ describe "Home Page" do
 	
 	context "visitor has logged in" do
 		
+		context "user has set a homepage image" do
+			xit { should have an image}
+			context "click on image" do
+				xit {routes the user to the edit image view}
+			end
+		end
+
+		context "user has NOT set a homepage image" do
+			xit { should nothave an image }
+		end
+
 		context "user has set their default view preference to show their stories and their friends stories" do
 			before(:each) do 
 				@user = FactoryGirl.create(:user, default_view_preference: "My Friends")
