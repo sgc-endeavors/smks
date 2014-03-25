@@ -44,7 +44,7 @@ def update_existing_story
   fill_in "title", with: "Eating Burgers"
   fill_in "body", with: "Burger eating story..."
   select "Jasmine", from: "Attribute to:"
-  select "private", from: "Share type" 
+  select "private", from: "Share Type:" 
 end
 
 def submit_a_new_remark(new_remark)

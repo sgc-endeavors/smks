@@ -2,7 +2,7 @@
 	<div align="middle">
 		<%=link_to "<<", story_path(@previous_story, type: @type) if @previous_story%>
 		
-		<%=image_tag Image.where(story_id: @existing_story.id).first.s3_image_loc_url.to_s if Image.where(story_id: @existing_story.id).first%>
+		<%=image_tag Image.where(story_id: @existing_story.id).first.s3_image_loc_url.to_s, class:"img-responsive" if Image.where(story_id: @existing_story.id).first%>
 
 		<%=link_to ">>", story_path(@next_story, type: @type) if @next_story%>
 

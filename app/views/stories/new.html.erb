@@ -2,34 +2,50 @@
 
 <h4>Create a Story </h4>
 
-<%= form_for(@new_story, html: { multipart: true }, url: stories_path(@new_story)) do |f| %>
+<%= form_for(@new_story, html: { multipart: true }, url: stories_path(@new_story), role:"form") do |f| %>
 	
-	<%=file_field_tag :s3_image_loc%>
+	
+		<%=file_field_tag :s3_image_loc%> <br>
+	
+
+	<div class="form-group">
+		<%= f.label :title, "Title:", for: "title" %>
+		<%= f.text_field :title, id: "title", class:"form-control" %> 
+	</div>
 
 
-	<%= f.label :title, "Title:", for: "title" %>
-	<%= f.text_field :title, id: "title" %> 
+	<div class="form-group">
+		<%= f.label :date_occurred, "Date Occurred:", for: "date_ocurred" %>
+		<div class="row">
+			<div class="col-xs-6">
+				<input type="date" name="date_occurred"  value=<%=Date.current%> class="form-control">
+			</div>
+		</div>
+	</div>
 
-	<br>
-
-	<%= f.label :date_occurred, "Date Occurred:", for: "date_ocurred" %>
-	<input type="date" name="date_occurred" value=<%=Date.current%>>
 
 
-	<%= f.label :person_id, "Attribute to:"%>
-	<%= f.select :person_id, options_from_collection_for_select(Person.where(user_id: current_user.id).order("name"), :id, :name)%> <%=link_to "Add Child/Person", people_path%> 
+	
+	<div class="form-group">
+		<%= f.label :person_id, "Attribute to:"%>
+		<%= f.select :person_id, options_from_collection_for_select(Person.where(user_id: current_user.id).order("name"), :id, :name), class:"form-control"%> <%=link_to "Add Child/Person", people_path%> 
+	</div>
 
-	<%= f.label :body, "Body:", for: "body" %>
-	<%= f.text_area :body, id: "body" %>
-
-	<%= f.label :share_type, "Share Type:", for: "share_type" %>
-	<%= f.select :share_type, options_for_select(["public", "with friends", "private"], @share_type) %><br>
+	<div class="form-group">
+		<%= f.label :body, "Body:", for: "body" %>
+		<%= f.text_area :body, id: "body", class:"form-control" , rows:10%>
+	</div>
+	
+	<div class="form-group">
+		<%= f.label :share_type, "Share Type:", for: "share_type" %>
+		<%= f.select :share_type, options_for_select(["public", "with friends", "private"], @share_type),class:"form-control" %><br>
+	</div>
 
 	<%= f.hidden_field :user_id, id: "user_id" %>
 
 
-	<%= button_tag "Publish", name: "publish", class: "btn btn-success btn-small" %>
-	<%= button_tag "Save as Draft", name: "draft", class: "btn btn-small" %>
+	<%= button_tag "Publish", name: "publish", class: "btn btn-success btn-sm" %>
+	<%= button_tag "Save as Draft", name: "draft", class: "btn btn-sm btn-default" %>
 	<%= link_to "Cancel", stories_path%>
 
 <%end%>

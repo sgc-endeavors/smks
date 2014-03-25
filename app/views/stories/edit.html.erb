@@ -1,7 +1,7 @@
 <h4>Edit My Story </h4>
 
 
-<%= form_for(@current_story, url: story_path(@current_story), html: {multipart: true, method: "put"} ) do |f| %>
+<%= form_for(@current_story, url: story_path(@current_story), html: {multipart: true, method: "put"}, role:"form" ) do |f| %>
 
 	<%if Image.where(story_id: @current_story.id).first%>
 		<%=image_tag Image.where(story_id: @current_story).first.s3_image_loc_url.to_s %>
@@ -15,30 +15,40 @@
 		</small>
 	<%end%>
 
+	<br><br>
+	<div class="form-group">
+		<%= f.label :title, "Title:", for: "title" %>
+		<%= f.text_field :title, id: "title", class:"form-control" %> 
+	</div>
 
-	<%= f.label :title, "Title:", for: "title" %>
-	<%= f.text_field :title, id: "title" %> 
+	<div class="form-group">
+		<%= f.label :date_occurred, "Date Occurred:", for: "date_ocurred" %>
+		<div class="row">
+			<div class="col-xs-6">
+				<input type="date" name="date_occurred"  value=<%=@current_story.date_occurred%> class="form-control">
+			</div>
+		</div>
+	</div>
 
-	<br>
-
-	<%= f.label :date_occurred, "Date Occurred:", for: "date_ocurred" %>
-	<input type="date" name="date_occurred" value=<%=@current_story.date_occurred%>>
-
-	<%= f.label :person_id, "Attribute to:"%>
-	<%= f.select :person_id, options_from_collection_for_select(Person.where(user_id: current_user.id).order("name"), :id, :name, @current_story.person.id)%> <%=link_to "Add Child/Person", people_path%> 
-	<br>
-
-	<%= f.label :body, "Body:", for: "body" %>
-	<%= f.text_area :body, id: "body" %><br>
-
-	<%= f.label :share_type%>
-	<%= f.select :share_type, options_for_select(["public", "with friends", "private"], @share_type)%>
+	<div class="form-group">
+		<%= f.label :person_id, "Attribute to:"%>
+		<%= f.select :person_id, options_from_collection_for_select(Person.where(user_id: current_user.id).order("name"), :id, :name, @current_story.person.id), class:"form-control"%> <%=link_to "Add Child/Person", people_path%> 
+	</div>
+	<div class="form-group">
+		<%= f.label :body, "Body:", for: "body" %>
+		<%= f.text_area :body, id: "body", class:"form-control", rows:10 %>
+	</div>
+	
+	<div class="form-group">
+		<%= f.label :share_type, "Share Type:"%>
+		<%= f.select :share_type, options_for_select(["public", "with friends", "private"], @share_type) %>
+	</div>
 
 	<%= f.hidden_field :status%>
 
 	<br>
-	<%= button_tag "Publish", name: "publish", class: "btn btn-success btn-small" %>
-	<%= button_tag "Save as Draft", name: "save_as_draft", class: "btn btn-small" %>
+	<%= button_tag "Publish", name: "publish", class: "btn btn-success btn-sm" %>
+	<%= button_tag "Save as Draft", name: "save_as_draft", class: "btn btn-default btn-sm" %>
 	<%= link_to "Cancel", story_path(@current_story)%>
 
 <%end%>

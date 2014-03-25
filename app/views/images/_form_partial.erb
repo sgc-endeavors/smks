@@ -8,12 +8,12 @@
 	
 	<br><br>
 
-	<%= submit_tag "Submit", class: "btn btn-success btn-small" %>
+	<%= submit_tag "Submit", class: "btn btn-success btn-sm" %>
 	
 	<%if @type%>
-		<%= link_to "Cancel", root_path, class: "btn btn-small"%>
+		<%= link_to "Cancel", root_path, class: "btn btn-sm"%>
 	<%else%>
-		<%= link_to "Cancel", edit_story_path(@story_id), class: "btn btn-small"%>
+		<%= link_to "Cancel", edit_story_path(@story_id), class: "btn btn-sm"%>
 	<%end%>
 <%end%>
 
