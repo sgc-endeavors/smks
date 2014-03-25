@@ -11,9 +11,7 @@
 <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap-theme.min.css">
 
 
-  <%= stylesheet_link_tag    "application", :media => "all" %>
-  <%= javascript_include_tag "application" %>
-  <%= csrf_meta_tags %>
+  
 
   <%if @existing_story != nil %>
     <meta property="og:title" content="<%=@existing_story.title%>"/>
@@ -30,9 +28,12 @@
 
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
       
-
+  <%= stylesheet_link_tag    "application", :media => "all" %>
+  <%= javascript_include_tag "application" %>
+  <%= csrf_meta_tags %>
 </head>
 <body>
+
 
   <!-- this is for facebook share functionality-->
       <div id="fb-root"></div>
@@ -44,7 +45,7 @@
           fjs.parentNode.insertBefore(js, fjs);
         }(document, 'script', 'facebook-jssdk'));</script>
 
-<div class="container">
+
 
 <nav class="navbar navbar-default" role="navigation">
   <div class="container-fluid">
@@ -56,7 +57,7 @@
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
       </button>
-      <a class="navbar-brand" href= <%=home_path%> class="brand"> <img style="width: 30px; height: 30px" src=""> SMKS</a>
+      <a class="navbar-brand " href= <%=home_path%> class="brand"> SMKS</a>
     </div>
 
     <!-- Collect the nav links, forms, and other content for toggling -->
