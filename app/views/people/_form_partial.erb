@@ -1,15 +1,28 @@
 
 <%=form_for(@person) do |f| %>
-	<%= f.label :name, "Person's First Name:", for: "name" %>
-	<%= f.text_field :name, id: "name" %> <br>
-	<%= f.label :birthdate, "Birth Date (if appl.*)", for: "birthdate" %>
-	<input type="date" name="birthdate">
-	<small>
-		<br>
-		*Note: Birthdate is only applicable for children
-	</small>
-	<br><br>
-	<%=submit_tag "Submit"%>
+	
+	<div class="form-group">
+	<%= f.label :name, "Person's First Name", for: "name" %>    
+    <div class="row">
+      <div class="col-sm-4">
+				<%= f.text_field :name, id: "name", class:"form-control" %>
+			</div>
+		</div>
+	</div>
+
+	<div class="form-group">
+		<%= f.label :birthdate, "Birth Date (if appl.*)", for: "birthdate" %>
+		<div class="row">
+      <div class="col-sm-4">
+				<input type="date" name="birthdate" class="form-control">
+				<small>					
+					*Note: Birthdate is only relevant for approximating kid's age for each story.
+				</small>
+			</div>
+		</div>
+	</div>
+
+	<%=submit_tag "Submit", class:"btn btn-sm btn-success"%> &nbsp;&nbsp;
 	<%=link_to "Cancel", people_path%>
 
 <%end%>

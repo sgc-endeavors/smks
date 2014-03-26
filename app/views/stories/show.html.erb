@@ -1,10 +1,21 @@
 
 	<div align="middle">
-		<%=link_to "<<", story_path(@previous_story, type: @type) if @previous_story%>
 		
-		<%=image_tag Image.where(story_id: @existing_story.id).first.s3_image_loc_url.to_s, class:"img-responsive" if Image.where(story_id: @existing_story.id).first%>
 
-		<%=link_to ">>", story_path(@next_story, type: @type) if @next_story%>
+		<%if @previous_story%>
+			<%=link_to story_path(@previous_story, type: @type) do%>
+				<span class="glyphicon glyphicon-circle-arrow-left"></span>
+			<%end%>
+		<%end%>
+		<%=image_tag Image.where(story_id: @existing_story.id).first.s3_image_loc_url.to_s, class:"img-thumbnail"  if Image.where(story_id: @existing_story.id).first%>
+
+		<%if @next_story%>
+			<%=link_to story_path(@next_story, type: @type) do%>
+				<span class="glyphicon glyphicon-circle-arrow-right"></span>
+			<%end%>
+		<%end%>
+
+	
 
 	<h4><%=@existing_story.title%> </h4>
 

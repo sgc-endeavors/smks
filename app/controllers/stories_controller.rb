@@ -81,8 +81,8 @@ class StoriesController < ApplicationController
 			@previous_story = Story.where(share_type: "public").where(status: "published").order(:id).where("id < #{params[:id].to_i}").last	 			
 	 	elsif @type == "personal"
 	 		#date = DateTime.strptime()
-			@next_story = Story.where(status: "published").where(user_id: current_user.id).order(:date_occurred).where("id > #{params[:id].to_i}").first
-			@previous_story = Story.where(status: "published").where(user_id: current_user.id).order(:date_occurred).where("id < #{params[:id].to_i}").last
+			@next_story = Story.where(status: "published").where(user_id: current_user.id).where("date_occurred" => @existing_story.date_occurred.."2099-01-01".to_datetime).where("id != ?", @existing_story.id).order("date_occurred").first
+			@previous_story = Story.where(status: "published").where(user_id: current_user.id).where("date_occurred" => "1000-01-01".to_datetime..@existing_story.date_occurred).where("id != ?", @existing_story.id).order("date_occurred desc").first
 	 	
 		elsif @type == "shared"
 			@shared_stories = Story.where(user_id: current_user.id).where(status: "published").where("share_type not like 'private'") + Story.where(user_id: current_user.inverse_friends).where(status: "published").where("share_type not like 'private'")
