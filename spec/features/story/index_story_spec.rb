@@ -110,8 +110,8 @@ describe "Story_Index Page" do
 				current_path.should == root_path
 			end
 
-			it "should be titled 'Share with Everyone'" do
-				should have_content("Share with Everyone")
+			it "should be titled 'Shared with Everyone'" do
+				should have_content("Shared with Everyone")
 			end	
 
 			context "visitor has authored 1 public story" do

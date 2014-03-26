@@ -12,7 +12,7 @@ def sign_in_as_existing_user(existing_user)
   visit new_user_session_path
   fill_in "email", with: existing_user.email
   fill_in "password", with: existing_user.password
-  click_button "Sign in"
+  click_button "Agree & Login"
 end
 
 def sign_up_as_a_new_user(new_user)
@@ -21,8 +21,7 @@ def sign_up_as_a_new_user(new_user)
     fill_in "email", with: new_user.email
     fill_in "password", with: new_user.password
     fill_in "password_confirmation", with: new_user.password_confirmation
-    check "terms"
-    click_on "Create Account"
+    click_on "Agree & Sign up"
 end
 
 def publish_a_new_story(new_story)

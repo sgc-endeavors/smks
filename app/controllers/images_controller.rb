@@ -16,6 +16,7 @@ class ImagesController < ApplicationController
 #		else
 			@story_id = params[:story_id]
 #		end
+
 	end
 
 	def create

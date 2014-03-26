@@ -17,7 +17,7 @@
     <meta property="og:title" content="<%=@existing_story.title%>"/>
     <meta property="og:site_name" content="SMKS"/>
     <meta property="og:url" content="http://smks.herokuapp.com/story/<%=@existing_story.id%>"/>
-    <meta property="og:description" content="http://smks.herokuapp.com/story/<%=@existing_story.body%>"/>
+    <meta property="og:description" content="<%=@existing_story.body%>"/>
     <%if @existing_story.images.first%>
       <meta property="og:image" content="<%=@existing_story.images.first.s3_image_loc%>"/>
     <%else%>
@@ -108,7 +108,13 @@
             <li><%=link_to "Edit Profile", edit_user_registration_path%></li>
             <li><%= link_to "Add/Edit Friendships", friendships_path%></li>
             <li><%= link_to "Add Kids to My List", people_path%></li>
-            <li><%= link_to "Add/Edit Homepage Pic", new_image_path(type: "homepage_image")%></li>
+            
+            <%homepage_image = Image.where(user_id: current_user.id).where(show_on_homepage: true).first%>
+            <%if homepage_image%>
+            <li><%= link_to "Edit Homepage Pic", edit_image_path(homepage_image.id, type: "homepage_image")%></li>              
+            <%else%>
+            <li><%= link_to "Add Homepage Pic", new_image_path(type: "homepage_image")%></li>
+            <%end%>
             <li><%= link_to 'Admin', admin_root_path if User.find(current_user.id).is_admin%></li>
           </ul>
         </li>

@@ -58,12 +58,10 @@
     <%= f.select :default_view_preference, options_for_select(["My Stories", "My Friends", "Public"], resource.default_view_preference), class:"form-control" %>
   </div>
 
-  <div class="form-group">
-    <%= f.check_box :terms, id: "terms" %>
-    <%= f.label :terms, "I accept the terms and conditions", for: "terms"%>
-	</div>
+  <p><small> By clicking "Agree & Sign up", I agree to the <%=link_to "Terms of Use", "/Terms_of_Use.pdf"%> and <%=link_to "Privacy Policy", "/Privacy_Policy.pdf"%>.</small></p>
+
   <div>
-    <%= f.submit "Create Account", class:"btn btn-sm btn-success" %>
+    <%= f.submit "Agree & Sign up", class:"btn btn-sm btn-success" %>
   </div>
 <% end %>
 <br>

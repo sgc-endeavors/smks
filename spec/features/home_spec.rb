@@ -61,7 +61,7 @@ describe "Home Page" do
 			end
 			it "routes the user to the story index view for all public stories" do
 				click_on "Enter"
-				should have_content("Share with Everyone")
+				should have_content("Shared with Everyone")
 			end
 		end
 		context "user has set their default view preference to show only their own stories " do

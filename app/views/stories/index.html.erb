@@ -3,7 +3,7 @@
 <%if @type == "public" || @type == nil%>
 	<div class="row">
 		<div class="span9">
-			<h4>Share with Everyone</h4>
+			<h4>Shared with Everyone</h4>
 <%elsif @type == "personal"%>
 	<div class="row">
 		<div class="span12">
@@ -33,7 +33,9 @@
 
 	<%if existing_story.images.first%>
 		<div class= "span3">
-			<%=image_tag Image.where(story_id: existing_story.id).first.s3_image_loc_url.to_s if Image.where(story_id: existing_story.id).first%>
+			<%if Image.where(story_id: existing_story.id).first%>
+			<%=image_tag Image.where(story_id: existing_story.id).first.s3_image_loc_url.to_s, class:"img-responsive img-thumbnail"  %>
+			<%end%>
 		</div>
 		<%@story_length = 300%>
 

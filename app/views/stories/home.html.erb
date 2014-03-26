@@ -1,4 +1,4 @@
-<br>
+
 
   <%if current_user%>
     <%default_view_preference = User.find(current_user.id).default_view_preference%>
@@ -15,37 +15,19 @@
 
 
   <div class="container">
-            <div class="hero-unit" style="padding-top:30px; padding-left:25px; padding-bottom:25px; padding-right:25px;">
+            <div class="hero-unit" style="padding-top:15px; padding-left:5px; padding-bottom:5px; padding-right:15px;">
               <div align="middle">
                 <%if @image%>
                 <a href=<%=edit_image_path(@image, type: "homepage_image")%>>
-                  <img src=<%=@image.s3_image_loc%> width="300"/>
+                  <img src=<%=@image.s3_image_loc%> class="img-responsive img-thumbnail"/>
                 </a>
                 <%end%>
                 <h2>SMKS</h2>                
-                  <p>An online journal for new parents.  <br>
+                  <p>An online journal for capturing and sharing those candid and amusing moments as a new parent.  <br>
                 <a href=<%=stories_path(type: @view_preference)%>>Enter</a></p>
             </div>
           </div>
-          <div class="row" >
-            <div class="span4">
-              <h4><a href=<%=marketing_path%>>My Journal</h4></a>
-                <p>Maintain an online journal of personal and shared memories as you begin your new life as a parent.  </p>
-            </div>
-            <div class="span4">
-              <h4><a href=<%=marketing_path%>> Share Something Funny</a></h4>
-                <p>Share those often hilarious moments that occur as you begin your crash course in Parenting 101 and as your child discovers their new world.</p>
-           </div>
-            <div class="span4">
-              <h4><a href=<%=marketing_path%>>Read Something Funny</a></h4>
-              <p> Take a break, laugh, and commiserate.  
-
-            </div>
-          
-            
-            
-          </div>
-        <hr />
+                 <hr />
         
 
       </div>
