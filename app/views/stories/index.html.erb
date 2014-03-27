@@ -99,31 +99,30 @@
 
 	</div> <!-- closs out the span	-->
 	
-<%if @type == "public" || @type == nil%>
+
+
+<!--	
+< %if @type == "public" || @type == nil%>
 	<div class="span3">
 		<br><br>
 		<b>This Month's 10 Most Funny</b>
-		<%=@top_rated%>
+		< %=@top_rated%>
 		<hr />
-		<% for i in (0..(@top_stories.size-1))%>
-			<%id = @top_stories[i]%>
-			<%story = Story.find(id[0])%><br>
-			<b><%=link_to story.title, story_path(story, type: @type)%></b><br>
-			"<%=story.body[0..299]%>
-				<%if story.body.length > 300%>
-	 				<%=link_to "...more", story_path(story, type: @type) %>"
-	 			<%else%>
+		< % for i in (0..(@top_stories.size-1))%>
+			< %id = @top_stories[i]%>
+			< %story = Story.find(id[0])%><br>
+			<b>< %=link_to story.title, story_path(story, type: @type)%></b><br>
+			"< %=story.body[0..299]%>
+				< %if story.body.length > 300%>
+	 				< %=link_to "...more", story_path(story, type: @type) %>"
+	 			< %else%>
 	 			"
-	 			<%end%>
-
-
-
+	 			< %end%>
 			<br>
-			Thumbs Up: <%=id[1]%><br><br>
-
-			<%end%>
+			Thumbs Up: < %=id[1]%><br><br>
+		< %end%>
 	</div>
-<%end%>
-
+< %end%>
+-->
 </div> <!-- close out the row-->
 </div>
