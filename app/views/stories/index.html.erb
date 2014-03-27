@@ -31,11 +31,11 @@
 
 <div class="row-fluid thumbnail">
 
-	<%if existing_story.images.first != nil  && existing_story.images.first != ""%>
+	<%if existing_story.images.first%>
 		<div class= "span3">
-		<%if Image.where(story_id: existing_story.id).first != nil && Image.where(story_id: existing_story.id).first != ""%>
+			<%if Image.where(story_id: existing_story.id).first%>
 			<%=image_tag Image.where(story_id: existing_story.id).first.s3_image_loc_url.to_s, class:"img-responsive img-thumbnail"  %>
-		<%end%>
+			<%end%>
 		</div>
 		<%@story_length = 300%>
 
