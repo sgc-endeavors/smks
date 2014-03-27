@@ -21,7 +21,7 @@ config.action_mailer.default_url_options = { :host => 'http://smks.herokuapp.com
   config.assets.compress = true
 
   # Don't fallback to assets pipeline if a precompiled asset is missed
-  config.assets.compile = false  ######## was false changed by Seth
+  config.assets.compile = true  ######## was false changed by Seth
 
   # Generate digests for assets URLs
   config.assets.digest = true
