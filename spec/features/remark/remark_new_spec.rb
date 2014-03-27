@@ -21,8 +21,6 @@ describe "Remark_New Page" do
 			visit new_remark_path(story_id: story.id)
 		end
 
- 		it { should have_content("Create a Remark") }
-
 		it "saves the new remark information upon submission" do
 			submit_a_new_remark(new_remark)
 	 		last_remark = Remark.last

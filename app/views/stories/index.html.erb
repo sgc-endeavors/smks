@@ -68,17 +68,24 @@
 		 					by <%=existing_story.user.first_name.capitalize%>
 
 		 					<%if existing_story.published_date != nil && existing_story.status == "published"%>
-		 						<%="on #{existing_story.published_date.strftime("%m/%d/%Y")}" %> 
+		 						
 		 					| <%=existing_story.share_type%>
-		 					<br>
+		 				
 		 					<%end%>
 		 					
 
 		 					<% if can? :update, existing_story  %>
-								<%= link_to "Edit Story", edit_story_path(existing_story) %> |
+		 						|&nbsp;
+		 						<%=link_to edit_story_path(existing_story), id:"edit_story" do%>
+									<span class="glyphicon glyphicon-pencil"></span>
+								<%end%>
 							<%end%>
 							<% if can? :destroy, existing_story  %>
-								<%= link_to "Delete", story_path(existing_story), method: :delete, confirm: "Are You Sure?" %>
+								
+								&nbsp;|&nbsp;
+								<%= link_to story_path(existing_story), method: :delete, confirm: "Are You Sure?", id:"delete_story" do%>
+									<span class="glyphicon glyphicon-remove"></span>
+								<%end%>
 							<%end%>	
 		
 							<%= render "ratings_partial" %>

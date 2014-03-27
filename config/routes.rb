@@ -14,6 +14,7 @@ App::Application.routes.draw do
   
   get "/marketing" => "stories#marketing", as: "marketing"
   get "/home" => "stories#home", as: "home"
+  get "/about" => "stories#about", as: "about"
 
   resources :users, :stories, :ratings, :remarks, :people, :images, :friendships
   # The priority is based upon order of creation:

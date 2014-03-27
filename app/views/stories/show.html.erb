@@ -3,14 +3,14 @@
 		
 
 		<%if @previous_story%>
-			<%=link_to story_path(@previous_story, type: @type) do%>
+			<%=link_to story_path(@previous_story, type: @type), id:"previous" do%>
 				<span class="glyphicon glyphicon-circle-arrow-left"></span>
 			<%end%>
 		<%end%>
 		<%=image_tag Image.where(story_id: @existing_story.id).first.s3_image_loc_url.to_s, class:"img-thumbnail"  if Image.where(story_id: @existing_story.id).first%>
 
 		<%if @next_story%>
-			<%=link_to story_path(@next_story, type: @type) do%>
+			<%=link_to story_path(@next_story, type: @type), id:"next" do%>
 				<span class="glyphicon glyphicon-circle-arrow-right"></span>
 			<%end%>
 		<%end%>
@@ -34,15 +34,21 @@
 	by: <%=@existing_story.user.first_name.capitalize%> 
 
 	<%if @existing_story.published_date != nil && @existing_story.status == "published"%>
-		<%="on #{@existing_story.published_date.strftime("%m/%d/%Y")}" %> 
 		| <%=@existing_story.share_type%>
-		<br>
 	<%end%>
 
 	<% if can? :update, @existing_story  %>
-		| <%= link_to "Edit Story", edit_story_path(@existing_story) %> |
-		<%= link_to "Delete Story", story_path(@existing_story), method: :delete, confirm: "Are You Sure?" %>
+		|&nbsp; 
+		<%=link_to edit_story_path(@existing_story), id:"edit_story" do%>
+			<span class="glyphicon glyphicon-pencil"></span>
+		<%end%>
 
+		&nbsp; | &nbsp;
+
+		<%= link_to story_path(@existing_story), method: :delete, confirm: "Are You Sure?", id:"delete_story" do%>
+			<span class="glyphicon glyphicon-remove"></span>
+		<%end%>
+	
 	<%end%>
 
 	
@@ -51,15 +57,30 @@
 	<%= render "ratings_partial" %>
 
 </small>
-
-	<h5>Remarks</h5>
-	<%= link_to "Create Remark", new_remark_path(story_id: @existing_story.id) %> 
 <br>
-	<%@remarks.each do |remark| %>
+
+
+<h5>
+	Remarks
+	<%=link_to new_remark_path(story_id: @existing_story.id), id:"create_remark" do%>
+		<span class="glyphicon glyphicon-pencil"></span>
+	<%end%>
+	&nbsp;
+</h5>
+
+<%@remarks.each do |remark| %>
 	<%=remark.body%>	- <%=remark.user.first_name.capitalize%>  
 	<%if can? :update, remark %>
-		| <%= link_to "Edit Remark", edit_remark_path(remark)%> 
-		| <%= link_to "Delete", remark_path(remark)%>
+	
+		<%=link_to edit_remark_path(remark), id:"edit_remark" do%>
+			<span class="glyphicon glyphicon-pencil"></span>
+		<%end%>
+
+		&nbsp; | &nbsp;
+		<%= link_to remark_path(remark.id), method: :delete, confirm: "Are You Sure?", id:"delete_remark" do%>
+			<span class="glyphicon glyphicon-remove"></span>
+		<%end%>
+	
 	<%end%>
 	
 		<br>

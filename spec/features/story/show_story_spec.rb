@@ -20,7 +20,7 @@ describe "Story_Show Page" do
 			should_not have_link("Show Journal")
 		end
 		it "should not be able to create a remark without first logging in" do
-			click_on("Create Remark")
+			page.click_link("create_remark")
 			current_path.should == new_user_session_path
 		end
 	end
@@ -68,7 +68,7 @@ describe "Story_Show Page" do
 					should_not have_button("1")
 					should_not have_button("3")
 				end
-				it { should have_link("Edit Story") }
+				it { should have_link("edit_story") }
 			end
 
 			context "the story is not authored by the current_user" do
@@ -86,7 +86,7 @@ describe "Story_Show Page" do
 
 				end
 				it "should not have an 'Edit Story' link" do
-					should_not have_link("Edit Story")
+					should_not have_link("edit_story")
 				end
 
 				context "user rates the story for the first time" do
@@ -195,14 +195,6 @@ describe "Story_Show Page" do
 			end
 		end
 
-
-
-
-
-
-
-
-
 		describe "ShowPage_comments_section" do
 			before(:each) do
 				@published_non_authored_story = FactoryGirl.create(:story, status: "published", published_date: Date.new(2012, 12, 3), share_type: "private", title: "My Published Private Story")
@@ -212,7 +204,7 @@ describe "Story_Show Page" do
 			end
 			
 			it "allows the user to access the remark/new view" do
-				click_on("Create Remark")
+				click_link("create_remark")
 				current_path.should == new_remark_path
 			end
 
@@ -222,11 +214,11 @@ describe "Story_Show Page" do
 			end
 
 			context "the current user authored the remark" do
-				it { should have_link("Edit Remark") }
-				it { should have_link("Delete") }
+				it { should have_link("edit_remark") }
+				it { should have_link("delete_remark") }
 			
 				it "routes the user to edit view when the user presses 'Edit'" do
-					click_on("Edit Remark")
+					click_link("edit_remark")
 					current_path.should == edit_remark_path(@remark)
 				end
 			end
@@ -237,8 +229,8 @@ describe "Story_Show Page" do
 					visit story_path(@current_public_published_story)
 				end
 
-				it { should_not have_link("Edit Remark") }		
-				it { should_not have_link("Delete") }
+				it { should_not have_link("edit_remark") }		
+				it { should_not have_link("delete_remark") }
 			end
 		end
 
@@ -256,12 +248,12 @@ describe "Story_Show Page" do
 		 		
 		
 				it "includes a link to show the previous public published story" do
-					click_on("<<")
+					click_link("previous")
 					current_path.should == story_path(@previous_public_published_story)
 				end
 
 				it "includes a link to show the newer publich published story" do
-					click_on(">>")
+					click_link("next")
 					current_path.should == story_path(@next_public_published_story)
 				end
 			end
@@ -270,12 +262,12 @@ describe "Story_Show Page" do
 		 		before(:each) { visit story_path(@current_public_published_story, type: "personal") }		
 
 				it "includes a link to show the previous published story (regardless of whether it is public or private)" do
-					click_on("<<")
+					click_link("previous")
 					current_path.should == story_path(@previous_private_published_story)
 				end
 
 				it "includes a link to show the newer published story (regardless of whether it is public or private)" do
-					click_on(">>")
+					click_link("next")
 					current_path.should == story_path(@next_private_published_story)
 				end
 			end
@@ -285,11 +277,11 @@ describe "Story_Show Page" do
 			before(:each) { visit story_path(@current_public_published_story) }
 
 			it "does NOT include a link to show the previous public published story" do
-				should_not have_link("<<")
+				should_not have_link("previous")
 			end
 
 			it "does NOT include a link to show the next public published story" do
-				should_not have_link(">>")
+				should_not have_link("next")
 			end
 		end
 	end #visitor signs in as a user

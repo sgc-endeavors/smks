@@ -7,22 +7,6 @@ describe "Home Page" do
 
 	it {should have_link("Enter") }
 
-	context "visitor has or has not logged in" do
-		it "allow the user to visit the marketing content" do
-			click_on("My Journal")
-			current_path.should == marketing_path
-		end	
-
-		it "allow the user to visit the marketing content" do
-			click_on("Share Something Funny")
-			current_path.should == marketing_path
-		end	
-
-		it "allow the user to visit the marketing content" do
-			click_on("Read Something Funny")
-			current_path.should == marketing_path
-		end	
-	end
 
 	context "visitor has NOT logged in" do
 		it "allow the user to visit the stories path" do

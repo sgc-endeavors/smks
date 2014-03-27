@@ -15,20 +15,30 @@
 
 
   <div class="container">
-            <div class="hero-unit" style="padding-top:15px; padding-left:5px; padding-bottom:5px; padding-right:15px;">
-              <div align="middle">
-                <%if @image%>
-                <a href=<%=edit_image_path(@image, type: "homepage_image")%>>
-                  <img src=<%=@image.s3_image_loc%> class="img-responsive img-thumbnail"/>
-                </a>
-                <%end%>
-                <h2>SMKS</h2>                
-                  <p>An online journal for capturing and sharing those candid and amusing moments as a new parent.  <br>
-                <a href=<%=stories_path(type: @view_preference)%>>Enter</a></p>
-            </div>
-          </div>
-                 <hr />
-        
-
+    
+    <div align="middle"
+     <div class="row" align="middle" >
+        <div class="col-md-4" >
+          <%if @image%>
+            <a href=<%=stories_path(type: @view_preference)%>>
+              <img src=<%=@image.s3_image_loc%> class="img-responsive img-thumbnail"/>
+            </a>
+          <%else%>
+            <a href=<%=stories_path(type: @view_preference)%>>
+              <img src="/images/riley.jpg" class="img-responsive img-thumbnail"/>
+            </a>
+          <%end%>
+        </div>
       </div>
+
+     
+        <h2>SMKS</h2>                
+        <p>An online journal for capturing and sharing those candid and amusing moments as a new parent.  
+        <br><br>
+        <a href=<%=stories_path(type: @view_preference)%> class="btn btn-primary btn-sm">Enter</a></p>
+       
+     </div>
+    
+  </div>
   
+

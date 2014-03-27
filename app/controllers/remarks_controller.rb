@@ -2,7 +2,7 @@ class RemarksController < ApplicationController
 	before_filter :authenticate_user!
 	
 	def new
-		@new_remark = Remark.new
+		@remark = Remark.new
 		@story_id = params[:story_id]
 		authorize! :create, Remark
 		render :new
@@ -17,6 +17,7 @@ class RemarksController < ApplicationController
 
 	def edit
 		@remark = Remark.find(params[:id])
+		@story_id = @remark.story_id
 		authorize! :update, @remark
 		render :edit
 	end
@@ -28,6 +29,9 @@ class RemarksController < ApplicationController
 	end
 
 	def destroy
+		remark = Remark.find(params[:id])
+		remark.destroy
+		redirect_to story_path(remark.story_id)
 
 	end
 

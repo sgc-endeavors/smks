@@ -12,8 +12,6 @@ describe "Remark_Edit Page" do
 		visit edit_remark_path(remark.id)
 	end
 
- 	it { should have_content("Edit My Remark") }
-
 	it "saves the updated remark information upon submission" do
 		update_an_existing_remark(remark)
 		updated_remark = Remark.find(remark.id)

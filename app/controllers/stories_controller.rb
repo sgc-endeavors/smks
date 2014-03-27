@@ -1,5 +1,5 @@
 class StoriesController < ApplicationController
-	before_filter :authenticate_user!, except: [ :home, :index, :show, :marketing ]
+	before_filter :authenticate_user!, except: [ :home, :index, :show, :about ]
 
  def home
  	if user_signed_in?
@@ -8,8 +8,8 @@ class StoriesController < ApplicationController
  	render :home
  end
 
- def marketing
- 	render :marketing
+ def about
+ 	render :about
  end
 
  def index

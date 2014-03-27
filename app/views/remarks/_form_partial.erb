@@ -1,0 +1,19 @@
+
+<%= form_for(@remark, role:"form") do |f| %>
+	
+	<div class="form-group">
+		<%= f.label :body, "Remark", for: "body" %>
+		<%= f.text_area :body, id: "body", class:"form-control", rows:5 %>
+	</div>
+
+
+	<%= f.hidden_field :story_id, value: @story_id%>
+
+	<%= f.submit class:"btn btn-sm btn-success"%>
+
+<%end%>
+
+<br>
+
+<%= link_to "Cancel", story_path(@story_id)%>
+

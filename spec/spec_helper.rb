@@ -48,12 +48,12 @@ end
 
 def submit_a_new_remark(new_remark)
   fill_in "body", with: "That was the funniest thing I've ever read..."
-  click_on("Submit")
+  click_on("Create Remark")
 end
 
 def update_an_existing_remark(remark)
   fill_in "body", with: "That was the dumbest thing I've ever read..."
-  click_on("Update")
+  click_on("Update Remark")
 end
 
 def cancel_account(existing_user)

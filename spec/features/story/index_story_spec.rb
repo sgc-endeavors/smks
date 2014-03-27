@@ -77,10 +77,6 @@ describe "Story_Index Page" do
 				should have_content("by #{@public_published_short_story.user.first_name}")
 			end
 
-			it "shows the date last_updated" do
-				should have_content("on #{@public_published_short_story.published_date.strftime("%m/%d/%Y")}")
-			end
-
 			describe "Index#Sidebar" do
 
 				it "allows the visitor to view the most funny list" do
@@ -126,18 +122,18 @@ describe "Story_Index Page" do
 				end
 
 				it "allows user to access the story edit page for their stories" do 
-					first(:link, "Edit Story").click
+					first(:link, "edit_story").click
 					current_path.should == edit_story_path(@another_story.id)
 				end
 				it "shows the edit link for only those public published stories authored by the user" do
-					should have_link("Edit Story", count: 1)
+					should have_link("edit_story", count: 1)
 				end
 				it "shows the delete link for only those public published stories authored by the user" do
-					should have_link("Delete", count: 1)
+					should have_link("delete_story", count: 1)
 				end
 
 				context "users wants to delete the story" do
-					before(:each) { click_on "Delete" }
+					before(:each) { click_link "delete_story" }
 						it "deletes the story" do
 							expect { Story.find(@another_story.id)}.to raise_error(ActiveRecord::RecordNotFound)	
 						end
@@ -199,14 +195,14 @@ describe "Story_Index Page" do
 			end
 
 			it "allows user to access the story edit page for their stories" do 
-				first(:link, "Edit Story").click
+				first(:link, "edit_story").click
 				current_path.should == edit_story_path(@another_story.id)
 			end
 			it "shows the edit link for only those stories authored by the user" do
-				should have_link("Edit Story", count: 2)
+				should have_link("edit_story", count: 2)
 			end
 			it "shows the delete link for only those stories authored by the user" do
-				should have_link("Delete", count: 2)
+				should have_link("delete_story", count: 2)
 			end
 			it "should not be able to access the edit view via the URL unless you authored the story" do
 				visit edit_story_path(FactoryGirl.create(:story, published_date: Date.new(2012, 12, 3))) #
@@ -290,7 +286,7 @@ describe "Story_Index Page" do
 		before(:each) { visit stories_path(type: "public") }
 		
 		it "does NOT allow visitor to click on the edit link" do
-			should_not have_link("Edit Story")
+			should_not have_link("edit_story")
 		end
 
 		it "only allows the visitor to view 'public' stories" do
