@@ -1,0 +1,20 @@
+<h4>New Remarks Inbox</h4>
+
+<% if @remarks.count == 0 %>
+	<p> You have no unread remarks </p>
+<%else%>
+
+	<p><small><i>Click the "x" to remove from your inbox</i></small></p>
+	<br>
+	<%@remarks.each do |remark|%>
+		<b><%=remark.story.title%></b><br>
+		<%= link_to remark_path(remark, viewed: true), method: :put, id:"remove_remark" do%>
+			<span class="glyphicon glyphicon-remove"></span>
+		<%end%>
+		<%=remark.body%> - <%=remark.user.first_name.capitalize%> on <%=remark.updated_at.strftime("%m/%d/%Y")%>
+	<br><br>
+	<%end%>
+<%end%>
+
+
+

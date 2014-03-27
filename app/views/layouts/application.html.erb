@@ -99,6 +99,9 @@
 
         <%if user_signed_in?%>
 
+          <% if Remark.where(viewed: nil).all(joins: :story, conditions: {stories: { user_id: current_user.id }}).count != 0%>
+          <li><a href=<%=remarks_path%>>Inbox(<%=Remark.where(viewed: nil).all(joins: :story, conditions: {stories: { user_id: current_user.id }}).count%>)</a></li>
+        <%end%>
         <li class="dropdown">
           <a href="#" class="dropdown-toggle" data-toggle="dropdown">
             Housekeeping
@@ -124,9 +127,12 @@
          
           <li><%= link_to "Login", new_user_session_path %></li>  
           <!--<li>< %= link_to "Sign in with Facebook", user_omniauth_authorize_path(:facebook)%></li>-->
-          <!--
-          <li>< %= link_to "Sign up", new_user_registration_path %></li>
-         -->
+          
+          <%if current_user%>
+            <%if current_user.is_admin?%>
+              <li><%= link_to "Sign up", new_user_registration_path %></li>
+            <%end%>
+          <%end%>
         <%end%>
 
 

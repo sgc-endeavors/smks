@@ -33,6 +33,8 @@
 <% end %>
 <br>
 
-<!--
-< %= render "devise/shared/links" %>
--->
+<%if current_user%>
+  <%if current_user.is_admin?%>
+    <%= render "devise/shared/links"%>
+  <%end%>
+<%end%>

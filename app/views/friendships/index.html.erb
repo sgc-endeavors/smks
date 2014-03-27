@@ -1,4 +1,13 @@
-<h4>Find a Friend</h4>
+<h4>
+	Find a Friend 
+	<%if current_user.is_admin?%>
+		<%text = "I am keeping an online journal to capture those candid and amusing moments as a new parent.  The site is called SMKS.  I'd like to share my stories and pictures with you.  Please create an account (at #{new_user_registration_url}) so that I can add you as a friend.  If you just want to look around before registering, the site is http://smks.herokuapp.com"%>
+			(or <a href="mailto:?subject=SMKS Online Journal&body=<%=text%>">Invite a Friend</a>)
+	<%end%>
+</h4>
+
+
+
 
 
 <%=form_tag friendships_path, method: :get, class:"form-inline", role:"form" do %>

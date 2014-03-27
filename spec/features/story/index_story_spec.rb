@@ -8,6 +8,7 @@ describe "Story_Index Page" do
 		@user = FactoryGirl.create(:user)
 		@public_published_short_story = FactoryGirl.create(:story, title: "A Public Published Short Story", share_type: "public", status: "published", date_occurred: Date.new(2012, 12, 1), published_date: Date.new(2012, 12, 3))
 		@private_published_story = FactoryGirl.create(:story, title: "My Private Story", user_id: @user.id, status: "published", date_occurred: Date.new(2012, 12, 1), published_date: Date.new(2012, 12, 3), share_type: "private")
+		#@remark = FactoryGirl.create(:remark, story_id: @public_published_short_story)
 	end
 
 	context "a visitor has or has not logged in" do
@@ -45,6 +46,22 @@ describe "Story_Index Page" do
 				end
 			end
 
+			context "a story has received 1 remark" do
+				before(:each) do
+					FactoryGirl.create(:remark, story_id: @public_published_short_story.id)
+					visit stories_path(type: "public")
+				end
+				it "shows the number of remarks for a story" do
+					should have_content("Remarks: 1")
+				end
+
+				it "has a link to create a remark" do
+					should have_link("create_remark")
+				end
+
+
+			end
+
 			context "a story has more than 300 characters" do
 				context " the story has an image" do
 					before(:each) do
@@ -79,12 +96,12 @@ describe "Story_Index Page" do
 
 			describe "Index#Sidebar" do
 
-				it "allows the visitor to view the most funny list" do
+				xit "allows the visitor to view the most funny list" do
 					should have_content("This Month's 10 Most Funny")
 				end
 
-				it "contains the five funniest stories of all time" do
-					pending
+				xit "contains the five funniest stories of all time" do
+					
 				end
 			end
 		end

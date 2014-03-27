@@ -1,6 +1,12 @@
 class RemarksController < ApplicationController
 	before_filter :authenticate_user!
 	
+	def index
+		@remarks = Remark.where(viewed: nil).all(joins: :story, conditions: {stories: { user_id: current_user.id }})
+
+
+	end
+	
 	def new
 		@remark = Remark.new
 		@story_id = params[:story_id]
@@ -23,9 +29,17 @@ class RemarksController < ApplicationController
 	end
 
 	def update
-		updated_remark = Remark.find(params[:id])
-		updated_remark.update_attributes(params[:remark])
-		redirect_to story_path(updated_remark.story)
+
+		if params[:viewed] == "true"
+			viewed_remark = Remark.find(params[:id])
+			viewed_remark.viewed = true
+			viewed_remark.save!
+			redirect_to remarks_path
+		else
+			updated_remark = Remark.find(params[:id])
+			updated_remark.update_attributes(params[:remark])
+			redirect_to story_path(updated_remark.story)
+		end
 	end
 
 	def destroy

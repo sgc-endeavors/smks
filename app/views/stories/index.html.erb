@@ -88,9 +88,16 @@
 								<%end%>
 							<%end%>	
 		
-							<%= render "ratings_partial" %>
+							<%= render "ratings_partial" %><br>
+							Remarks: <%=existing_story.remarks.count%> &nbsp;| &nbsp; </small>
+							<%=link_to new_remark_path(story_id: existing_story.id), id:"create_remark" do%>
+								<span class="glyphicon glyphicon-pencil"></span>
+							<%end%>
+
+
+
 		 				</p>
-		 				</small>	
+		 					
 	</div>
 </div>
 <br>
