@@ -59,7 +59,7 @@
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
       </button>
-      <a class="navbar-brand " href= <%=home_path%> class="brand"> SMKS</a>
+      <a class="navbar-brand " href= <%=home_path%> class="brand"> SMKS <small><i>beta</i></small></a>
     </div>
 
     <!-- Collect the nav links, forms, and other content for toggling -->
@@ -124,8 +124,9 @@
          
           <li><%= link_to "Login", new_user_session_path %></li>  
           <!--<li>< %= link_to "Sign in with Facebook", user_omniauth_authorize_path(:facebook)%></li>-->
-          <li><%= link_to "Sign up", new_user_registration_path %></li>
-         
+          <!--
+          <li>< %= link_to "Sign up", new_user_registration_path %></li>
+         -->
         <%end%>
 
 
