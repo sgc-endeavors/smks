@@ -61,7 +61,7 @@
   <p><small> By clicking "Agree & Sign up", I agree to the <%=link_to "Terms of Use", "/Terms_of_Use.pdf"%> and <%=link_to "Privacy Policy", "/Privacy_Policy.pdf"%>.</small></p>
 
   <div>
-    <%= f.submit "Agree & Sign up", class:"btn btn-sm btn-success" %>
+    <%= f.submit "Agree & Sign up", class:"btn btn-sm btn-success", data: { disable_with: "Processing"}%>
   </div>
 <% end %>
 <br>

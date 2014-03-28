@@ -64,7 +64,7 @@
     </div>
   </div>
 
-  <%= f.submit "Update & Save", class:"btn btn-sm btn-success" %> &nbsp; &nbsp; <%= link_to "Cancel Changes", :back %>
+  <%= f.submit "Update & Save", class:"btn btn-sm btn-success", data: { disable_with: "Processing"} %> &nbsp; &nbsp; <%= link_to "Cancel Changes", :back %>
 
 <% end %>
 

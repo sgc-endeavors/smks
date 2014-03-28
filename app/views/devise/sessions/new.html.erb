@@ -29,7 +29,7 @@
   <p><small> By clicking "Agree & Login", I agree to the <%=link_to "Terms of Use", "/Terms_of_Use.pdf"%> and <%=link_to "Privacy Policy", "/Privacy_Policy.pdf"%>.</small></p>
   <br>
 
-  <div><%= f.submit "Agree & Login", class:"btn btn-sm btn-success"%></div>
+  <div><%= f.submit "Agree & Login", class:"btn btn-sm btn-success", data: { disable_with: "Processing"}%></div>
 <% end %>
 <br>
 
