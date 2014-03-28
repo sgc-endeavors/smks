@@ -17,15 +17,15 @@
   <div class="container">
     
     <div align="middle">
-      <div class="row" >
-        <div  class="col-xs-6 col-md-12">
+     <div class="row">
+        <div class="col-sm-12" "col-xs-12" >
           <%if @image%>
             <a href=<%=stories_path(type: @view_preference)%>>
               <img src=<%=@image.s3_image_loc%> class="img-responsive img-thumbnail"/>
             </a>
           <%else%>
             <a href=<%=stories_path(type: @view_preference)%>>
-              <img alt="Riley" class="img-responsive img-thumbnail" src="https://smks-images.s3.amazonaws.com/uploads/22/riley.JPG">
+              <img alt="Riley" class="img-thumbnail" src="https://smks-images.s3.amazonaws.com/uploads/22/riley.JPG">
             </a>
           <%end%>
         </div>
