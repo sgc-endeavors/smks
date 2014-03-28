@@ -8,7 +8,7 @@
 	
 	<br><br>
 
-	<%= submit_tag "Submit", class: "btn btn-success btn-sm" %>
+	<%= submit_tag "Submit", class: "btn btn-success btn-sm", data: { disable_with: "Processing"} %>
 	
 	<%if @type%>
 		<%= link_to "Cancel", root_path, class: "btn btn-sm"%>

@@ -47,8 +47,8 @@
 	<%= f.hidden_field :status%>
 
 	<br><br>
-	<%= button_tag "Publish", name: "publish", class: "btn btn-success btn-sm" %>
-	<%= button_tag "Save as Draft", name: "save_as_draft", class: "btn btn-default btn-sm" %>
+	<%= button_tag "Publish", name: "publish", class: "btn btn-success btn-sm", data: { disable_with: "Processing"} %>
+	<%= button_tag "Save as Draft", name: "save_as_draft", class: "btn btn-default btn-sm", data: { disable_with: "Processing"} %>
 	&nbsp;&nbsp;
 	<%= link_to "Cancel", story_path(@current_story)%>
 

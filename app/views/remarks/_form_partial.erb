@@ -10,7 +10,7 @@
 	<%= f.hidden_field :viewed, value: nil%>
 	<%= f.hidden_field :story_id, value: @story_id%>
 
-	<%= f.submit class:"btn btn-sm btn-success"%>
+	<%= f.submit class:"btn btn-sm btn-success", data: { disable_with: "Processing"}%>
 
 <%end%>
 

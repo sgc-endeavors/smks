@@ -16,7 +16,7 @@
 			<div class="input-group"> 
 				<%=text_field_tag :search, params[:search], placeholder: "your friend's email", class:"form-control"%>
 				<span class="input-group-btn">
-					<%=submit_tag "Search", name: nil, class:"btn btn-sm, btn-default"%>				
+					<%=submit_tag "Search", name: nil, class:"btn btn-sm, btn-default", data: { disable_with: "Processing"}%>				
 				</span>
 			</div>
 		</div>
