@@ -36,6 +36,7 @@
 	<%if @existing_story.published_date != nil && @existing_story.status == "published"%>
 		| <%=@existing_story.share_type%>
 	<%end%>
+</small>
 
 	<% if can? :update, @existing_story  %>
 		|&nbsp; 
@@ -54,6 +55,7 @@
 	
 	<br>
 
+<small>
 	<%= render "ratings_partial" %>
 
 </small>

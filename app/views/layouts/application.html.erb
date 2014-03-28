@@ -26,7 +26,7 @@
   <%end%>
 
 
-  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
   <!--    
   < %= stylesheet_link_tag    "application", :media => "all" %>
   -->
@@ -75,7 +75,11 @@
             <%if user_signed_in?%>
               <%count = Story.where(user_id: current_user.id).where(status: "draft").count%>
               <%if count > 0%> 
-                <li><a href=<%=stories_path(type: "draft")%>>Finish Drafts(<%=count%>)</a></li>
+                <li><a href=<%=stories_path(type: "draft")%>>Finish Drafts
+                    <span class="badge">
+                      <%=count%>
+                    </span>
+                    </a></li>
               <%end%>
             <%end%>
           </ul>
@@ -100,7 +104,13 @@
         <%if user_signed_in?%>
 
           <% if Remark.where(viewed: nil).all(joins: :story, conditions: {stories: { user_id: current_user.id }}).count != 0%>
-          <li><a href=<%=remarks_path%>>Inbox(<%=Remark.where(viewed: nil).all(joins: :story, conditions: {stories: { user_id: current_user.id }}).count%>)</a></li>
+          <li><a href=<%=remarks_path%>>Remarks Inbox
+
+              <span class="badge">
+                <%=Remark.where(viewed: nil).all(joins: :story, conditions: {stories: { user_id: current_user.id }}).count%>
+              </span>
+
+          </a></li>
         <%end%>
         <li class="dropdown">
           <a href="#" class="dropdown-toggle" data-toggle="dropdown">

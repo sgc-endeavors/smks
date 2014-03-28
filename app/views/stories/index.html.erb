@@ -34,6 +34,8 @@
 	<%if existing_story.images.first%>
 		<div class= "span3">
 			<%if Image.where(story_id: existing_story.id).first%>
+
+			
 			<%=image_tag Image.where(story_id: existing_story.id).first.s3_image_loc_url.to_s, class:"img-responsive img-thumbnail"  %>
 			<%end%>
 		</div>
@@ -57,7 +59,7 @@
 	 					<%if existing_story.date_occurred && existing_story.person.birthdate%>
 	 						- Age: <%=existing_story.calculate_story_age%>
 	 					<%end%>
-	 					  <br><br>
+	 					  <br>
 
 		 				<small>	  
 							<%@existing_story = existing_story%>   <!--for ratings and facebook partial -->
@@ -72,7 +74,7 @@
 		 					| <%=existing_story.share_type%>
 		 				
 		 					<%end%>
-		 					
+		 					</small>
 
 		 					<% if can? :update, existing_story  %>
 		 						|&nbsp;
@@ -88,6 +90,7 @@
 								<%end%>
 							<%end%>	
 		
+							<small>
 							<%= render "ratings_partial" %><br>
 							Remarks: <%=existing_story.remarks.count%> &nbsp;| &nbsp; </small>
 							<%=link_to new_remark_path(story_id: existing_story.id), id:"create_remark" do%>
